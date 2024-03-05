@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage>
                 sigmaY: 5 * (1 - _nonBouncyAnimation.value)),
             child: Container(
                 color: backgroundAnimationColor
-                    .withOpacity(0.5 * (1 - _animation.value).abs())),
+                    .withOpacity(0.5 * (1 - _nonBouncyAnimation.value).abs())),
           );
         },
       ),
@@ -107,9 +107,7 @@ class _LoginPageState extends State<LoginPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Hero(
-                      tag: 'loginText',
-                      child: Text('Welcome!', style: titleMedium)),
+                  Text('Welcome!', style: titleMedium),
                   const SizedBox(height: 200),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -193,12 +191,9 @@ class _LoginFailedPageState extends State<LoginFailedPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Hero(
-            tag: 'loginText',
-            child: Text(
-              'Invalid Login',
-              style: TextStyle(color: warningPrimaryColor, fontSize: 40),
-            ),
+          Text(
+            'Invalid Login',
+            style: TextStyle(color: warningPrimaryColor, fontSize: 40),
           ),
           const SizedBox(height: 200),
           Padding(
