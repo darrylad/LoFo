@@ -33,7 +33,7 @@ Future<void> getLoginDetails() async {
   loginID = prefs.getString('savedLoginID') ?? '';
 }
 
-void performLogin(BuildContext context) {
+void performLogin(BuildContext context, AnimationController _controller) {
   bool isLoginValid = checkLoginDetails();
   if (isLoginValid) {
     isUserLoggedIn = true;
@@ -42,10 +42,45 @@ void performLogin(BuildContext context) {
     saveLoginDetails(loginID!, loginProfileImage!);
 
     // unlock the app to user
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) {
-      return const Layout();
-    }));
+    // Navigator.pushReplacement(context,
+    //     MaterialPageRoute(builder: (BuildContext context) {
+    //   return const Layout();
+    // }));
+
+    // Navigator.pushReplacement(
+    //     context,
+    //     PageRouteBuilder(
+    //       pageBuilder: (context, animation, secondaryAnimation) =>
+    //           const Layout(),
+    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //         return AnimatedBuilder(
+    //           animation: animation,
+    //           builder: (context, child) {
+    //             return Align(
+    //               alignment: Alignment.topCenter,
+    //               child: ClipRect(
+    //                 child: Transform.scale(
+    //                   scale: (1 - animation.value).clamp(0.0, 1.0),
+    //                   child: Transform.translate(
+    //                     offset: Offset(0.0, -animation.value * 300),
+    //                     child: child,
+    //                   ),
+    //                 ),
+    //               ),
+    //             );
+    //           },
+    //           child: child,
+    //         );
+    //       },
+    //     ));
+
+    _controller.forward().then((value) {
+      Navigator.pushReplacement(context, PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+        return const Layout();
+      }));
+    });
+
     debugPrint('Login Successful');
   } else {
     debugPrint('Login Failed');

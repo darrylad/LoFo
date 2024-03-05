@@ -109,12 +109,13 @@ class _NewPostFloatingActionButtonState
                                         return BackdropFilter(
                                           filter: ImageFilter.blur(
                                               sigmaX:
-                                                  10 * curvedAnimation.value,
+                                                  15 * curvedAnimation.value,
                                               sigmaY:
-                                                  10 * curvedAnimation.value),
+                                                  15 * curvedAnimation.value),
                                           child: Container(
-                                            color: Colors.black.withOpacity(
-                                                0.7 * curvedAnimation.value),
+                                            color: backgroundAnimationColor
+                                                .withOpacity(0.5 *
+                                                    curvedAnimation.value),
                                           ),
                                         );
                                       },

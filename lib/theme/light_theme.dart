@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 
 List<String> fonts = ['Manrope', 'Rubik'];
 int fontIndex = 1;
-ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: Colors.blue);
+// ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: Colors.blue);
+Color? lightThemeScaffoldBackgroundColor = Colors.blueGrey[50];
 
 ThemeData lightThemeData = ThemeData(
   useMaterial3: true,
-  colorScheme: colorScheme,
-  scaffoldBackgroundColor: Colors.blueGrey[50],
+  colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+  scaffoldBackgroundColor: lightThemeScaffoldBackgroundColor,
   // textTheme: GoogleFonts.manropeTextTheme(),
 
   fontFamily: fonts[fontIndex],
@@ -35,6 +36,8 @@ ThemeData lightThemeData = ThemeData(
   ),
 );
 
+ColorScheme colorScheme = lightThemeData.colorScheme;
+
 TextStyle? bodyMedium = lightThemeData.textTheme.bodyMedium;
 TextStyle? titleLarge = lightThemeData.textTheme.titleLarge;
 TextStyle? titleSmall = lightThemeData.textTheme.titleSmall;
@@ -47,3 +50,5 @@ Color secondaryButtonBackgroundSolidColor =
     lightThemeData.colorScheme.primaryContainer;
 
 Color warningPrimaryColor = lightThemeData.colorScheme.error;
+
+Color backgroundAnimationColor = const Color.fromRGBO(0, 57, 95, 0.627);
