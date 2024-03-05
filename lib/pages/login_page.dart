@@ -62,23 +62,34 @@ class _LoginPageState extends State<LoginPage>
     double topPaddingHeight = MediaQuery.of(context).padding.top;
     return Stack(children: [
       const Layout(),
-      BackdropFilter(
-          filter: ImageFilter.blur(
-              sigmaX: 5 * (1 - _nonBouncyAnimation.value),
-              sigmaY: 5 * (1 - _nonBouncyAnimation.value)),
-          child: Container(
-              color: backgroundAnimationColor
-                  .withOpacity(0.5 * (1 - _animation.value).abs()))),
-      Transform.translate(
-        offset: Offset(
-          0,
-          -_animation.value *
-              (screenHeight -
-                  56.0 -
-                  topPaddingHeight), // 56.0 is the height of the app bar
-        ),
-        child: loginPageContent(context, _controller),
+      AnimatedBuilder(
+        animation: _nonBouncyAnimation,
+        builder: (BuildContext context, Widget? child) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(
+                sigmaX: 5 * (1 - _nonBouncyAnimation.value),
+                sigmaY: 5 * (1 - _nonBouncyAnimation.value)),
+            child: Container(
+                color: backgroundAnimationColor
+                    .withOpacity(0.5 * (1 - _animation.value).abs())),
+          );
+        },
       ),
+      AnimatedBuilder(
+        animation: _animation,
+        builder: (BuildContext context, Widget? child) {
+          return Transform.translate(
+            offset: Offset(
+              0,
+              -_animation.value *
+                  (screenHeight -
+                      56.0 -
+                      topPaddingHeight), // 56.0 is the height of the app bar
+            ),
+            child: loginPageContent(context, _controller),
+          );
+        },
+      )
       // loginPageContent(context),
     ]);
   }
