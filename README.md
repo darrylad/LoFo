@@ -1,6 +1,7 @@
 # lofo
 
-A new Flutter project.
+An app that helps report lost items to the security. 
+Created inside of Google Developers Students Club, Indian Institute of Technology, Indore.
 
 ## Getting Started
 
