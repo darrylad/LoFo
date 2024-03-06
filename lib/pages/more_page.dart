@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/animation/logout_intermediate.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/theme/light_theme.dart';
@@ -53,9 +54,13 @@ class _MorePageState extends State<MorePage> {
         ),
         onTap: () async {
           performLogout(context);
-          setState(() {
-            // isUserLoggedIn = false;
-          });
+          // setState(() {
+          //   // isUserLoggedIn = false;
+          // });
+          Navigator.pushReplacement(context, PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+            return const LogoutIntermediatePage();
+          }));
         },
       ),
       const SizedBox(height: 200),

@@ -11,15 +11,15 @@ class Layout extends StatefulWidget {
   State<Layout> createState() => _LayoutState();
 }
 
-class _LayoutState extends State<Layout> {
-  var selectedIndex = 1;
+int selectedPageIndex = 1;
 
+class _LayoutState extends State<Layout> {
   String appBarTitle = 'Home';
   Widget page = const HomePage();
 
   @override
   Widget build(BuildContext context) {
-    switch (selectedIndex) {
+    switch (selectedPageIndex) {
       case 0:
         page = const MorePage();
         appBarTitle = 'Hi, Darryl';
@@ -33,7 +33,9 @@ class _LayoutState extends State<Layout> {
         appBarTitle = 'Your Requests';
         break;
       default:
-        throw UnimplementedError('no widget for $selectedIndex');
+        page = const HomePage();
+        appBarTitle = 'Home';
+        throw UnimplementedError('no widget for $selectedPageIndex');
     }
 
     var mainArea = AnimatedSwitcher(
@@ -68,12 +70,14 @@ class _LayoutState extends State<Layout> {
           label: 'Your Posts',
         ),
       ],
-      currentIndex: selectedIndex,
+      currentIndex: selectedPageIndex,
       onTap: (value) {
         setState(() {
-          selectedIndex = value;
+          selectedPageIndex = value;
         });
       },
     );
   }
 }
+
+const layoutWidget = Layout();

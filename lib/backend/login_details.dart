@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lofo/components/navigation.dart';
+import 'package:lofo/animation/login_intermediate.dart';
+
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +34,7 @@ Future<void> getLoginDetails() async {
   loginID = prefs.getString('savedLoginID') ?? '';
 }
 
-void performLogin(BuildContext context, AnimationController _controller) {
+void performLogin(BuildContext context) {
   bool isLoginValid = checkLoginDetails();
   if (isLoginValid) {
     isUserLoggedIn = true;
@@ -74,20 +75,34 @@ void performLogin(BuildContext context, AnimationController _controller) {
     //       },
     //     ));
 
-    _controller.forward().then((value) {
-      Navigator.pushReplacement(context, PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-        return const Layout();
-      }));
-    });
+    // animationController.forward().then((value) {
+    //   Navigator.pushReplacement(context, PageRouteBuilder(
+    //       pageBuilder: (context, animation, secondaryAnimation) {
+    //     return const Layout();
+    //   }));
+    // });
+
+    Navigator.pushReplacement(context,
+        PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+      return const LoginIntermediatePage();
+    }));
 
     debugPrint('Login Successful');
   } else {
     debugPrint('Login Failed');
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) {
-      return const LoginFailedPage();
-    }));
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const LoginFailedPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -97,8 +112,8 @@ void performLogout(BuildContext context) async {
   prefs.setString('savedLoginID', '');
 
   isUserLoggedIn = false;
-  Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (BuildContext context) {
-    return LoginPage();
-  }));
+  // Navigator.pushReplacement(context,
+  //     MaterialPageRoute(builder: (BuildContext context) {
+  //   return LoginPage();
+  // }));
 }

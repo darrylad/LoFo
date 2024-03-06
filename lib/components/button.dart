@@ -94,7 +94,7 @@ class BasicButton {
                 style: TextStyle(
                     fontFamily: fonts[0],
                     fontSize: 15,
-                    fontVariations: [FontVariation('wght', 600)]),
+                    fontVariations: const [FontVariation('wght', 600)]),
               ),
             ],
           ),

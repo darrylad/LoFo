@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightThemeData,
-      home: isUserLoggedIn ? const Layout() : LoginPage(),
+      home: isUserLoggedIn ? const Layout() : const LoginPage(),
     );
   }
 }

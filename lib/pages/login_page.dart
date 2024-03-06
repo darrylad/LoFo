@@ -1,148 +1,133 @@
 import 'dart:async';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lofo/backend/login_details.dart';
-import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/basic_text_box.dart';
 import 'package:lofo/components/button.dart';
-import 'package:lofo/components/navigation.dart';
-
 import 'package:lofo/theme/light_theme.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage> {
   TextEditingController loginText = TextEditingController();
 
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  late Animation<double> _nonBouncyAnimation;
+  // late AnimationController _animationController;
+  // late Animation<double> _animation;
+  // late Animation<double> _nonBouncyAnimation;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 900),
-      vsync: this,
-    );
-    const curve = Cubic(0.7, 0, 0.04, 1.05); // Customize this to your needs
-    _animation = CurvedAnimation(parent: _controller, curve: curve)
-      ..addListener(() {
-        setState(() {});
-      });
-    const nonBouncyCurve = Cubic(1, 0.01, 0.54, 1);
-    _nonBouncyAnimation =
-        CurvedAnimation(parent: _controller, curve: nonBouncyCurve)
-          ..addListener(() {
-            setState(() {});
-          });
-    // _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
-    //   ..addListener(() {
-    //     setState(() {});
-    //   });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _animationController = AnimationController(
+  //     duration: const Duration(milliseconds: 900),
+  //     vsync: this,
+  //   );
+  //   const curve = Cubic(0.7, 0, 0.04, 1.05); // Customize this to your needs
+  //   _animation = CurvedAnimation(parent: _animationController, curve: curve)
+  //     ..addListener(() {
+  //       setState(() {});
+  //     });
+  //   const nonBouncyCurve = Cubic(1, 0.01, 0.54, 1);
+  //   _nonBouncyAnimation =
+  //       CurvedAnimation(parent: _animationController, curve: nonBouncyCurve)
+  //         ..addListener(() {
+  //           setState(() {});
+  //         });
+  //   // _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
+  //   //   ..addListener(() {
+  //   //     setState(() {});
+  //   //   });
+  // }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _animationController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double topPaddingHeight = MediaQuery.of(context).padding.top;
-    return Stack(children: [
-      const Layout(),
-      AnimatedBuilder(
-        animation: _nonBouncyAnimation,
-        builder: (BuildContext context, Widget? child) {
-          return BackdropFilter(
-            filter: ImageFilter.blur(
-                sigmaX: 5 * (1 - _nonBouncyAnimation.value),
-                sigmaY: 5 * (1 - _nonBouncyAnimation.value)),
-            child: Container(
-                color: backgroundAnimationColor
-                    .withOpacity(0.5 * (1 - _nonBouncyAnimation.value).abs())),
-          );
-        },
-      ),
-      AnimatedBuilder(
-        animation: _animation,
-        builder: (BuildContext context, Widget? child) {
-          return Transform.translate(
-            offset: Offset(
-              0,
-              -_animation.value *
-                  (screenHeight -
-                      56.0 -
-                      topPaddingHeight), // 56.0 is the height of the app bar
-            ),
-            child: loginPageContent(context, _controller),
-          );
-        },
-      )
-      // loginPageContent(context),
-    ]);
+    // double screenHeight = MediaQuery.of(context).size.height;
+    // double topPaddingHeight = MediaQuery.of(context).padding.top;
+
+    return loginPageContent(context);
+
+    // return Stack(children: [
+    //   const Layout(),
+    //   AnimatedBuilder(
+    //     animation: _nonBouncyAnimation,
+    //     builder: (BuildContext context, Widget? child) {
+    //       return BackdropFilter(
+    //         filter: ImageFilter.blur(
+    //             sigmaX: 5 * (1 - _nonBouncyAnimation.value),
+    //             sigmaY: 5 * (1 - _nonBouncyAnimation.value)),
+    //         child: Container(
+    //             color: backgroundAnimationColor
+    //                 .withOpacity(0.5 * (1 - _nonBouncyAnimation.value).abs())),
+    //       );
+    //     },
+    //   ),
+    //   AnimatedBuilder(
+    //     animation: _animation,
+    //     builder: (BuildContext context, Widget? child) {
+    //       return Transform.translate(
+    //         offset: Offset(
+    //           0,
+    //           -_animation.value *
+    //               (screenHeight -
+    //                   56.0 -
+    //                   topPaddingHeight), // 56.0 is the height of the app bar
+    //         ),
+    //         child: loginPageContent(context, _animationController),
+    //       );
+    //     },
+    //   )
+    //   // loginPageContent(context),
+    // ]);
   }
 
-  Scaffold loginPageContent(
-      BuildContext context, AnimationController _controller) {
+  Scaffold loginPageContent(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.lerp(lightThemeScaffoldBackgroundColor,
-          Colors.white, _nonBouncyAnimation.value),
-      body: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Welcome!', style: titleMedium),
-                  const SizedBox(height: 200),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: BasicTextBox(
-                        maxLength: 30,
-                        labelText: 'Login ID',
-                        textController: loginText),
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: Hero(
-                      tag: 'loginButton',
-                      child: BasicButton.primaryButton('Login', () {
-                        // loginID = 'ex220003002@iiti.ac.in';
-                        // loginID = 'meow';
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Welcome!', style: titleMedium),
+            const SizedBox(height: 200),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: BasicTextBox(
+                  maxLength: 30,
+                  labelText: 'Login ID',
+                  textController: loginText),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: Hero(
+                tag: 'loginButton',
+                child: BasicButton.primaryButton('Login', () {
+                  // loginID = 'ex220003002@iiti.ac.in';
+                  // loginID = 'meow';
 
-                        // Close keyboard
-                        FocusScope.of(context).unfocus();
+                  // Close keyboard
+                  FocusScope.of(context).unfocus();
 
-                        Future.delayed(const Duration(milliseconds: 500), () {
-                          loginID = loginText.text;
-                          performLogin(context, _controller);
-                        });
-                      }),
-                    ),
-                  ),
-                ],
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    loginID = loginText.text;
+                    performLogin(context);
+                  });
+                }),
               ),
             ),
-          ),
-          Opacity(
-              opacity: _nonBouncyAnimation.value,
-              child: appBar('Home', userImageExample))
-        ],
+          ],
+        ),
       ),
     );
   }
