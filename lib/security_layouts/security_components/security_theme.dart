@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 List<String> fonts = ['Manrope', 'Rubik'];
 int fontIndex = 1;
 // ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: Colors.blue);
-Color? lightThemeScaffoldBackgroundColor = Colors.blueGrey[50];
+Color? securityThemeScaffoldBackgroundColor = Colors.blueGrey[50];
 
-ThemeData lightThemeData = ThemeData(
+ThemeData securityThemeData = ThemeData(
   useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-  scaffoldBackgroundColor: lightThemeScaffoldBackgroundColor,
+  brightness: Brightness.dark,
+  colorScheme:
+      ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark),
+  scaffoldBackgroundColor: securityThemeScaffoldBackgroundColor,
   // textTheme: GoogleFonts.manropeTextTheme(),
 
   fontFamily: fonts[fontIndex],
@@ -36,20 +38,20 @@ ThemeData lightThemeData = ThemeData(
   ),
 );
 
-ColorScheme lightColorScheme = lightThemeData.colorScheme;
+ColorScheme securityColorScheme = securityThemeData.colorScheme;
 
-TextStyle? bodyMedium = lightThemeData.textTheme.bodyMedium;
-TextStyle? titleLarge = lightThemeData.textTheme.titleLarge;
-TextStyle? titleSmall = lightThemeData.textTheme.titleSmall;
-TextStyle? titleMedium = lightThemeData.textTheme.titleMedium;
+TextStyle? bodyMedium = securityThemeData.textTheme.bodyMedium;
+TextStyle? titleLarge = securityThemeData.textTheme.titleLarge;
+TextStyle? titleSmall = securityThemeData.textTheme.titleSmall;
+TextStyle? titleMedium = securityThemeData.textTheme.titleMedium;
 
 Color secondaryButtonBackGroundColor =
-    lightThemeData.colorScheme.primary.withOpacity(0.2);
+    securityThemeData.colorScheme.primary.withOpacity(0.2);
 
 Color secondaryButtonBackgroundSolidColor =
-    lightThemeData.colorScheme.primaryContainer;
+    securityThemeData.colorScheme.primaryContainer;
 
-Color warningPrimaryColor = lightThemeData.colorScheme.error;
+Color warningPrimaryColor = securityThemeData.colorScheme.error;
 
 Color backgroundAnimationColor = const Color.fromRGBO(0, 57, 95, 0.627);
 

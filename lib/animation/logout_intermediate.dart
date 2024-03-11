@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/login_page.dart';
@@ -92,7 +93,7 @@ class _LogoutIntermediatePageState extends State<LogoutIntermediatePage>
                       child: Column(
                         children: [
                           const Spacer(),
-                          appBar('Hi, Darryl', userImageExample),
+                          appBar('Hi, $userName', userImageExample),
                         ],
                       ),
                     )

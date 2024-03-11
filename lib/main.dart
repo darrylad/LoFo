@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lofo/components/navigation.dart';
-import 'package:lofo/pages/login_page.dart';
+import 'package:lofo/login_verification.dart';
 import 'package:lofo/theme/light_theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-bool isUserLoggedIn = false;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  isUserLoggedIn = prefs.getBool('isUserLoggedIn') ?? false;
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  // isUserLoggedIn = prefs.getBool('isUserLoggedIn') ?? false;
   // getLoginDetails();
   runApp(const MyApp());
 }
@@ -21,7 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightThemeData,
-      home: isUserLoggedIn ? const Layout() : const LoginPage(),
+      // home: isUserLoggedIn ? const Layout() : const LoginPage(),
+      home: const LoginVerification(),
     );
   }
 }

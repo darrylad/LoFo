@@ -3,17 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/home_letter_card_list_example.dart';
 
-import 'package:lofo/components/letter_card.dart';
-import 'package:lofo/components/new_post_floating_action_button.dart';
+import 'package:lofo/security_layouts/security_components/security_letter_card.dart';
+import 'package:lofo/security_layouts/security_components/security_new_post_floating_action_button.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class SecurityHomePage extends StatefulWidget {
+  const SecurityHomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<SecurityHomePage> createState() => _SecurityHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SecurityHomePageState extends State<SecurityHomePage> {
   final GlobalKey _fabKey = GlobalKey();
 
   @override
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView.builder(
           itemCount: database1.length,
           itemBuilder: (context, index) {
-            return LetterCard(
+            return SecurityLetterCard(
               cardTitle: database1[index].cardTitle,
               cardPostedAt: database1[index].cardPostedAt,
               cardDescription: database1[index].cardDescription,
@@ -34,7 +34,8 @@ class _HomePageState extends State<HomePage> {
               userImage: database1[index].userImage,
             );
           }),
-      floatingActionButton: NewPostFloatingActionButton(fabKey: _fabKey),
+      floatingActionButton:
+          SecurityNewPostFloatingActionButton(fabKey: _fabKey),
     );
   }
 }

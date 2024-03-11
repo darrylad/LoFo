@@ -3,10 +3,10 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
+import 'package:lofo/security_layouts/security_components/security_theme.dart';
 
 File? pickedPostImage;
 TextEditingController titleController = TextEditingController();
@@ -29,14 +29,14 @@ class CustomNavigatorObserver extends NavigatorObserver {
   }
 }
 
-class NewPostPage extends StatefulWidget {
-  const NewPostPage({super.key});
+class SecurityNewPostPage extends StatefulWidget {
+  const SecurityNewPostPage({super.key});
 
   @override
-  State<NewPostPage> createState() => _NewPostPageState();
+  State<SecurityNewPostPage> createState() => _SecurityNewPostPageState();
 }
 
-class _NewPostPageState extends State<NewPostPage> {
+class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
   // @override
 
   // void initState() {
@@ -76,7 +76,7 @@ class _NewPostPageState extends State<NewPostPage> {
   }
 
   void postAction(BuildContext context) {
-    requestUploadStatus.value = 'Uploading';
+    securityRequestUploadStatus.value = 'Uploading';
 
     // code for uploading the post to firebase
 
@@ -90,33 +90,14 @@ class _NewPostPageState extends State<NewPostPage> {
   }
 
   void sendCompletion() {
-    requestUploadStatus.value = 'Uploaded';
+    securityRequestUploadStatus.value = 'Uploaded';
     Timer(const Duration(seconds: 1), () {
-      requestUploadStatus.value = 'Normal';
+      securityRequestUploadStatus.value = 'Normal';
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // bool isRequestPostable = false;
-    // if (_formKey.currentState!.validate()) {
-    //   setState(() {
-    //     isRequestPostable = true;
-    //   });
-    // }
-
-    // bool isRequestPostable = false;
-    // bool isRequestPostable() {
-    //   if (_formKey.currentState != null) {
-    //     if (_formKey.currentState!.validate()) {
-    //       return true;
-    //     }
-    //     return false;
-    //   } else {
-    //     return false;
-    //   }
-    // }
-
     void updateIsRequestPostable() {
       // isRequestPostable.value = _formKey.currentState?.validate() ?? false;
       isRequestFilledAdequately.value = titleController.text.isNotEmpty &&
@@ -126,6 +107,7 @@ class _NewPostPageState extends State<NewPostPage> {
 
     Widget leading = IconButton(
       icon: const Icon(Icons.arrow_back),
+      color: securityColorScheme.onBackground,
       onPressed: () {
         nullifyNewPostPatameters();
         Navigator.pop(context);
@@ -136,7 +118,7 @@ class _NewPostPageState extends State<NewPostPage> {
         nullifyNewPostPatameters();
       },
       child: Scaffold(
-          appBar: appBar('New Request', null, leading: leading),
+          appBar: securityAppBar('New Request', null, leading: leading),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             child: SingleChildScrollView(
@@ -260,22 +242,26 @@ class _NewPostPageState extends State<NewPostPage> {
                   : null),
           child: (pickedPostImage != null)
               ? null
-              : const Column(
+              : Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.add_a_photo,
+                      color: securityColorScheme.primary,
                       size: 100,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Upload Image',
                             style: TextStyle(
+                                color: securityColorScheme.primary,
                                 fontSize: 20,
-                                fontVariations: [FontVariation('wght', 400)])),
+                                fontVariations: const [
+                                  FontVariation('wght', 400)
+                                ])),
                       ],
                     ),
                   ],

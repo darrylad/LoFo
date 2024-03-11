@@ -1,11 +1,11 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:lofo/components/app_bar.dart';
-import 'package:lofo/pages/new_post.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
+import 'package:lofo/security_layouts/security_components/security_theme.dart';
+import 'package:lofo/security_layouts/security_pages/security_new_post_page.dart';
 
-class NewPostFloatingActionButton extends StatefulWidget {
+class SecurityNewPostFloatingActionButton extends StatefulWidget {
   // Define a GlobalKey
   final GlobalKey fabKey;
 
@@ -13,32 +13,32 @@ class NewPostFloatingActionButton extends StatefulWidget {
   //   super.key,
   // });
 
-  const NewPostFloatingActionButton({required this.fabKey, Key? key})
+  const SecurityNewPostFloatingActionButton({required this.fabKey, Key? key})
       : super(key: key);
 
   @override
-  State<NewPostFloatingActionButton> createState() =>
-      _NewPostFloatingActionButtonState();
+  State<SecurityNewPostFloatingActionButton> createState() =>
+      _SecurityNewPostFloatingActionButtonState();
 }
 
-bool isNewPostAddable = requestUploadStatus.value == 'Normal' ||
-    requestUploadStatus.value == 'Uploaded';
+bool isNewSecurityPostAddable = securityRequestUploadStatus.value == 'Normal' ||
+    securityRequestUploadStatus.value == 'Uploaded';
 
-class _NewPostFloatingActionButtonState
-    extends State<NewPostFloatingActionButton> {
+class _SecurityNewPostFloatingActionButtonState
+    extends State<SecurityNewPostFloatingActionButton> {
   bool _isPressed = false;
   final ValueNotifier<Color> colorNotifier =
-      ValueNotifier<Color>(lightColorScheme.primary);
+      ValueNotifier<Color>(securityColorScheme.primary);
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<String>(
-      valueListenable: requestUploadStatus,
+      valueListenable: securityRequestUploadStatus,
       builder: (context, value, child) {
-        isNewPostAddable = value == 'Normal' || value == 'Uploaded';
-        colorNotifier.value = (isNewPostAddable)
-            ? lightColorScheme.primary
-            : lightColorScheme.error;
+        isNewSecurityPostAddable = value == 'Normal' || value == 'Uploaded';
+        colorNotifier.value = (isNewSecurityPostAddable)
+            ? secondaryButtonBackgroundSolidColor
+            : securityColorScheme.onError;
 
         return AnimatedBuilder(
           animation: colorNotifier,
@@ -89,7 +89,7 @@ class _NewPostFloatingActionButtonState
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) {
-                                  return const NewPostPage();
+                                  return const SecurityNewPostPage();
                                 },
                                 transitionDuration:
                                     const Duration(milliseconds: 550),
@@ -159,12 +159,12 @@ class _NewPostFloatingActionButtonState
                   ),
                   padding: const EdgeInsets.all(16),
                   child: Icon(
-                    (isNewPostAddable) ? Icons.add : Icons.close,
-                    color: (isNewPostAddable)
+                    (isNewSecurityPostAddable) ? Icons.add : Icons.close,
+                    color: (isNewSecurityPostAddable)
                         ? (_isPressed)
-                            ? lightColorScheme.secondary
-                            : lightColorScheme.onPrimary
-                        : lightColorScheme.onError,
+                            ? securityColorScheme.secondary
+                            : securityColorScheme.primary
+                        : securityColorScheme.error,
                   ),
                 ),
               ),

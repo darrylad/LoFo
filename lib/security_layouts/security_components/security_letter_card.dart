@@ -1,10 +1,11 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:lofo/components/button.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/security_layouts/security_components/security_theme.dart';
 
-class LetterCard extends StatelessWidget {
-  const LetterCard(
+class SecurityLetterCard extends StatelessWidget {
+  const SecurityLetterCard(
       {super.key,
       required this.cardTitle,
       required this.cardDescription,
@@ -27,12 +28,12 @@ class LetterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return cardLayout(cardTitle, cardPostedAt, cardDescription, cardLocation,
-        cardTimeMisplaced, cardName, cardImage, userImage);
+    return securityCardLayout(cardTitle, cardPostedAt, cardDescription,
+        cardLocation, cardTimeMisplaced, cardName, cardImage, userImage);
   }
 }
 
-Column cardLayout(
+Column securityCardLayout(
     String cardTitle,
     DateTime cardPostedAt,
     String cardDescription,
@@ -44,7 +45,7 @@ Column cardLayout(
   return Column(
     children: [
       const SizedBox(height: 20),
-      posterInfoRow(posterImage, cardName, cardPostedAt),
+      securityCardPosterInfoRow(posterImage, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
         color: Colors.white,
@@ -59,7 +60,7 @@ Column cardLayout(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  letterImage(cardImage),
+                  securityCardLetterImage(cardImage),
                   const SizedBox(width: 14),
                   Expanded(
                     child: Column(
@@ -90,11 +91,11 @@ Column cardLayout(
                 ],
               ),
               const SizedBox(height: 12),
-              locationInfo(cardLocation),
+              securityCardLocationInfo(cardLocation),
               const SizedBox(height: 10),
-              timeInfo(cardTimeMisplaced),
+              securityCardTimeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
-              BasicButton.secondaryButton('Claim', () {}),
+              BasicButton.warningSecondaryButton('Delete', () {}),
               const SizedBox(height: 5),
             ],
           ),
@@ -104,7 +105,8 @@ Column cardLayout(
   );
 }
 
-Row posterInfoRow(Image posterImage, String cardName, DateTime cardPostedAt) {
+Row securityCardPosterInfoRow(
+    Image posterImage, String cardName, DateTime cardPostedAt) {
   String yearLastTwoDigits = cardPostedAt.year.toString().substring(2);
   String formattedDate =
       '${cardPostedAt.day}/${cardPostedAt.month}/$yearLastTwoDigits at ${cardPostedAt.hour}:${cardPostedAt.minute}';
@@ -144,7 +146,7 @@ Row posterInfoRow(Image posterImage, String cardName, DateTime cardPostedAt) {
   );
 }
 
-Row locationInfo(String cardLocation) {
+Row securityCardLocationInfo(String cardLocation) {
   return Row(
     children: [
       const Icon(
@@ -157,7 +159,7 @@ Row locationInfo(String cardLocation) {
   );
 }
 
-Row timeInfo(String? cardLeftBehindAt) {
+Row securityCardTimeInfo(String? cardLeftBehindAt) {
   if (cardLeftBehindAt != null) {
     return Row(
       children: [
@@ -174,7 +176,7 @@ Row timeInfo(String? cardLeftBehindAt) {
   }
 }
 
-Container letterImage(Image? cardImage) {
+Container securityCardLetterImage(Image? cardImage) {
   if (cardImage != null) {
     return Container(
       width: 140,

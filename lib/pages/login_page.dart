@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/basic_text_box.dart';
 import 'package:lofo/components/button.dart';
+import 'package:lofo/login_verification.dart';
 import 'package:lofo/theme/light_theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,7 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController loginText = TextEditingController();
+  TextEditingController loginText =
+      TextEditingController(text: securityAccountEmail);
 
   // late AnimationController _animationController;
   // late Animation<double> _animation;
@@ -104,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: BasicTextBox(
                   maxLength: 30,
+                  maxLines: 1,
                   labelText: 'Login ID',
                   textController: loginText),
             ),
@@ -121,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   Future.delayed(const Duration(milliseconds: 500), () {
                     loginID = loginText.text;
+                    debugPrint('Login ID: $loginID');
                     performLogin(context);
                   });
                 }),
@@ -171,7 +175,7 @@ class _LoginFailedPageState extends State<LoginFailedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colorScheme.errorContainer,
+      backgroundColor: lightColorScheme.errorContainer,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

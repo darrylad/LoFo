@@ -1,53 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:lofo/backend/login_details.dart';
-import 'package:lofo/components/app_bar.dart';
-import 'package:lofo/pages/home.dart';
 import 'package:lofo/pages/more_page.dart';
-import 'package:lofo/pages/your_posts_page.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
+import 'package:lofo/security_layouts/security_components/security_theme.dart';
+import 'package:lofo/security_layouts/security_pages/security_home.dart';
+import 'package:lofo/security_layouts/security_pages/security_inbox_page.dart';
 
-class Layout extends StatefulWidget {
-  const Layout({super.key});
+class SecurityLayout extends StatefulWidget {
+  const SecurityLayout({super.key});
 
   @override
-  State<Layout> createState() => _LayoutState();
+  State<SecurityLayout> createState() => _SecurityLayoutState();
 }
 
-int selectedPageIndex = 1;
+int selectedSecurityPageIndex = 1;
 
-class _LayoutState extends State<Layout> {
+class _SecurityLayoutState extends State<SecurityLayout> {
   String appBarTitle = 'Home';
-  Widget page = const HomePage();
+  Widget securityPage = const SecurityHomePage();
 
   @override
   Widget build(BuildContext context) {
-    switch (selectedPageIndex) {
+    switch (selectedSecurityPageIndex) {
       case 0:
-        page = const MorePage();
-        appBarTitle = 'Hi, $userName';
+        securityPage = const MorePage();
+        appBarTitle = 'Hi, Security';
         break;
       case 1:
-        page = const HomePage();
+        securityPage = const SecurityHomePage();
         appBarTitle = 'Home';
         break;
       case 2:
-        page = const YourPostsPage();
+        securityPage = const SecurityInboxPage();
         appBarTitle = 'Your Requests';
         break;
       default:
-        page = const HomePage();
+        securityPage = const SecurityHomePage();
         appBarTitle = 'Home';
-        throw UnimplementedError('no widget for $selectedPageIndex');
+        throw UnimplementedError('no widget for $selectedSecurityPageIndex');
     }
 
     var mainArea = AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
-      child: page,
+      child: securityPage,
     );
 
     return Scaffold(
       // backgroundColor: Colors.blueGrey[100],
-      appBar: appBar(appBarTitle, userImageExample),
+      appBar: securityAppBar(appBarTitle, securityImageExample),
       body: Column(children: <Widget>[
         Expanded(child: mainArea),
         SafeArea(top: false, child: bottomNavigationBar()),
@@ -57,6 +56,9 @@ class _LayoutState extends State<Layout> {
 
   BottomNavigationBar bottomNavigationBar() {
     return BottomNavigationBar(
+      backgroundColor: securityColorScheme.background,
+      unselectedItemColor: securityColorScheme.surfaceVariant,
+      selectedItemColor: securityColorScheme.primary,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.menu),
@@ -69,13 +71,13 @@ class _LayoutState extends State<Layout> {
         BottomNavigationBarItem(
           icon: Icon(Icons.all_inbox_rounded),
           // icon: Icon(Icons.amp_stories_rounded),
-          label: 'Your Posts',
+          label: 'Inbox',
         ),
       ],
-      currentIndex: selectedPageIndex,
+      currentIndex: selectedSecurityPageIndex,
       onTap: (value) {
         setState(() {
-          selectedPageIndex = value;
+          selectedSecurityPageIndex = value;
         });
       },
     );
@@ -83,7 +85,7 @@ class _LayoutState extends State<Layout> {
 
   NavigationBar navigationBar() {
     return NavigationBar(
-      indicatorColor: lightColorScheme.primary,
+      indicatorColor: securityColorScheme.primary,
       destinations: const <Widget>[
         NavigationDestination(
           icon: Icon(Icons.menu),
@@ -99,14 +101,14 @@ class _LayoutState extends State<Layout> {
           label: 'Your Posts',
         ),
       ],
-      selectedIndex: selectedPageIndex,
+      selectedIndex: selectedSecurityPageIndex,
       onDestinationSelected: (int index) {
         setState(() {
-          selectedPageIndex = index;
+          selectedSecurityPageIndex = index;
         });
       },
     );
   }
 }
 
-Widget layoutWidget = const Layout();
+// const layoutWidget = SecurityLayout();

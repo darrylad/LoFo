@@ -5,17 +5,15 @@ import 'package:lofo/theme/light_theme.dart';
 
 class BasicButton {
   static ElevatedButton primaryButton(
-      String buttonText, Function() actionOnPressed) {
+      String buttonText, Function()? actionOnPressed) {
     return ElevatedButton(
-        onPressed: () {
-          actionOnPressed();
-        },
+        onPressed: actionOnPressed,
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: colorScheme.primary,
-          foregroundColor: colorScheme.onPrimary,
+          backgroundColor: lightColorScheme.primary,
+          foregroundColor: lightColorScheme.onPrimary,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),
@@ -47,8 +45,41 @@ class BasicButton {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: colorScheme.error,
-          foregroundColor: colorScheme.onError,
+          backgroundColor: lightColorScheme.error,
+          foregroundColor: lightColorScheme.onError,
+          elevation: 0,
+          // shadowColor: Colors.transparent
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                buttonText,
+                style: TextStyle(
+                    fontFamily: fonts[0],
+                    fontSize: 15,
+                    fontVariations: const [FontVariation('wght', 600)]),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  static ElevatedButton warningSecondaryButton(
+      String buttonText, Function() actionOnPressed) {
+    return ElevatedButton(
+        onPressed: () {
+          actionOnPressed();
+        },
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          backgroundColor: lightColorScheme.errorContainer,
+          foregroundColor: lightColorScheme.error,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),

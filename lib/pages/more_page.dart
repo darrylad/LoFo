@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lofo/animation/logout_intermediate.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
+import 'package:lofo/pages/about_page.dart';
 import 'package:lofo/theme/light_theme.dart';
 
 class MorePage extends StatefulWidget {
@@ -98,50 +99,6 @@ class _MorePageState extends State<MorePage> {
             child: const Text('Uploaded')),
         const SizedBox(height: 20),
       ],
-    );
-  }
-}
-
-class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Widget leading = IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    return Hero(
-      tag: 'about',
-      child: Scaffold(
-          appBar: appBar('About', null, leading: leading),
-          body: Opacity(
-              opacity: 0.5,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      'assets/images/madeWIthLoveTextPNG.png',
-                      width: 220,
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      'assets/images/gdsclogo.png',
-                      width: 120,
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                ],
-              ))),
     );
   }
 }

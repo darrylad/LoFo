@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/login_page.dart';
+import 'package:lofo/security_layouts/security_pages/security_layout.dart';
 import 'package:lofo/theme/light_theme.dart';
 
 class LoginIntermediatePage extends StatefulWidget {
@@ -23,8 +25,9 @@ class _LoginIntermediatePageState extends State<LoginIntermediatePage>
   void initState() {
     super.initState();
     selectedPageIndex = 1;
+    selectedSecurityPageIndex = 1;
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 900),
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
     const curve = Cubic(0.7, 0, 0.04, 1.0); // Customize this to your needs
@@ -44,10 +47,11 @@ class _LoginIntermediatePageState extends State<LoginIntermediatePage>
     //   });
 
     _animationController.forward().then((value) {
-      Navigator.pushReplacement(context, PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-        return const Layout();
-      }));
+      // Navigator.pushReplacement(context, PageRouteBuilder(
+      //     pageBuilder: (context, animation, secondaryAnimation) {
+      //   return const Layout();
+      // }));
+      navigateToAppropriatePostLoginPage(context);
     });
   }
 

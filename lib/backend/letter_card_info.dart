@@ -6,9 +6,9 @@ class LetterCardInfo {
   String cardTitle;
   String cardDescription;
   String cardLocation;
-  String cardLeftBehindAt;
+  String? cardTimeMisplaced;
   String cardName;
-  Image cardImage;
+  Image? cardImage;
   Image userImage;
 
   LetterCardInfo(
@@ -17,7 +17,7 @@ class LetterCardInfo {
       required this.cardTitle,
       required this.cardDescription,
       required this.cardLocation,
-      required this.cardLeftBehindAt,
+      required this.cardTimeMisplaced,
       required this.cardName,
       required this.cardImage,
       required this.userImage});

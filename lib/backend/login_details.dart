@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/animation/login_intermediate.dart';
-
-import 'package:lofo/main.dart';
+import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/login_page.dart';
+import 'package:lofo/login_verification.dart';
+import 'package:lofo/security_layouts/security_pages/security_layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // class LoginDetails {
@@ -14,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String? loginID;
 Image? loginProfileImage;
+String? userName = 'Darryl';
 
 bool checkLoginDetails() {
   if (loginID!.endsWith('@iiti.ac.in')) {
@@ -31,6 +33,7 @@ Future<void> saveLoginDetails(String id, Image profileImage) async {
 
 Future<void> getLoginDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  isUserLoggedIn = prefs.getBool('isUserLoggedIn') ?? false;
   loginID = prefs.getString('savedLoginID') ?? '';
 }
 
@@ -82,6 +85,8 @@ void performLogin(BuildContext context) {
     //   }));
     // });
 
+    setAppropriatePostLoginPage(context);
+
     Navigator.pushReplacement(context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
       return const LoginIntermediatePage();
@@ -116,4 +121,70 @@ void performLogout(BuildContext context) async {
   //     MaterialPageRoute(builder: (BuildContext context) {
   //   return LoginPage();
   // }));
+}
+
+void setAppropriatePostLoginPage(BuildContext context) {
+  if (isUserLoggedIn) {
+    if (loginID!.endsWith('@iiti.ac.in')) {
+      if (loginID == securityAccountEmail) {
+        layoutWidget = const SecurityLayout();
+      } else {
+        layoutWidget = const Layout();
+      }
+    }
+  }
+}
+
+void navigateToAppropriatePostLoginPage(BuildContext context) {
+  if (isUserLoggedIn) {
+    if (loginID!.endsWith('@iiti.ac.in')) {
+      if (loginID == securityAccountEmail) {
+        layoutWidget = const SecurityLayout();
+        Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return const SecurityLayout();
+              },
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+            ));
+      } else {
+        layoutWidget = const Layout();
+        Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return const Layout();
+              },
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+            ));
+      }
+    }
+  } else {
+    Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const LoginPage();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        ));
+  }
 }
