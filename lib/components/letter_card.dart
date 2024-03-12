@@ -7,15 +7,19 @@ class LetterCard extends StatelessWidget {
   const LetterCard(
       {super.key,
       required this.cardTitle,
+      required this.cardID,
       required this.cardDescription,
       required this.cardLocation,
       required this.cardTimeMisplaced,
       required this.cardName,
       required this.cardImage,
       required this.userImage,
-      required this.cardPostedAt});
+      required this.cardPostedAt,
+      required this.cardCategory});
 
+  final int cardCategory; // 0 for found, 1 for lost
   final String cardTitle;
+  final String cardID;
   final DateTime cardPostedAt;
   final String cardDescription;
   final String cardLocation;
@@ -27,12 +31,13 @@ class LetterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return cardLayout(cardTitle, cardPostedAt, cardDescription, cardLocation,
-        cardTimeMisplaced, cardName, cardImage, userImage);
+    return cardLayout(cardCategory, cardTitle, cardPostedAt, cardDescription,
+        cardLocation, cardTimeMisplaced, cardName, cardImage, userImage);
   }
 }
 
 Column cardLayout(
+    int cardCategory,
     String cardTitle,
     DateTime cardPostedAt,
     String cardDescription,
@@ -44,7 +49,7 @@ Column cardLayout(
   return Column(
     children: [
       const SizedBox(height: 20),
-      posterInfoRow(posterImage, cardName, cardPostedAt),
+      posterInfoRow(cardCategory, posterImage, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
         color: Colors.white,
@@ -104,7 +109,8 @@ Column cardLayout(
   );
 }
 
-Row posterInfoRow(Image posterImage, String cardName, DateTime cardPostedAt) {
+Row posterInfoRow(int cardCategory, Image posterImage, String cardName,
+    DateTime cardPostedAt) {
   String yearLastTwoDigits = cardPostedAt.year.toString().substring(2);
   String formattedDate =
       '${cardPostedAt.day}/${cardPostedAt.month}/$yearLastTwoDigits at ${cardPostedAt.hour}:${cardPostedAt.minute}';
@@ -130,6 +136,8 @@ Row posterInfoRow(Image posterImage, String cardName, DateTime cardPostedAt) {
             fontVariations: const [FontVariation('wght', 600)],
             fontSize: 15),
       ),
+      const SizedBox(width: 5),
+      cardCategoryBox(cardCategory),
       const Spacer(),
       Text(
         formattedDate.toString(),
@@ -142,6 +150,42 @@ Row posterInfoRow(Image posterImage, String cardName, DateTime cardPostedAt) {
       const SizedBox(width: 15),
     ],
   );
+}
+
+Container cardCategoryBox(int cardCategory) {
+  // 0 for found, 1 for lost
+
+  Text cardCategoryText(String cardCategoryText) {
+    return Text(cardCategoryText,
+        style: TextStyle(
+          fontFamily: fonts[0],
+          fontSize: 12,
+          color: Colors.white,
+          fontVariations: const [FontVariation('wght', 500)],
+        ));
+  }
+
+  if (cardCategory == 0) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.green[800],
+      ),
+      child: cardCategoryText('Found'),
+    );
+  } else if (cardCategory == 1) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: lightColorScheme.primary,
+      ),
+      child: cardCategoryText('Lost'),
+    );
+  } else {
+    return Container(width: 0);
+  }
 }
 
 Row locationInfo(String cardLocation) {

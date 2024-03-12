@@ -14,9 +14,9 @@ class Layout extends StatefulWidget {
 }
 
 int selectedPageIndex = 1;
+var currentAppBar = appBar('Welcome', null);
 
 class _LayoutState extends State<Layout> {
-  String appBarTitle = 'Home';
   Widget page = const HomePage();
 
   @override
@@ -24,19 +24,19 @@ class _LayoutState extends State<Layout> {
     switch (selectedPageIndex) {
       case 0:
         page = const MorePage();
-        appBarTitle = 'Hi, $userName';
+        currentAppBar = appBar('Hi, $userName', userImageExample);
         break;
       case 1:
         page = const HomePage();
-        appBarTitle = 'Home';
+        currentAppBar = appBar('Home', userImageExample);
         break;
       case 2:
         page = const YourPostsPage();
-        appBarTitle = 'Your Requests';
+        currentAppBar = appBar('Your Requests', userImageExample);
         break;
       default:
         page = const HomePage();
-        appBarTitle = 'Home';
+        currentAppBar = appBar('Which page is this', userImageExample);
         throw UnimplementedError('no widget for $selectedPageIndex');
     }
 
@@ -47,7 +47,7 @@ class _LayoutState extends State<Layout> {
 
     return Scaffold(
       // backgroundColor: Colors.blueGrey[100],
-      appBar: appBar(appBarTitle, userImageExample),
+      appBar: currentAppBar,
       body: Column(children: <Widget>[
         Expanded(child: mainArea),
         SafeArea(top: false, child: bottomNavigationBar()),

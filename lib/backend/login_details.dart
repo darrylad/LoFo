@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/animation/login_intermediate.dart';
+import 'package:lofo/backend/login_main.dart';
+import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/login_page.dart';
 import 'package:lofo/login_verification.dart';
+import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_pages/security_layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,6 +41,7 @@ Future<void> getLoginDetails() async {
 }
 
 void performLogin(BuildContext context) {
+  // signinwithgoogle();
   bool isLoginValid = checkLoginDetails();
   if (isLoginValid) {
     isUserLoggedIn = true;
@@ -128,8 +132,10 @@ void setAppropriatePostLoginPage(BuildContext context) {
     if (loginID!.endsWith('@iiti.ac.in')) {
       if (loginID == securityAccountEmail) {
         layoutWidget = const SecurityLayout();
+        currentAppBar = securityAppBar('Home', securityImageExample);
       } else {
         layoutWidget = const Layout();
+        currentAppBar = appBar('Home', userImageExample);
       }
     }
   }
@@ -140,6 +146,7 @@ void navigateToAppropriatePostLoginPage(BuildContext context) {
     if (loginID!.endsWith('@iiti.ac.in')) {
       if (loginID == securityAccountEmail) {
         layoutWidget = const SecurityLayout();
+        currentAppBar = securityAppBar('Home', securityImageExample);
         Navigator.pushReplacement(
             context,
             PageRouteBuilder(
@@ -156,6 +163,7 @@ void navigateToAppropriatePostLoginPage(BuildContext context) {
             ));
       } else {
         layoutWidget = const Layout();
+        currentAppBar = appBar('Home', userImageExample);
         Navigator.pushReplacement(
             context,
             PageRouteBuilder(

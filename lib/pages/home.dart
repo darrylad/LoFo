@@ -24,7 +24,9 @@ class _HomePageState extends State<HomePage> {
           itemCount: database1.length,
           itemBuilder: (context, index) {
             return LetterCard(
+              cardCategory: database1[index].cardCategory,
               cardTitle: database1[index].cardTitle,
+              cardID: database1[index].cardID,
               cardPostedAt: database1[index].cardPostedAt,
               cardDescription: database1[index].cardDescription,
               cardLocation: database1[index].cardLocation,

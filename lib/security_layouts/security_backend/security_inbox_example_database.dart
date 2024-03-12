@@ -5,7 +5,7 @@ String posterImagePath = 'assets/images/profileS.jpg';
 
 // card id fomat : ex220003001@day/month/year/hour:minute:second
 
-List<LetterCardInfo> database1 = [
+List<LetterCardInfo> databaseSecurityInbox = [
   LetterCardInfo(
     cardCategory: 0,
     cardID: 'ex220003001@4/3/24/11:52:40',
@@ -49,7 +49,7 @@ List<LetterCardInfo> database1 = [
           Image.asset('assets/images/photo-1643804926339-e94f0a655185.png'),
       userImage: Image.asset(posterImagePath)),
   LetterCardInfo(
-      cardCategory: 1,
+      cardCategory: 0,
       cardID: 'ex220003004@4/3/24/11:52:40',
       cardPosterID: 'ex220003004@iiti.ac.in',
       cardPostedAt: DateTime.parse('2024-03-04 11:52:40.094'),

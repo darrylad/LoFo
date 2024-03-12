@@ -14,9 +14,15 @@ class SecurityLetterCard extends StatelessWidget {
       required this.cardName,
       required this.cardImage,
       required this.userImage,
-      required this.cardPostedAt});
+      required this.cardPostedAt,
+      required this.cardID,
+      required this.cardType,
+      required this.cardCategory});
 
+  final int cardType; // 0 for Public, 1 for Inbox
+  final int cardCategory; // 0 for found, 1 for lost
   final String cardTitle;
+  final String cardID;
   final DateTime cardPostedAt;
   final String cardDescription;
   final String cardLocation;
@@ -28,12 +34,23 @@ class SecurityLetterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return securityCardLayout(cardTitle, cardPostedAt, cardDescription,
-        cardLocation, cardTimeMisplaced, cardName, cardImage, userImage);
+    return securityCardLayout(
+        cardCategory,
+        cardType,
+        cardTitle,
+        cardPostedAt,
+        cardDescription,
+        cardLocation,
+        cardTimeMisplaced,
+        cardName,
+        cardImage,
+        userImage);
   }
 }
 
 Column securityCardLayout(
+    int cardCategory,
+    int cardType,
     String cardTitle,
     DateTime cardPostedAt,
     String cardDescription,
@@ -45,7 +62,8 @@ Column securityCardLayout(
   return Column(
     children: [
       const SizedBox(height: 20),
-      securityCardPosterInfoRow(posterImage, cardName, cardPostedAt),
+      securityCardPosterInfoRow(
+          cardCategory, posterImage, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
         color: Colors.white,
@@ -95,7 +113,7 @@ Column securityCardLayout(
               const SizedBox(height: 10),
               securityCardTimeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
-              BasicButton.warningSecondaryButton('Delete', () {}),
+              securityCardActionRow(cardType),
               const SizedBox(height: 5),
             ],
           ),
@@ -105,8 +123,30 @@ Column securityCardLayout(
   );
 }
 
-Row securityCardPosterInfoRow(
-    Image posterImage, String cardName, DateTime cardPostedAt) {
+Widget securityCardActionRow(int cardType) {
+  Row type1ActionRow() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        BasicButton.warningSecondaryButton('Delete', () {}),
+        const SizedBox(width: 10),
+        BasicButton.secondaryButton('Publicize', () {}),
+      ],
+    );
+  }
+
+  if (cardType == 0) {
+    return BasicButton.warningSecondaryButton('Delete', () {});
+  } else if (cardType == 1) {
+    return type1ActionRow();
+  } else {
+    return const SizedBox();
+  }
+}
+
+Row securityCardPosterInfoRow(int cardCategory, Image posterImage,
+    String cardName, DateTime cardPostedAt) {
   String yearLastTwoDigits = cardPostedAt.year.toString().substring(2);
   String formattedDate =
       '${cardPostedAt.day}/${cardPostedAt.month}/$yearLastTwoDigits at ${cardPostedAt.hour}:${cardPostedAt.minute}';
@@ -132,6 +172,8 @@ Row securityCardPosterInfoRow(
             fontVariations: const [FontVariation('wght', 600)],
             fontSize: 15),
       ),
+      const SizedBox(width: 5),
+      securityCardCategoryBox(cardCategory),
       const Spacer(),
       Text(
         formattedDate.toString(),
@@ -144,6 +186,42 @@ Row securityCardPosterInfoRow(
       const SizedBox(width: 15),
     ],
   );
+}
+
+Container securityCardCategoryBox(int cardCategory) {
+  // 0 for found, 1 for lost
+
+  Text cardCategoryText(String cardCategoryText) {
+    return Text(cardCategoryText,
+        style: TextStyle(
+          fontFamily: fonts[0],
+          fontSize: 12,
+          color: Colors.white,
+          fontVariations: const [FontVariation('wght', 500)],
+        ));
+  }
+
+  if (cardCategory == 0) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.green[800],
+      ),
+      child: cardCategoryText('Found'),
+    );
+  } else if (cardCategory == 1) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: securityColorScheme.onPrimary,
+      ),
+      child: cardCategoryText('Lost'),
+    );
+  } else {
+    return Container(width: 0);
+  }
 }
 
 Row securityCardLocationInfo(String cardLocation) {

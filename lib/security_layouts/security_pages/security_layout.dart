@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/more_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
@@ -15,7 +16,6 @@ class SecurityLayout extends StatefulWidget {
 int selectedSecurityPageIndex = 1;
 
 class _SecurityLayoutState extends State<SecurityLayout> {
-  String appBarTitle = 'Home';
   Widget securityPage = const SecurityHomePage();
 
   @override
@@ -23,19 +23,19 @@ class _SecurityLayoutState extends State<SecurityLayout> {
     switch (selectedSecurityPageIndex) {
       case 0:
         securityPage = const MorePage();
-        appBarTitle = 'Hi, Security';
+        currentAppBar = securityAppBar('Hi, Security', securityImageExample);
         break;
       case 1:
         securityPage = const SecurityHomePage();
-        appBarTitle = 'Home';
+        currentAppBar = securityAppBar('Pubic Posts', securityImageExample);
         break;
       case 2:
         securityPage = const SecurityInboxPage();
-        appBarTitle = 'Your Requests';
+        currentAppBar = securityAppBar('Inbox', securityImageExample);
         break;
       default:
         securityPage = const SecurityHomePage();
-        appBarTitle = 'Home';
+        currentAppBar = securityAppBar('Hi, Darryl', securityImageExample);
         throw UnimplementedError('no widget for $selectedSecurityPageIndex');
     }
 
@@ -46,15 +46,15 @@ class _SecurityLayoutState extends State<SecurityLayout> {
 
     return Scaffold(
       // backgroundColor: Colors.blueGrey[100],
-      appBar: securityAppBar(appBarTitle, securityImageExample),
+      appBar: currentAppBar,
       body: Column(children: <Widget>[
         Expanded(child: mainArea),
-        SafeArea(top: false, child: bottomNavigationBar()),
+        SafeArea(top: false, child: securityBottomNavigationBar()),
       ]),
     );
   }
 
-  BottomNavigationBar bottomNavigationBar() {
+  BottomNavigationBar securityBottomNavigationBar() {
     return BottomNavigationBar(
       backgroundColor: securityColorScheme.background,
       unselectedItemColor: securityColorScheme.surfaceVariant,

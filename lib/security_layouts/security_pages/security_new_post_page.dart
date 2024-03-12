@@ -130,7 +130,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                     uploadImageButton(),
                     const SizedBox(height: 20),
                     BasicTextFormField(
-                      maxLength: 20,
+                      maxLength: 40,
                       maxLines: 1,
                       isRequiredField: true,
                       labelText: 'Title',

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LetterCardInfo {
+  int cardCategory;
   DateTime cardPostedAt;
   String cardID;
+  String cardPosterID;
   String cardTitle;
   String cardDescription;
   String cardLocation;
@@ -12,7 +14,9 @@ class LetterCardInfo {
   Image userImage;
 
   LetterCardInfo(
-      {required this.cardPostedAt,
+      {required this.cardCategory,
+      required this.cardPostedAt,
+      required this.cardPosterID,
       required this.cardID,
       required this.cardTitle,
       required this.cardDescription,
