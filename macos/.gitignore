@@ -5,3 +5,9 @@
 # Xcode-related
 **/dgph
 **/xcuserdata/
+
+# Google Sign-In related
+**/GoogleService-Info.plist
+**/Info.plist
+**/GeneratedPluginRegistrant.h
+**/firebase_app_id_file.json

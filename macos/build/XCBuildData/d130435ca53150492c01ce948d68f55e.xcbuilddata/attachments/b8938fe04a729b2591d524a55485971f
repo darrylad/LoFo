@@ -1,0 +1,20 @@
+{
+  "" : {
+    "const-values" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/file_selector_macos-master.swiftconstvalues",
+    "dependencies" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/file_selector_macos-master.d",
+    "diagnostics" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/file_selector_macos-master.dia",
+    "emit-module-dependencies" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/file_selector_macos-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/file_selector_macos-master-emit-module.dia",
+    "swift-dependencies" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/file_selector_macos-master.swiftdeps"
+  },
+  "/Users/darrylad/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.3+3/macos/Classes/FileSelectorPlugin.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/FileSelectorPlugin.o",
+    "llvm-bc" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/FileSelectorPlugin.bc",
+    "object" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/FileSelectorPlugin.o"
+  },
+  "/Users/darrylad/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.3+3/macos/Classes/messages.g.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/messages.g.o",
+    "llvm-bc" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/messages.g.bc",
+    "object" : "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/file_selector_macos.build/Objects-normal/x86_64/messages.g.o"
+  }
+}

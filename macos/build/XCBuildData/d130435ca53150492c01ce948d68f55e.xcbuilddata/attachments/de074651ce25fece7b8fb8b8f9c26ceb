@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Release/FirebaseCoreInternal/FirebaseCoreInternal.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/FirebaseCoreInternal.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Release/FirebaseCoreInternal/FirebaseCoreInternal.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "FirebaseCoreInternal-Swift.h",
+      'external-contents': "/Users/darrylad/Darryl/MyProjects/FlutterDev/lofo/macos/build/Pods.build/Release/FirebaseCoreInternal.build/unextended-interface-header.h",
+    }]
+    }]
+}

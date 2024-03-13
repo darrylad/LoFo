@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                   FocusScope.of(context).unfocus();
 
                   Future.delayed(const Duration(milliseconds: 500), () {
-                    loginID = loginText.text;
+                    // loginID = loginText.text;
                     debugPrint('Login ID: $loginID');
                     performLogin(context);
                   });

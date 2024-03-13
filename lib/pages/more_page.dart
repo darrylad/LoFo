@@ -49,6 +49,13 @@ class _MorePageState extends State<MorePage> {
         ),
       ),
       ListTile(
+        title: Text('login ID: $loginID', style: bodyMedium),
+      ),
+      ListTile(
+        title: Text('User Name: $userName', style: bodyMedium),
+      ),
+
+      ListTile(
         title: Text(
           'Log Out',
           style: bodyMedium,

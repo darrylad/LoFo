@@ -24,19 +24,19 @@ class _LayoutState extends State<Layout> {
     switch (selectedPageIndex) {
       case 0:
         page = const MorePage();
-        currentAppBar = appBar('Hi, $userName', userImageExample);
+        currentAppBar = appBar('Hi, $userName', loginProfileImage);
         break;
       case 1:
         page = const HomePage();
-        currentAppBar = appBar('Home', userImageExample);
+        currentAppBar = appBar('Home', loginProfileImage);
         break;
       case 2:
         page = const YourPostsPage();
-        currentAppBar = appBar('Your Requests', userImageExample);
+        currentAppBar = appBar('Your Requests', loginProfileImage);
         break;
       default:
         page = const HomePage();
-        currentAppBar = appBar('Which page is this', userImageExample);
+        currentAppBar = appBar('Which page is this', loginProfileImage);
         throw UnimplementedError('no widget for $selectedPageIndex');
     }
 

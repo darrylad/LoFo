@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/more_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
@@ -23,19 +24,19 @@ class _SecurityLayoutState extends State<SecurityLayout> {
     switch (selectedSecurityPageIndex) {
       case 0:
         securityPage = const MorePage();
-        currentAppBar = securityAppBar('Hi, Security', securityImageExample);
+        currentAppBar = securityAppBar('Hi, Security', loginProfileImage);
         break;
       case 1:
         securityPage = const SecurityHomePage();
-        currentAppBar = securityAppBar('Pubic Posts', securityImageExample);
+        currentAppBar = securityAppBar('Pubic Posts', loginProfileImage);
         break;
       case 2:
         securityPage = const SecurityInboxPage();
-        currentAppBar = securityAppBar('Inbox', securityImageExample);
+        currentAppBar = securityAppBar('Inbox', loginProfileImage);
         break;
       default:
         securityPage = const SecurityHomePage();
-        currentAppBar = securityAppBar('Hi, Darryl', securityImageExample);
+        currentAppBar = securityAppBar('Hi, Darryl', loginProfileImage);
         throw UnimplementedError('no widget for $selectedSecurityPageIndex');
     }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/animation/login_intermediate.dart';
+import 'package:lofo/backend/google_sign_in.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/login_page.dart';
@@ -15,8 +16,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 //   LoginDetails({required this.loginID, required this.loginProfileImage});
 // }
 
-String? loginID;
+String? loginID = '';
 Image? loginProfileImage;
+String loginProfileImageURL = '';
 String? userName = 'Darryl';
 
 bool checkLoginDetails() {
@@ -27,26 +29,36 @@ bool checkLoginDetails() {
   }
 }
 
-Future<void> saveLoginDetails(String id, Image profileImage) async {
+Future<void> saveLoginDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('isUserLoggedIn', true);
   prefs.setString('savedLoginID', loginID!);
+  prefs.setString('savedUserName', userName!);
+  prefs.setString('savedProfileImageURL', loginProfileImageURL);
 }
 
 Future<void> getLoginDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isUserLoggedIn = prefs.getBool('isUserLoggedIn') ?? false;
   loginID = prefs.getString('savedLoginID') ?? '';
+  userName = prefs.getString('savedUserName') ?? '';
+  loginProfileImageURL = prefs.getString('savedProfileImageURL') ?? '';
+  try {
+    loginProfileImage = Image.network(loginProfileImageURL);
+  } catch (e) {
+    debugPrint('Error: $e');
+  }
 }
 
-void performLogin(BuildContext context) {
-  // signinwithgoogle();
+void performLogin(BuildContext context) async {
+  await signinwithgoogle(context);
   bool isLoginValid = checkLoginDetails();
   if (isLoginValid) {
     isUserLoggedIn = true;
-    loginProfileImage = Image.asset('assets/images/profileD.jpg');
+    // loginProfileImage = Image.asset('assets/images/profileD.jpg');
+    loginProfileImage = Image.network(loginProfileImageURL);
 
-    saveLoginDetails(loginID!, loginProfileImage!);
+    saveLoginDetails();
 
     // unlock the app to user
     // Navigator.pushReplacement(context,
@@ -97,6 +109,7 @@ void performLogin(BuildContext context) {
 
     debugPrint('Login Successful');
   } else {
+    await signOut(context);
     debugPrint('Login Failed');
     Navigator.pushReplacement(
       context,
@@ -115,6 +128,7 @@ void performLogin(BuildContext context) {
 }
 
 void performLogout(BuildContext context) async {
+  await signOut(context);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('isUserLoggedIn', false);
   prefs.setString('savedLoginID', '');
