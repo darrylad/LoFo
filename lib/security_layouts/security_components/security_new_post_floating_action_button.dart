@@ -21,8 +21,9 @@ class SecurityNewPostFloatingActionButton extends StatefulWidget {
       _SecurityNewPostFloatingActionButtonState();
 }
 
-bool isNewSecurityPostAddable = securityRequestUploadStatus.value == 'Normal' ||
-    securityRequestUploadStatus.value == 'Uploaded';
+bool isNewSecurityPostAddable = securityRequestUploadStatus.value ==
+        SecurityRequestUploadStatus.normal ||
+    securityRequestUploadStatus.value == SecurityRequestUploadStatus.uploaded;
 
 class _SecurityNewPostFloatingActionButtonState
     extends State<SecurityNewPostFloatingActionButton> {
@@ -32,10 +33,12 @@ class _SecurityNewPostFloatingActionButtonState
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<String>(
+    return ValueListenableBuilder<SecurityRequestUploadStatus>(
       valueListenable: securityRequestUploadStatus,
       builder: (context, value, child) {
-        isNewSecurityPostAddable = value == 'Normal' || value == 'Uploaded';
+        isNewSecurityPostAddable =
+            value == SecurityRequestUploadStatus.normal ||
+                value == SecurityRequestUploadStatus.uploaded;
         colorNotifier.value = (isNewSecurityPostAddable)
             ? secondaryButtonBackgroundSolidColor
             : securityColorScheme.onError;
@@ -64,7 +67,7 @@ class _SecurityNewPostFloatingActionButtonState
                     _isPressed = false;
                   });
                 },
-                onTap: (value == 'Normal')
+                onTap: (value == SecurityRequestUploadStatus.normal)
                     ? () {
                         // Get the position of the FAB
 

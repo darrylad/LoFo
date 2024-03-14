@@ -1,34 +1,47 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 import 'package:lofo/theme/light_theme.dart';
 
+enum SecurityRequestUploadStatus {
+  normal,
+  uploading,
+  uploaded,
+  uploadError,
+  someThingWentWrong,
+}
+
 // String requestUploadStatus = 'Normal';
-ValueNotifier<String> securityRequestUploadStatus =
-    ValueNotifier<String>('Normal');
+ValueNotifier<SecurityRequestUploadStatus> securityRequestUploadStatus =
+    ValueNotifier<SecurityRequestUploadStatus>(
+        SecurityRequestUploadStatus.normal);
 String userImagePath = 'assets/images/profileD.jpg';
 Image securityImageExample = Image.asset(userImagePath);
 
-PreferredSize securityAppBar(String title, Image? actionImage,
+PreferredSize securityAppBar(String title, Widget? actionImage,
     {Widget? leading}) {
   return PreferredSize(
       preferredSize: const Size.fromHeight(56),
-      child: ValueListenableBuilder<String>(
+      child: ValueListenableBuilder<SecurityRequestUploadStatus>(
         valueListenable: securityRequestUploadStatus,
         builder: (context, value, child) {
           AppBar currentSecurityAppBar =
               normalSecurityAppBar(title, actionImage, leading: leading);
           switch (value) {
-            case 'Normal':
+            case SecurityRequestUploadStatus.normal:
               currentSecurityAppBar =
                   normalSecurityAppBar(title, actionImage, leading: leading);
               break;
-            case 'Uploading':
+            case SecurityRequestUploadStatus.uploading:
               currentSecurityAppBar = uploadingSecurityAppBar();
               break;
-            case 'Uploaded':
+            case SecurityRequestUploadStatus.uploaded:
               currentSecurityAppBar = uploadedSecurityAppBar();
+              break;
+            case SecurityRequestUploadStatus.uploadError:
+              currentSecurityAppBar = uploadErrorSecurityAppBar();
+              break;
+            case SecurityRequestUploadStatus.someThingWentWrong:
+              currentSecurityAppBar = someThingWentWrongSecurityAppBar();
               break;
             default:
               currentSecurityAppBar =
@@ -88,7 +101,34 @@ AppBar uploadingSecurityAppBar() {
   );
 }
 
-AppBar normalSecurityAppBar(String title, Image? actionImage,
+AppBar uploadErrorSecurityAppBar() {
+  return AppBar(
+    key: const ValueKey(3),
+    centerTitle: true,
+    title: const Text(
+      'Could not send',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: lightThemeData.colorScheme.error,
+  );
+}
+
+AppBar someThingWentWrongSecurityAppBar() {
+  return AppBar(
+    backgroundColor: securityColorScheme.background,
+    key: const ValueKey(4),
+    centerTitle: true,
+    title: PulsingText(
+      text: 'Something went wrong',
+      style: const TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    // backgroundColor: lightThemeData.colorScheme.error,
+  );
+}
+
+AppBar normalSecurityAppBar(String title, Widget? actionImage,
     {Widget? leading}) {
   return AppBar(
     backgroundColor: securityColorScheme.background,
@@ -103,19 +143,64 @@ AppBar normalSecurityAppBar(String title, Image? actionImage,
     leading: leading,
     actions: [
       (actionImage != null)
-          ? IconButton(
-              onPressed: null,
-              icon: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2)),
-                child: ClipOval(
-                  child: actionImage,
-                ),
+          ? Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 2)),
+              child: ClipOval(
+                child: actionImage,
               ),
             )
           : const SizedBox(),
-      const SizedBox(width: 8)
+      const SizedBox(width: 12)
     ],
   );
+}
+
+class PulsingText extends StatefulWidget {
+  final String text;
+  final TextStyle style;
+
+  PulsingText({required this.text, required this.style});
+
+  @override
+  _PulsingTextState createState() => _PulsingTextState();
+}
+
+class _PulsingTextState extends State<PulsingText>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 700),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _animation = Tween(begin: 0.4, end: 1.0).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (BuildContext context, Widget? child) {
+        return Opacity(
+          opacity: _animation.value,
+          child: Text(widget.text, style: widget.style),
+        );
+      },
+    );
+  }
 }

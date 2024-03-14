@@ -9,6 +9,7 @@ import 'package:lofo/components/button.dart';
 import 'package:lofo/theme/light_theme.dart';
 
 File? pickedPostImage;
+int postCategory = 1;
 TextEditingController titleController = TextEditingController();
 TextEditingController descriptionController = TextEditingController();
 TextEditingController locationController = TextEditingController();
@@ -76,7 +77,7 @@ class _NewPostPageState extends State<NewPostPage> {
   }
 
   void postAction(BuildContext context) {
-    requestUploadStatus.value = 'Uploading';
+    requestUploadStatus.value = RequestUploadStatus.uploading;
 
     // code for uploading the post to firebase
 
@@ -85,14 +86,21 @@ class _NewPostPageState extends State<NewPostPage> {
     setState(() {});
 
     Timer(Duration(seconds: sentTimer), () {
-      sendCompletion();
+      sendFailure();
     });
   }
 
   void sendCompletion() {
-    requestUploadStatus.value = 'Uploaded';
+    requestUploadStatus.value = RequestUploadStatus.uploaded;
     Timer(const Duration(seconds: 1), () {
-      requestUploadStatus.value = 'Normal';
+      requestUploadStatus.value = RequestUploadStatus.normal;
+    });
+  }
+
+  void sendFailure() {
+    requestUploadStatus.value = RequestUploadStatus.uploadError;
+    Timer(const Duration(seconds: 1), () {
+      requestUploadStatus.value = RequestUploadStatus.normal;
     });
   }
 
@@ -147,6 +155,8 @@ class _NewPostPageState extends State<NewPostPage> {
                     const SizedBox(height: 10),
                     uploadImageButton(),
                     const SizedBox(height: 20),
+                    basicDropDownFormField(),
+                    const SizedBox(height: 20),
                     BasicTextFormField(
                       maxLength: 40,
                       maxLines: 1,
@@ -157,7 +167,7 @@ class _NewPostPageState extends State<NewPostPage> {
                     ),
                     const SizedBox(height: 20),
                     BasicTextFormField(
-                      maxLength: 100,
+                      maxLength: 200,
                       maxLines: null,
                       isRequiredField: true,
                       labelText: 'Description',
@@ -177,22 +187,22 @@ class _NewPostPageState extends State<NewPostPage> {
                     BasicTextFormField(
                       maxLength: 20,
                       maxLines: 1,
-                      readOnly: true,
+                      // readOnly: true,
                       isRequiredField: false,
-                      labelText: 'Time misplaced',
+                      labelText: 'Time last seen',
                       textController: leftBehindAtController,
                       onChanged: updateIsRequestPostable,
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        ).then((time) {
-                          if (time != null) {
-                            leftBehindAtController.text =
-                                '${time.hour}:${time.minute}';
-                          }
-                        });
-                      },
+                      // onTap: () {
+                      //   showTimePicker(
+                      //     context: context,
+                      //     initialTime: TimeOfDay.now(),
+                      //   ).then((time) {
+                      //     if (time != null) {
+                      //       leftBehindAtController.text =
+                      //           '${time.hour}:${time.minute}';
+                      //     }
+                      //   });
+                      // },
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -227,6 +237,47 @@ class _NewPostPageState extends State<NewPostPage> {
               ),
             ),
           )),
+    );
+  }
+
+  DropdownButtonFormField<int> basicDropDownFormField() {
+    Text basicDropDownFormText(String text) {
+      return Text(
+        text,
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: fonts[1],
+          fontVariations: const [FontVariation('wght', 400)],
+        ),
+      );
+    }
+
+    return DropdownButtonFormField(
+      value: postCategory,
+      items: [
+        DropdownMenuItem(
+          value: 1,
+          child: basicDropDownFormText('I have lost ...'),
+        ),
+        DropdownMenuItem(
+          value: 0,
+          child: basicDropDownFormText('I have found ...'),
+        ),
+      ],
+      onChanged: (value) {
+        postCategory = value!;
+        debugPrint('post category : $postCategory');
+      },
+      decoration: InputDecoration(
+        enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8)),
+        focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(5)),
+        fillColor: Colors.white,
+        filled: true,
+      ),
     );
   }
 

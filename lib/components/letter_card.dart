@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/theme/light_theme.dart';
+import 'package:photo_view/photo_view.dart';
 
 class LetterCard extends StatelessWidget {
   const LetterCard(
@@ -31,13 +33,24 @@ class LetterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return cardLayout(cardCategory, cardTitle, cardPostedAt, cardDescription,
-        cardLocation, cardTimeMisplaced, cardName, cardImage, userImage);
+    return cardLayout(
+        cardCategory,
+        cardID,
+        cardTitle,
+        cardPostedAt,
+        cardDescription,
+        cardLocation,
+        cardTimeMisplaced,
+        cardName,
+        cardImage,
+        userImage,
+        context);
   }
 }
 
 Column cardLayout(
     int cardCategory,
+    String cardID,
     String cardTitle,
     DateTime cardPostedAt,
     String cardDescription,
@@ -45,7 +58,8 @@ Column cardLayout(
     String? cardTimeMisplaced,
     String cardName,
     Image? cardImage,
-    Image posterImage) {
+    Image posterImage,
+    BuildContext context) {
   return Column(
     children: [
       const SizedBox(height: 20),
@@ -64,7 +78,7 @@ Column cardLayout(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  letterImage(cardImage),
+                  letterImage(cardImage, context),
                   const SizedBox(width: 14),
                   Expanded(
                     child: Column(
@@ -99,7 +113,11 @@ Column cardLayout(
               const SizedBox(height: 10),
               timeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
-              BasicButton.secondaryButton('Claim', () {}),
+              BasicButton.secondaryButton('Claim', () {
+                debugPrint('Claim button pressed');
+                debugPrint('Card ID: $cardID');
+                debugPrint('Card Title: $cardTitle');
+              }),
               const SizedBox(height: 5),
             ],
           ),
@@ -159,9 +177,9 @@ Container cardCategoryBox(int cardCategory) {
     return Text(cardCategoryText,
         style: TextStyle(
           fontFamily: fonts[0],
-          fontSize: 12,
+          fontSize: 13,
           color: Colors.white,
-          fontVariations: const [FontVariation('wght', 500)],
+          fontVariations: const [FontVariation('wght', 600)],
         ));
   }
 
@@ -218,23 +236,54 @@ Row timeInfo(String? cardLeftBehindAt) {
   }
 }
 
-Container letterImage(Image? cardImage) {
+GestureDetector letterImage(Image? cardImage, BuildContext context) {
   if (cardImage != null) {
-    return Container(
-      width: 140,
-      height: 140,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 247, 131, 125),
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: cardImage.image,
-          fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        debugPrint('Card image pressed');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PhotoViewerPage(
+                    cardImage: cardImage,
+                  )),
+        );
+      },
+      child: Container(
+        width: 140,
+        height: 140,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 247, 131, 125),
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: cardImage.image,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
   } else {
-    return Container(
-      width: 0,
+    return GestureDetector(
+      child: Container(
+        width: 0,
+      ),
+    );
+  }
+}
+
+class PhotoViewerPage extends StatelessWidget {
+  final Image cardImage;
+  const PhotoViewerPage({super.key, required this.cardImage});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar('', null),
+      body: Center(
+          child: PhotoView(
+        imageProvider: cardImage.image,
+        enableRotation: true,
+      )),
     );
   }
 }

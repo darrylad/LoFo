@@ -36,6 +36,7 @@ class SecurityLetterCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return securityCardLayout(
         cardCategory,
+        cardID,
         cardType,
         cardTitle,
         cardPostedAt,
@@ -50,6 +51,7 @@ class SecurityLetterCard extends StatelessWidget {
 
 Column securityCardLayout(
     int cardCategory,
+    String cardID,
     int cardType,
     String cardTitle,
     DateTime cardPostedAt,
@@ -195,9 +197,9 @@ Container securityCardCategoryBox(int cardCategory) {
     return Text(cardCategoryText,
         style: TextStyle(
           fontFamily: fonts[0],
-          fontSize: 12,
+          fontSize: 13,
           color: Colors.white,
-          fontVariations: const [FontVariation('wght', 500)],
+          fontVariations: const [FontVariation('wght', 600)],
         ));
   }
 

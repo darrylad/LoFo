@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
@@ -9,6 +8,7 @@ import 'package:lofo/security_layouts/security_components/security_app_bar.dart'
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 
 File? pickedPostImage;
+int postCategory = 0;
 TextEditingController titleController = TextEditingController();
 TextEditingController descriptionController = TextEditingController();
 TextEditingController locationController = TextEditingController();
@@ -76,7 +76,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
   }
 
   void postAction(BuildContext context) {
-    securityRequestUploadStatus.value = 'Uploading';
+    securityRequestUploadStatus.value = SecurityRequestUploadStatus.uploading;
 
     // code for uploading the post to firebase
 
@@ -85,14 +85,21 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
     setState(() {});
 
     Timer(Duration(seconds: sentTimer), () {
-      sendCompletion();
+      sendFailure();
     });
   }
 
   void sendCompletion() {
-    securityRequestUploadStatus.value = 'Uploaded';
+    securityRequestUploadStatus.value = SecurityRequestUploadStatus.uploaded;
     Timer(const Duration(seconds: 1), () {
-      securityRequestUploadStatus.value = 'Normal';
+      securityRequestUploadStatus.value = SecurityRequestUploadStatus.normal;
+    });
+  }
+
+  void sendFailure() {
+    securityRequestUploadStatus.value = SecurityRequestUploadStatus.uploadError;
+    Timer(const Duration(seconds: 1), () {
+      securityRequestUploadStatus.value = SecurityRequestUploadStatus.normal;
     });
   }
 
@@ -129,6 +136,8 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                     const SizedBox(height: 10),
                     uploadImageButton(),
                     const SizedBox(height: 20),
+                    basicSecurityDropDownFormField(),
+                    const SizedBox(height: 20),
                     BasicTextFormField(
                       maxLength: 40,
                       maxLines: 1,
@@ -159,22 +168,22 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                     BasicTextFormField(
                       maxLength: 20,
                       maxLines: 1,
-                      readOnly: true,
+                      // readOnly: true,
                       isRequiredField: false,
-                      labelText: 'Time misplaced',
+                      labelText: 'Time last seen',
                       textController: leftBehindAtController,
                       onChanged: updateIsRequestPostable,
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        ).then((time) {
-                          if (time != null) {
-                            leftBehindAtController.text =
-                                '${time.hour}:${time.minute}';
-                          }
-                        });
-                      },
+                      // onTap: () {
+                      //   showTimePicker(
+                      //     context: context,
+                      //     initialTime: TimeOfDay.now(),
+                      //   ).then((time) {
+                      //     if (time != null) {
+                      //       leftBehindAtController.text =
+                      //           '${time.hour}:${time.minute}';
+                      //     }
+                      //   });
+                      // },
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -209,6 +218,47 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
               ),
             ),
           )),
+    );
+  }
+
+  DropdownButtonFormField<int> basicSecurityDropDownFormField() {
+    Text basicDropDownFormText(String text) {
+      return Text(
+        text,
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: fonts[1],
+          fontVariations: const [FontVariation('wght', 400)],
+        ),
+      );
+    }
+
+    return DropdownButtonFormField(
+      value: postCategory,
+      items: [
+        DropdownMenuItem(
+          value: 1,
+          child: basicDropDownFormText('I have lost ...'),
+        ),
+        DropdownMenuItem(
+          value: 0,
+          child: basicDropDownFormText('I have found ...'),
+        ),
+      ],
+      onChanged: (value) {
+        postCategory = value!;
+        debugPrint('post category : $postCategory');
+      },
+      decoration: InputDecoration(
+        enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8)),
+        focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(5)),
+        fillColor: Colors.white,
+        filled: true,
+      ),
     );
   }
 

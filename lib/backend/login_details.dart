@@ -7,6 +7,8 @@ import 'package:lofo/pages/login_page.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_pages/security_layout.dart';
+import 'package:lofo/theme/light_theme.dart';
+import 'package:popover/popover.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // class LoginDetails {
@@ -31,7 +33,7 @@ bool checkLoginDetails() {
 
 Future<void> saveLoginDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool('isUserLoggedIn', true);
+  prefs.setBool('isUserLoggedIn', isUserLoggedIn);
   prefs.setString('savedLoginID', loginID!);
   prefs.setString('savedUserName', userName!);
   prefs.setString('savedProfileImageURL', loginProfileImageURL);
@@ -51,12 +53,16 @@ Future<void> getLoginDetails() async {
 }
 
 void performLogin(BuildContext context) async {
-  await signinwithgoogle(context);
+  await signUpWithGoogle(context);
   bool isLoginValid = checkLoginDetails();
   if (isLoginValid) {
     isUserLoggedIn = true;
     // loginProfileImage = Image.asset('assets/images/profileD.jpg');
-    loginProfileImage = Image.network(loginProfileImageURL);
+    try {
+      loginProfileImage = Image.network(loginProfileImageURL);
+    } catch (e) {
+      debugPrint('Error: $e');
+    }
 
     saveLoginDetails();
 
@@ -127,11 +133,19 @@ void performLogin(BuildContext context) async {
   }
 }
 
-void performLogout(BuildContext context) async {
+performLogout(BuildContext context) async {
   await signOut(context);
+
+  loginID = '';
+  userName = '';
+  loginProfileImageURL = '';
+  loginProfileImage = null;
+  isUserLoggedIn = false;
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('isUserLoggedIn', false);
   prefs.setString('savedLoginID', '');
+  prefs.setString('savedUserName', '');
+  prefs.setString('savedProfileImageURL', '');
 
   isUserLoggedIn = false;
   // Navigator.pushReplacement(context,
@@ -154,8 +168,9 @@ void setAppropriatePostLoginPage(BuildContext context) {
   }
 }
 
-void navigateToAppropriatePostLoginPage(BuildContext context) {
+Future<void> navigateToAppropriatePostLoginPage(BuildContext context) async {
   if (isUserLoggedIn) {
+    await checkLoginStatus(context);
     if (loginID!.endsWith('@iiti.ac.in')) {
       if (loginID == securityAccountEmail) {
         layoutWidget = const SecurityLayout();
@@ -192,6 +207,21 @@ void navigateToAppropriatePostLoginPage(BuildContext context) {
               },
             ));
       }
+    } else {
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return const LoginPage();
+            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          ));
     }
   } else {
     Navigator.pushReplacement(
@@ -207,5 +237,58 @@ void navigateToAppropriatePostLoginPage(BuildContext context) {
             );
           },
         ));
+  }
+}
+
+class LoginImageButton extends StatelessWidget {
+  const LoginImageButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (isUserLoggedIn)
+          ? () {
+              showPopover(
+                  context: context,
+                  shadow: const [
+                    BoxShadow(color: Colors.black26, blurRadius: 10)
+                  ],
+                  barrierColor: Colors.blueGrey[200]!.withOpacity(0.2),
+                  transition: PopoverTransition.other,
+                  radius: 13,
+                  arrowWidth: 18,
+                  arrowHeight: 10,
+                  bodyBuilder: (context) {
+                    return Container(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            popOverText(
+                                'Logged In', Colors.green[800], 20, 700),
+                            const SizedBox(height: 10),
+                            popOverText(
+                                'Name: $userName', Colors.black, 16, 600),
+                            popOverText(
+                                'Email: $loginID', Colors.black, 16, 600),
+                          ],
+                        ));
+                  });
+            }
+          : null,
+      child: loginProfileImage,
+    );
+  }
+
+  Text popOverText(String text, Color? color, double? fontSize, double wght) {
+    return Text(
+      text,
+      style: TextStyle(
+          color: color,
+          fontSize: fontSize,
+          fontFamily: fonts[0],
+          fontVariations: [FontVariation('wght', wght)]),
+    );
   }
 }

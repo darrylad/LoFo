@@ -5,7 +5,7 @@ class BasicTextFormField extends StatefulWidget {
   final int maxLength;
   final int? maxLines;
   final TextEditingController textController;
-  final String labelText;
+  final String? labelText;
   final bool isRequiredField;
   final ValueChanged<bool>? onValidChanged;
   final Function()? onChanged;
@@ -16,7 +16,7 @@ class BasicTextFormField extends StatefulWidget {
     super.key,
     required this.maxLength,
     required this.textController,
-    required this.labelText,
+    this.labelText,
     required this.isRequiredField,
     this.maxLines,
     this.onValidChanged,

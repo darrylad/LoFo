@@ -21,8 +21,9 @@ class NewPostFloatingActionButton extends StatefulWidget {
       _NewPostFloatingActionButtonState();
 }
 
-bool isNewPostAddable = requestUploadStatus.value == 'Normal' ||
-    requestUploadStatus.value == 'Uploaded';
+bool isNewPostAddable =
+    requestUploadStatus.value == RequestUploadStatus.normal ||
+        requestUploadStatus.value == RequestUploadStatus.uploaded;
 
 class _NewPostFloatingActionButtonState
     extends State<NewPostFloatingActionButton> {
@@ -32,13 +33,14 @@ class _NewPostFloatingActionButtonState
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<String>(
+    return ValueListenableBuilder<RequestUploadStatus>(
       valueListenable: requestUploadStatus,
       builder: (context, value, child) {
-        isNewPostAddable = value == 'Normal' || value == 'Uploaded';
+        isNewPostAddable = value == RequestUploadStatus.normal ||
+            value == RequestUploadStatus.uploaded;
         colorNotifier.value = (isNewPostAddable)
             ? lightColorScheme.primary
-            : lightColorScheme.error;
+            : lightColorScheme.outline;
 
         return AnimatedBuilder(
           animation: colorNotifier,
@@ -64,7 +66,7 @@ class _NewPostFloatingActionButtonState
                     _isPressed = false;
                   });
                 },
-                onTap: (value == 'Normal')
+                onTap: (value == RequestUploadStatus.normal)
                     ? () {
                         // Get the position of the FAB
 
@@ -158,14 +160,22 @@ class _NewPostFloatingActionButtonState
                     ],
                   ),
                   padding: const EdgeInsets.all(16),
-                  child: Icon(
-                    (isNewPostAddable) ? Icons.add : Icons.close,
-                    color: (isNewPostAddable)
-                        ? (_isPressed)
-                            ? lightColorScheme.secondary
-                            : lightColorScheme.onPrimary
-                        : lightColorScheme.onError,
-                  ),
+                  child: (isNewPostAddable)
+                      ? Icon(
+                          Icons.add,
+                          color: (isNewPostAddable)
+                              ? (_isPressed)
+                                  ? lightColorScheme.secondary
+                                  : lightColorScheme.onPrimary
+                              : lightColorScheme.onError,
+                        )
+                      : PulsingChild(
+                          child: Icon(
+                            // Icons.arrow_circle_up_rounded,
+                            Icons.circle_outlined,
+                            color: lightColorScheme.onError,
+                          ),
+                        ),
                 ),
               ),
             );
@@ -195,6 +205,49 @@ class CircleClipper extends CustomClipper<Path> {
   }
 }
 
+class PulsingChild extends StatefulWidget {
+  final child;
+  const PulsingChild({super.key, this.child});
+
+  @override
+  State<PulsingChild> createState() => _PulsingChildState();
+}
+
+class _PulsingChildState extends State<PulsingChild>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 700),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _animation = Tween(begin: 0.4, end: 1.0).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (BuildContext context, Widget? child) {
+        return Opacity(
+          opacity: _animation.value,
+          child: widget.child,
+        );
+      },
+    );
+  }
+}
 
 // class NewPostFloatingActionButton extends StatelessWidget {
 //   NewPostFloatingActionButton({

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lofo/backend/login_details.dart';
 
 bool isUserLoggedIn = false;
-String securityAccountEmail = 'securityoffice@iiti.ac.in';
+// String securityAccountEmail = 'securityoffice@iiti.ac.in';
+// String securityAccountEmail = 'me220003079@iiti.ac.in';
+String securityAccountEmail = 'me220003022@iiti.ac.in';
 
 class LoginVerification extends StatefulWidget {
   const LoginVerification({super.key});

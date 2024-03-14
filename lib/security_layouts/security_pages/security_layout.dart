@@ -24,19 +24,20 @@ class _SecurityLayoutState extends State<SecurityLayout> {
     switch (selectedSecurityPageIndex) {
       case 0:
         securityPage = const MorePage();
-        currentAppBar = securityAppBar('Hi, Security', loginProfileImage);
+        currentAppBar =
+            securityAppBar('Hi, Security', const LoginImageButton());
         break;
       case 1:
         securityPage = const SecurityHomePage();
-        currentAppBar = securityAppBar('Pubic Posts', loginProfileImage);
+        currentAppBar = securityAppBar('Pubic Posts', const LoginImageButton());
         break;
       case 2:
         securityPage = const SecurityInboxPage();
-        currentAppBar = securityAppBar('Inbox', loginProfileImage);
+        currentAppBar = securityAppBar('Inbox', const LoginImageButton());
         break;
       default:
         securityPage = const SecurityHomePage();
-        currentAppBar = securityAppBar('Hi, Darryl', loginProfileImage);
+        currentAppBar = securityAppBar('Hi, Darryl', const LoginImageButton());
         throw UnimplementedError('no widget for $selectedSecurityPageIndex');
     }
 
