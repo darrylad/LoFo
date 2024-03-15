@@ -67,7 +67,7 @@ Column cardLayout(
       posterInfoRow(cardCategory, posterImage, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
-        color: themeData.colorScheme.surfaceVariant,
+        color: themeData.colorScheme.tertiary,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(

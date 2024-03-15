@@ -64,6 +64,7 @@ Column securityCardLayout(
     Image? cardImage,
     Image posterImage,
     BuildContext context) {
+  themeData = Theme.of(context);
   return Column(
     children: [
       const SizedBox(height: 20),
@@ -71,7 +72,7 @@ Column securityCardLayout(
           cardCategory, posterImage, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
-        color: colorScheme.surfaceVariant,
+        color: themeData.colorScheme.tertiary,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(

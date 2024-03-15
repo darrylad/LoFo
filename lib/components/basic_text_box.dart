@@ -39,7 +39,7 @@ class BasicTextBox extends StatelessWidget {
               color: Colors.transparent,
             ),
             borderRadius: BorderRadius.circular(3)),
-        fillColor: themeData.colorScheme.surfaceVariant,
+        fillColor: themeData.colorScheme.tertiary,
         filled: true,
         labelText: labelText,
         labelStyle: TextStyle(

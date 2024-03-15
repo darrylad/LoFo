@@ -3,6 +3,7 @@ import 'package:lofo/main.dart';
 import 'package:lofo/theme/default_theme.dart';
 
 class BasicButton {
+  ThemeMode themeMode = ThemeMode.system;
   static ElevatedButton primaryButton(
       String buttonText, Function()? actionOnPressed) {
     return ElevatedButton(
@@ -11,8 +12,8 @@ class BasicButton {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: colorScheme.primary,
-          foregroundColor: colorScheme.onPrimary,
+          backgroundColor: themeData.colorScheme.primary,
+          foregroundColor: themeData.colorScheme.onPrimary,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),
@@ -44,8 +45,8 @@ class BasicButton {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: colorScheme.error,
-          foregroundColor: colorScheme.onError,
+          backgroundColor: themeData.colorScheme.error,
+          foregroundColor: themeData.colorScheme.onError,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),
@@ -77,8 +78,8 @@ class BasicButton {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: colorScheme.errorContainer,
-          foregroundColor: colorScheme.error,
+          backgroundColor: themeData.colorScheme.errorContainer,
+          foregroundColor: themeData.colorScheme.error,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),
@@ -111,6 +112,7 @@ class BasicButton {
             borderRadius: BorderRadius.circular(8),
           ),
           backgroundColor: secondaryButtonBackgroundSolidColor,
+          foregroundColor: themeData.colorScheme.primary,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),

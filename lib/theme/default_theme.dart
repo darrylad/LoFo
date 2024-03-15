@@ -5,16 +5,19 @@ import 'package:lofo/main.dart';
 List<String> fonts = ['Manrope', 'Rubik'];
 int fontIndex = 1;
 // ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: Colors.blue);
-Color? lightThemeScaffoldBackgroundColor = Colors.blueGrey[50];
+Color? lightThemeScaffoldBackgroundColor =
+    const Color.fromARGB(255, 219, 226, 230);
 ColorScheme blueColorScheme = ColorScheme.fromSeed(seedColor: Colors.blue);
 
 ThemeData lightThemeData = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.blue,
-      brightness: Brightness.light,
-      surfaceVariant: blueColorScheme.background),
-  scaffoldBackgroundColor: lightThemeScaffoldBackgroundColor,
+    seedColor: Colors.blue,
+    brightness: Brightness.light,
+    // surfaceVariant: blueColorScheme.background,
+    tertiary: blueColorScheme.background,
+  ),
+  scaffoldBackgroundColor: blueColorScheme.surfaceVariant,
 
   // textTheme: GoogleFonts.manropeTextTheme(),
 

@@ -6,6 +6,7 @@ import 'package:lofo/components/navigation.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/login_page.dart';
 import 'package:lofo/login_verification.dart';
+import 'package:lofo/pages/more_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_pages/security_layout.dart';
 import 'package:lofo/theme/default_theme.dart';
@@ -42,6 +43,7 @@ Future<void> saveLoginDetails() async {
 
 Future<void> getLoginDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  forceLightTheme.value = prefs.getBool('forceLightTheme') ?? true;
   isUserLoggedIn = prefs.getBool('isUserLoggedIn') ?? false;
   loginID = prefs.getString('savedLoginID') ?? '';
   userName = prefs.getString('savedUserName') ?? '';
@@ -275,6 +277,8 @@ class LoginImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
+    colorScheme = themeData.colorScheme;
     return GestureDetector(
       onTap: (isUserLoggedIn)
           ? () {
@@ -283,7 +287,7 @@ class LoginImageButton extends StatelessWidget {
                   shadow: const [
                     BoxShadow(color: Colors.black26, blurRadius: 10)
                   ],
-                  backgroundColor: colorScheme.background,
+                  backgroundColor: themeData.colorScheme.background,
                   barrierColor: Colors.blueGrey[200]!.withOpacity(0.2),
                   transition: PopoverTransition.other,
                   radius: 13,

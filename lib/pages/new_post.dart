@@ -282,7 +282,7 @@ class _NewPostPageState extends State<NewPostPage> {
               color: Colors.transparent,
             ),
             borderRadius: BorderRadius.circular(8)),
-        fillColor: themeData.colorScheme.surfaceVariant,
+        fillColor: themeData.colorScheme.tertiary,
         filled: true,
       ),
     );

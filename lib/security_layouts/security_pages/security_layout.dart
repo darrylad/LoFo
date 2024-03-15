@@ -59,7 +59,7 @@ class _SecurityLayoutState extends State<SecurityLayout> {
   BottomNavigationBar securityBottomNavigationBar() {
     return BottomNavigationBar(
       backgroundColor: securityColorScheme.background,
-      unselectedItemColor: securityColorScheme.surfaceVariant,
+      unselectedItemColor: securityColorScheme.onSurface.withOpacity(0.5),
       selectedItemColor: securityColorScheme.primary,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(

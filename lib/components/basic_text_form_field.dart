@@ -76,7 +76,7 @@ class _BasicTextFormFieldState extends State<BasicTextFormField> {
         //   borderRadius: BorderRadius.circular(5),
         //   gapPadding: 0,
         // ),
-        fillColor: colorScheme.surfaceVariant,
+        fillColor: colorScheme.tertiary,
         filled: true,
         labelText: widget.labelText,
         labelStyle: TextStyle(

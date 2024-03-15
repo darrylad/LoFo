@@ -6,8 +6,11 @@ import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/about_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 bool useMyAccountAsSecurityAccount = false;
+
+ValueNotifier<bool> forceLightTheme = ValueNotifier<bool>(true);
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -16,7 +19,14 @@ class MorePage extends StatefulWidget {
   State<MorePage> createState() => _MorePageState();
 }
 
+bool showForceLightThemeSubtitle = false;
+
 class _MorePageState extends State<MorePage> {
+  saveForceLightTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('forceLightTheme', forceLightTheme.value);
+  }
+
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
@@ -73,6 +83,22 @@ class _MorePageState extends State<MorePage> {
             debugPrint(
                 'useMyAccountAsSecurityAccount: $useMyAccountAsSecurityAccount');
             debugPrint('securityAccountEmail: $securityAccountEmail');
+          }),
+      SwitchListTile(
+          value: forceLightTheme.value,
+          title: Text(
+            'Force light theme',
+            style: themeData.textTheme.bodyMedium,
+          ),
+          subtitle: (showForceLightThemeSubtitle)
+              ? const Text('Restart to fully apply theme')
+              : null,
+          onChanged: (value) {
+            setState(() {
+              forceLightTheme.value = value;
+              showForceLightThemeSubtitle = true;
+            });
+            saveForceLightTheme();
           }),
       ListTile(
         title: Text(

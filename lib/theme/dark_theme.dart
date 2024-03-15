@@ -12,7 +12,7 @@ ThemeData darkThemeData = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.blue,
     brightness: Brightness.dark,
-    surfaceVariant: const Color.fromARGB(255, 11, 14, 16),
+    tertiary: const Color.fromARGB(255, 11, 14, 16),
   ),
   scaffoldBackgroundColor: darkThemeScaffoldBackgroundColor,
   // textTheme: GoogleFonts.manropeTextTheme(),

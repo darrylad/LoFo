@@ -262,7 +262,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
               color: Colors.transparent,
             ),
             borderRadius: BorderRadius.circular(8)),
-        fillColor: colorScheme.surfaceVariant,
+        fillColor: colorScheme.tertiary,
         filled: true,
       ),
     );
