@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/login_verification.dart';
+import 'package:lofo/main.dart';
 import 'package:lofo/pages/home.dart';
 import 'package:lofo/pages/more_page.dart';
 import 'package:lofo/pages/your_posts_page.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 class Layout extends StatefulWidget {
   const Layout({super.key});
@@ -23,6 +24,9 @@ class _LayoutState extends State<Layout> {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
+    colorScheme = themeData.colorScheme;
+
     switch (selectedPageIndex) {
       case 0:
         page = const MorePage();

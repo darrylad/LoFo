@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/components/button.dart';
+import 'package:lofo/main.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 import 'package:photo_view/photo_view.dart';
@@ -70,7 +71,7 @@ Column securityCardLayout(
           cardCategory, posterImage, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
-        color: Colors.white,
+        color: colorScheme.surfaceVariant,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -302,7 +303,7 @@ class SecurityPhotoViewerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget leading = IconButton(
       icon: const Icon(Icons.arrow_back),
-      color: securityColorScheme.onBackground,
+      color: securityColorScheme.background,
       onPressed: () {
         Navigator.pop(context);
       },

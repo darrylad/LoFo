@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/components/app_bar.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

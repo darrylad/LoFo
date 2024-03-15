@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/login_details.dart';
+import 'package:lofo/main.dart';
 
 bool isUserLoggedIn = false;
 bool loggedInAsSecurity = false;
@@ -26,6 +27,9 @@ class _LoginVerificationState extends State<LoginVerification> {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
+    colorScheme = themeData.colorScheme;
+
     return const Center(
       child: Scaffold(
         body: Center(

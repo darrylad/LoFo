@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/main.dart';
 
 class BasicTextFormField extends StatefulWidget {
   final int maxLength;
@@ -75,7 +76,7 @@ class _BasicTextFormFieldState extends State<BasicTextFormField> {
         //   borderRadius: BorderRadius.circular(5),
         //   gapPadding: 0,
         // ),
-        fillColor: Colors.white,
+        fillColor: colorScheme.surfaceVariant,
         filled: true,
         labelText: widget.labelText,
         labelStyle: TextStyle(

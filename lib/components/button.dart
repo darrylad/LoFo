@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/main.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 class BasicButton {
   static ElevatedButton primaryButton(
@@ -10,8 +11,8 @@ class BasicButton {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: lightColorScheme.primary,
-          foregroundColor: lightColorScheme.onPrimary,
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onPrimary,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),
@@ -43,8 +44,8 @@ class BasicButton {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: lightColorScheme.error,
-          foregroundColor: lightColorScheme.onError,
+          backgroundColor: colorScheme.error,
+          foregroundColor: colorScheme.onError,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),
@@ -76,8 +77,8 @@ class BasicButton {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: lightColorScheme.errorContainer,
-          foregroundColor: lightColorScheme.error,
+          backgroundColor: colorScheme.errorContainer,
+          foregroundColor: colorScheme.error,
           elevation: 0,
           // shadowColor: Colors.transparent
         ),

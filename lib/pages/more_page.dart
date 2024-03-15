@@ -3,9 +3,9 @@ import 'package:lofo/animation/logout_intermediate.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/login_verification.dart';
+import 'package:lofo/main.dart';
 import 'package:lofo/pages/about_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
-import 'package:lofo/theme/light_theme.dart';
 
 bool useMyAccountAsSecurityAccount = false;
 
@@ -19,6 +19,7 @@ class MorePage extends StatefulWidget {
 class _MorePageState extends State<MorePage> {
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
     return Scaffold(
         // appBar: appBar('Hi, Darryl', userImageExample),
         body: ListView(children: [
@@ -30,7 +31,7 @@ class _MorePageState extends State<MorePage> {
         child: Material(
           type: MaterialType.transparency,
           child: ListTile(
-            title: Text('About', style: bodyMedium),
+            title: Text('About', style: themeData.textTheme.bodyMedium),
             onTap: () {
               Navigator.push(
                   context,
@@ -56,7 +57,8 @@ class _MorePageState extends State<MorePage> {
           value: useMyAccountAsSecurityAccount,
           title: Text(
             'Use my account as security account',
-            style: bodyMedium,
+            style: themeData.textTheme.bodyMedium,
+            // style: bodyMedium,
           ),
           subtitle: (useMyAccountAsSecurityAccount)
               ? const Text('Log out to switch')
@@ -75,7 +77,7 @@ class _MorePageState extends State<MorePage> {
       ListTile(
         title: Text(
           'Log Out',
-          style: bodyMedium,
+          style: themeData.textTheme.bodyMedium,
         ),
         onTap: () async {
           await performLogout(context);

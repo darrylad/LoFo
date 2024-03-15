@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 enum RequestUploadStatus {
   normal,

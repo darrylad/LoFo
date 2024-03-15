@@ -1,6 +1,7 @@
-# lofo
+# LoFo
 
-An app that helps report lost items to the security. 
+An app that helps report lost and found items to the security.
+
 Created inside of Google Developers Students Club, Indian Institute of Technology, Indore.
 
 ## Getting Started

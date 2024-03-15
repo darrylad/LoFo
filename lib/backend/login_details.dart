@@ -3,11 +3,12 @@ import 'package:lofo/animation/login_intermediate.dart';
 import 'package:lofo/backend/google_sign_in.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/navigation.dart';
+import 'package:lofo/main.dart';
 import 'package:lofo/pages/login_page.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_pages/security_layout.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/theme/default_theme.dart';
 import 'package:popover/popover.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -282,6 +283,7 @@ class LoginImageButton extends StatelessWidget {
                   shadow: const [
                     BoxShadow(color: Colors.black26, blurRadius: 10)
                   ],
+                  backgroundColor: colorScheme.background,
                   barrierColor: Colors.blueGrey[200]!.withOpacity(0.2),
                   transition: PopoverTransition.other,
                   radius: 13,
@@ -295,12 +297,16 @@ class LoginImageButton extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             popOverText(
-                                'Logged In', Colors.green[800], 20, 700),
+                                'Logged In',
+                                //  Colors.green[700],
+                                primaryGreen,
+                                20,
+                                700),
                             const SizedBox(height: 10),
-                            popOverText(
-                                'Name: $userName', Colors.black, 16, 600),
-                            popOverText(
-                                'Email: $loginID', Colors.black, 16, 600),
+                            popOverText('Name: $userName',
+                                colorScheme.onBackground, 16, 600),
+                            popOverText('Email: $loginID',
+                                colorScheme.onBackground, 16, 600),
                           ],
                         ));
                   });

@@ -5,7 +5,7 @@ import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/login_page.dart';
 import 'package:lofo/security_layouts/security_pages/security_layout.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 class LoginIntermediatePage extends StatefulWidget {
   const LoginIntermediatePage({super.key});

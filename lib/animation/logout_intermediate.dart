@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/pages/login_page.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 class LogoutIntermediatePage extends StatefulWidget {
   const LogoutIntermediatePage({super.key});

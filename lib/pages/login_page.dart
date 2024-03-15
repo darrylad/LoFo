@@ -5,7 +5,8 @@ import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/basic_text_box.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/login_verification.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/main.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -54,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
     // double screenHeight = MediaQuery.of(context).size.height;
     // double topPaddingHeight = MediaQuery.of(context).padding.top;
 
@@ -100,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Welcome!', style: titleMedium),
+            Text('Welcome!', style: themeData.textTheme.titleMedium),
             const SizedBox(height: 200),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),

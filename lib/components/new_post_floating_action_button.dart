@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/pages/new_post.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 class NewPostFloatingActionButton extends StatefulWidget {
   // Define a GlobalKey

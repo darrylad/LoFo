@@ -5,7 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/main.dart';
+import 'package:lofo/theme/default_theme.dart';
 
 File? pickedPostImage;
 int postCategory = 1;
@@ -105,6 +106,7 @@ class _NewPostPageState extends State<NewPostPage> {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
     // bool isRequestPostable = false;
     // if (_formKey.currentState!.validate()) {
     //   setState(() {
@@ -263,6 +265,7 @@ class _NewPostPageState extends State<NewPostPage> {
           child: basicDropDownFormText('I have found ...'),
         ),
       ],
+      elevation: 6,
       onChanged: (value) {
         postCategory = value!;
         debugPrint('post category : $postCategory');
@@ -279,7 +282,7 @@ class _NewPostPageState extends State<NewPostPage> {
               color: Colors.transparent,
             ),
             borderRadius: BorderRadius.circular(8)),
-        fillColor: Colors.white,
+        fillColor: themeData.colorScheme.surfaceVariant,
         filled: true,
       ),
     );

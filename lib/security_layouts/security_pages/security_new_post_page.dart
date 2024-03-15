@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
+import 'package:lofo/main.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 
@@ -261,7 +262,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
               color: Colors.transparent,
             ),
             borderRadius: BorderRadius.circular(8)),
-        fillColor: Colors.white,
+        fillColor: colorScheme.surfaceVariant,
         filled: true,
       ),
     );

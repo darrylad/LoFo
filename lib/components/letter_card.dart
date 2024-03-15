@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/button.dart';
-import 'package:lofo/theme/light_theme.dart';
+import 'package:lofo/main.dart';
+import 'package:lofo/theme/default_theme.dart';
 import 'package:photo_view/photo_view.dart';
 
 class LetterCard extends StatelessWidget {
@@ -59,13 +60,14 @@ Column cardLayout(
     Image? cardImage,
     Image posterImage,
     BuildContext context) {
+  themeData = Theme.of(context);
   return Column(
     children: [
       const SizedBox(height: 20),
       posterInfoRow(cardCategory, posterImage, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
-        color: Colors.white,
+        color: themeData.colorScheme.surfaceVariant,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/main.dart';
 
 class BasicTextBox extends StatelessWidget {
   final int maxLength;
@@ -18,6 +19,7 @@ class BasicTextBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
     return TextField(
       controller: textController,
       maxLength: maxLength,
@@ -37,7 +39,7 @@ class BasicTextBox extends StatelessWidget {
               color: Colors.transparent,
             ),
             borderRadius: BorderRadius.circular(3)),
-        fillColor: Colors.white,
+        fillColor: themeData.colorScheme.surfaceVariant,
         filled: true,
         labelText: labelText,
         labelStyle: TextStyle(
