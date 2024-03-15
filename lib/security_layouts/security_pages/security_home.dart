@@ -28,7 +28,7 @@ class _SecurityHomePageState extends State<SecurityHomePage> {
               cardPostedAt: database1[index].cardPostedAt,
               cardDescription: database1[index].cardDescription,
               cardLocation: database1[index].cardLocation,
-              cardTimeMisplaced: database1[index].cardTimeMisplaced,
+              cardTimeLastSeen: database1[index].cardTimeLastSeen,
               cardName: database1[index].cardName,
               cardImage: database1[index].cardImage,
               userImage: database1[index].userImage,

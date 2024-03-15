@@ -52,8 +52,8 @@ Future<void> getLoginDetails() async {
   }
 }
 
-void performLogin(BuildContext context) async {
-  await signUpWithGoogle(context);
+void performLogin(BuildContext context, State state) async {
+  await signUpWithGoogle(context, state);
   bool isLoginValid = checkLoginDetails();
   if (isLoginValid) {
     isUserLoggedIn = true;
@@ -106,19 +106,23 @@ void performLogin(BuildContext context) async {
     //   }));
     // });
 
-    setAppropriatePostLoginPage(context);
+    if (!state.mounted) return;
 
-    Navigator.pushReplacement(context,
+    setAppropriatePostLoginPage(state.context);
+
+    Navigator.pushReplacement(state.context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
       return const LoginIntermediatePage();
     }));
 
     debugPrint('Login Successful');
   } else {
-    await signOut(context);
+    if (!state.mounted) return;
+    await signOut(state.context);
     debugPrint('Login Failed');
+    if (!state.mounted) return;
     Navigator.pushReplacement(
-      context,
+      state.context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
             const LoginFailedPage(),
@@ -168,15 +172,31 @@ void setAppropriatePostLoginPage(BuildContext context) {
   }
 }
 
-Future<void> navigateToAppropriatePostLoginPage(BuildContext context) async {
+bool checkIfSecurityAccount() {
+  if (loginID == securityAccountEmail) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Future<void> navigateToAppropriatePostVerificationPage(
+    BuildContext context, State state) async {
   if (isUserLoggedIn) {
-    await checkLoginStatus(context);
+    await checkLoginStatus(state.context, state);
+
+    if (!state.mounted) return;
+
     if (loginID!.endsWith('@iiti.ac.in')) {
-      if (loginID == securityAccountEmail) {
+      // check if log in account is security's account
+
+      if (checkIfSecurityAccount()) {
+        loggedInAsSecurity = true;
         layoutWidget = const SecurityLayout();
         currentAppBar = securityAppBar('Home', securityImageExample);
+
         Navigator.pushReplacement(
-            context,
+            state.context,
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) {
                 return const SecurityLayout();
@@ -189,11 +209,14 @@ Future<void> navigateToAppropriatePostLoginPage(BuildContext context) async {
                 );
               },
             ));
-      } else {
+      } else
+      // log in account is user's account
+
+      {
         layoutWidget = const Layout();
         currentAppBar = appBar('Home', userImageExample);
         Navigator.pushReplacement(
-            context,
+            state.context,
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) {
                 return const Layout();
@@ -207,9 +230,12 @@ Future<void> navigateToAppropriatePostLoginPage(BuildContext context) async {
               },
             ));
       }
-    } else {
+    } else
+    // log in account is not from IITI
+
+    {
       Navigator.pushReplacement(
-          context,
+          state.context,
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) {
               return const LoginPage();
@@ -223,7 +249,10 @@ Future<void> navigateToAppropriatePostLoginPage(BuildContext context) async {
             },
           ));
     }
-  } else {
+  } else
+  // user is not logged in
+
+  {
     Navigator.pushReplacement(
         context,
         PageRouteBuilder(

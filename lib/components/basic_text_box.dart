@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class BasicTextBox extends StatelessWidget {
@@ -30,11 +28,15 @@ class BasicTextBox extends StatelessWidget {
       maxLines: maxLines,
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide.none,
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
             borderRadius: BorderRadius.circular(8)),
         focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(5)),
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.circular(3)),
         fillColor: Colors.white,
         filled: true,
         labelText: labelText,

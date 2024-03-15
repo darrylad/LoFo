@@ -23,8 +23,7 @@ class _SecurityInboxPageState extends State<SecurityInboxPage> {
                 cardID: databaseSecurityInbox[index].cardID,
                 cardDescription: databaseSecurityInbox[index].cardDescription,
                 cardLocation: databaseSecurityInbox[index].cardLocation,
-                cardTimeMisplaced:
-                    databaseSecurityInbox[index].cardTimeMisplaced,
+                cardTimeLastSeen: databaseSecurityInbox[index].cardTimeLastSeen,
                 cardName: databaseSecurityInbox[index].cardName,
                 cardImage: databaseSecurityInbox[index].cardImage,
                 userImage: databaseSecurityInbox[index].userImage,

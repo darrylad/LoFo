@@ -8,7 +8,7 @@ class LetterCardInfo {
   String cardTitle;
   String cardDescription;
   String cardLocation;
-  String? cardTimeMisplaced;
+  String? cardTimeLastSeen;
   String cardName;
   Image? cardImage;
   Image userImage;
@@ -21,7 +21,7 @@ class LetterCardInfo {
       required this.cardTitle,
       required this.cardDescription,
       required this.cardLocation,
-      required this.cardTimeMisplaced,
+      required this.cardTimeLastSeen,
       required this.cardName,
       required this.cardImage,
       required this.userImage});

@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                   Future.delayed(const Duration(milliseconds: 500), () {
                     // loginID = loginText.text;
                     debugPrint('Login ID: $loginID');
-                    performLogin(context);
+                    performLogin(context, this);
                   });
                 }),
               ),

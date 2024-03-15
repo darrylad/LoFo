@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/theme/light_theme.dart';

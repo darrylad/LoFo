@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lofo/components/app_bar.dart';
@@ -245,7 +244,7 @@ class _NewPostPageState extends State<NewPostPage> {
       return Text(
         text,
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 18,
           fontFamily: fonts[1],
           fontVariations: const [FontVariation('wght', 400)],
         ),
@@ -269,12 +268,17 @@ class _NewPostPageState extends State<NewPostPage> {
         debugPrint('post category : $postCategory');
       },
       decoration: InputDecoration(
+        border: InputBorder.none,
         enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide.none,
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
             borderRadius: BorderRadius.circular(8)),
         focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(5)),
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.circular(8)),
         fillColor: Colors.white,
         filled: true,
       ),
@@ -284,7 +288,11 @@ class _NewPostPageState extends State<NewPostPage> {
   ElevatedButton uploadImageButton() {
     return ElevatedButton(
         onPressed: () {
-          _pickPostImage();
+          try {
+            _pickPostImage();
+          } catch (e) {
+            debugPrint('Error: $e');
+          }
           setState(() {});
         },
         style: ElevatedButton.styleFrom(

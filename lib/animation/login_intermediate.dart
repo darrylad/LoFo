@@ -50,7 +50,7 @@ class _LoginIntermediatePageState extends State<LoginIntermediatePage>
       //     pageBuilder: (context, animation, secondaryAnimation) {
       //   return const Layout();
       // }));
-      navigateToAppropriatePostLoginPage(context);
+      navigateToAppropriatePostVerificationPage(context, this);
     });
   }
 

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lofo/theme/light_theme.dart';
 
@@ -153,9 +151,9 @@ AppBar someThingWentWrongAppBar() {
   return AppBar(
     key: const ValueKey(4),
     centerTitle: true,
-    title: PulsingText(
+    title: const PulsingText(
       text: 'Something went wrong',
-      style: const TextStyle(fontVariations: [FontVariation('wght', 600)]),
+      style: TextStyle(fontVariations: [FontVariation('wght', 600)]),
     ),
     // backgroundColor: lightThemeData.colorScheme.error,
   );
@@ -205,13 +203,13 @@ class PulsingText extends StatefulWidget {
   final String text;
   final TextStyle style;
 
-  PulsingText({required this.text, required this.style});
+  const PulsingText({super.key, required this.text, required this.style});
 
   @override
-  _PulsingTextState createState() => _PulsingTextState();
+  PulsingTextState createState() => PulsingTextState();
 }
 
-class _PulsingTextState extends State<PulsingText>
+class PulsingTextState extends State<PulsingText>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

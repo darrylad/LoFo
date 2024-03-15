@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/button.dart';
@@ -12,7 +11,7 @@ class LetterCard extends StatelessWidget {
       required this.cardID,
       required this.cardDescription,
       required this.cardLocation,
-      required this.cardTimeMisplaced,
+      required this.cardTimeLastSeen,
       required this.cardName,
       required this.cardImage,
       required this.userImage,
@@ -25,7 +24,7 @@ class LetterCard extends StatelessWidget {
   final DateTime cardPostedAt;
   final String cardDescription;
   final String cardLocation;
-  final String? cardTimeMisplaced;
+  final String? cardTimeLastSeen;
   final String cardName;
   // final String cardImage = 'assets/images/photo-1643804926339-e94f0a655185.png';
   final Image? cardImage;
@@ -40,7 +39,7 @@ class LetterCard extends StatelessWidget {
         cardPostedAt,
         cardDescription,
         cardLocation,
-        cardTimeMisplaced,
+        cardTimeLastSeen,
         cardName,
         cardImage,
         userImage,
@@ -228,7 +227,7 @@ Row timeInfo(String? cardLeftBehindAt) {
           size: 20,
         ),
         const SizedBox(width: 10),
-        Text('Left behind at: $cardLeftBehindAt'),
+        Text('Time last seen: $cardLeftBehindAt'),
       ],
     );
   } else {

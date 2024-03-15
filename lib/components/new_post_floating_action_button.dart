@@ -206,8 +206,8 @@ class CircleClipper extends CustomClipper<Path> {
 }
 
 class PulsingChild extends StatefulWidget {
-  final child;
-  const PulsingChild({super.key, this.child});
+  final Widget child;
+  const PulsingChild({super.key, required this.child});
 
   @override
   State<PulsingChild> createState() => _PulsingChildState();

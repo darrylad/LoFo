@@ -4,12 +4,14 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/login_verification.dart';
 
-signUpWithGoogle(BuildContext context) async {
-  GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  showLoadingScreen(context);
-
+signUpWithGoogle(BuildContext context, State state) async {
   try {
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    if (!state.mounted) return;
+
+    showLoadingScreen(state.context);
+
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
     AuthCredential authcredential = GoogleAuthProvider.credential(
@@ -17,24 +19,25 @@ signUpWithGoogle(BuildContext context) async {
       idToken: googleAuth?.idToken,
     );
 
-    debugPrint('AuthCredential: $authcredential');
-    debugPrint('GoogleSignInAccount: $googleUser');
+    // debugPrint('AuthCredential: $authcredential');
+    // debugPrint('GoogleSignInAccount: $googleUser');
 
     UserCredential user =
         await FirebaseAuth.instance.signInWithCredential(authcredential);
 
-    debugPrint('User: $user');
+    // debugPrint('User: $user');
 
     loginID = user.user?.email;
-    debugPrint('LoginID: $loginID');
+    // debugPrint('LoginID: $loginID');
     userName = user.user?.displayName;
-    debugPrint('UserName: $userName');
+    // debugPrint('UserName: $userName');
     loginProfileImageURL = user.user?.photoURL ?? '';
     // loginProfileImage = Image.network(user.user?.photoURL ?? '');
-    Navigator.pop(context);
+    if (!state.mounted) return;
+    Navigator.pop(state.context);
   } catch (e) {
     debugPrint('Error: $e');
-    Navigator.pop(context);
+    Navigator.pop(state.context);
   }
 
   // user.user?.email;
@@ -79,10 +82,10 @@ void showLoadingScreen(BuildContext context) {
       }));
 }
 
-checkLoginStatus(BuildContext context) async {
+checkLoginStatus(BuildContext context, State state) async {
   try {
     User? user = FirebaseAuth.instance.currentUser;
-    debugPrint('current User: $user');
+    // debugPrint('current User: $user');
 
     if (user != null) {
       await user.reload();
@@ -95,6 +98,7 @@ checkLoginStatus(BuildContext context) async {
         userName = user.displayName;
         loginProfileImageURL = user.photoURL ?? '';
         debugPrint('user!=null, LoginID: $loginID');
+
         await saveLoginDetails();
       } else {
         // No user is signed in, navigate to the login screen
@@ -102,7 +106,9 @@ checkLoginStatus(BuildContext context) async {
         loginID = '';
         userName = '';
         loginProfileImageURL = '';
-        await signOut(context);
+
+        if (!state.mounted) return;
+        await signOut(state.context);
         await saveLoginDetails();
       }
     } else {
@@ -110,6 +116,7 @@ checkLoginStatus(BuildContext context) async {
       loginID = '';
       userName = '';
       loginProfileImageURL = '';
+
       await signOut(context);
       await saveLoginDetails();
     }
@@ -119,8 +126,11 @@ checkLoginStatus(BuildContext context) async {
     userName = '';
     loginProfileImageURL = '';
     debugPrint('Error: $e');
-    await signOut(context);
+
+    if (!state.mounted) return;
+    await signOut(state.context);
     // await saveLoginDetails();
-    await performLogout(context);
+    if (!state.mounted) return;
+    await performLogout(state.context);
   }
 }

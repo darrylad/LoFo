@@ -1,8 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lofo/components/button.dart';
+import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
+import 'package:photo_view/photo_view.dart';
 
 class SecurityLetterCard extends StatelessWidget {
   const SecurityLetterCard(
@@ -10,7 +10,7 @@ class SecurityLetterCard extends StatelessWidget {
       required this.cardTitle,
       required this.cardDescription,
       required this.cardLocation,
-      required this.cardTimeMisplaced,
+      required this.cardTimeLastSeen,
       required this.cardName,
       required this.cardImage,
       required this.userImage,
@@ -26,7 +26,7 @@ class SecurityLetterCard extends StatelessWidget {
   final DateTime cardPostedAt;
   final String cardDescription;
   final String cardLocation;
-  final String? cardTimeMisplaced;
+  final String? cardTimeLastSeen;
   final String cardName;
   // final String cardImage = 'assets/images/photo-1643804926339-e94f0a655185.png';
   final Image? cardImage;
@@ -42,10 +42,11 @@ class SecurityLetterCard extends StatelessWidget {
         cardPostedAt,
         cardDescription,
         cardLocation,
-        cardTimeMisplaced,
+        cardTimeLastSeen,
         cardName,
         cardImage,
-        userImage);
+        userImage,
+        context);
   }
 }
 
@@ -60,7 +61,8 @@ Column securityCardLayout(
     String? cardTimeMisplaced,
     String cardName,
     Image? cardImage,
-    Image posterImage) {
+    Image posterImage,
+    BuildContext context) {
   return Column(
     children: [
       const SizedBox(height: 20),
@@ -80,7 +82,7 @@ Column securityCardLayout(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  securityCardLetterImage(cardImage),
+                  securityCardLetterImage(cardImage, context),
                   const SizedBox(width: 14),
                   Expanded(
                     child: Column(
@@ -256,23 +258,63 @@ Row securityCardTimeInfo(String? cardLeftBehindAt) {
   }
 }
 
-Container securityCardLetterImage(Image? cardImage) {
+GestureDetector securityCardLetterImage(
+    Image? cardImage, BuildContext context) {
   if (cardImage != null) {
-    return Container(
-      width: 140,
-      height: 140,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 247, 131, 125),
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: cardImage.image,
-          fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        debugPrint('Card image pressed');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SecurityPhotoViewerPage(
+                    cardImage: cardImage,
+                  )),
+        );
+      },
+      child: Container(
+        width: 140,
+        height: 140,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 247, 131, 125),
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: cardImage.image,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
   } else {
-    return Container(
-      width: 0,
+    return GestureDetector(
+      child: Container(
+        width: 0,
+      ),
+    );
+  }
+}
+
+class SecurityPhotoViewerPage extends StatelessWidget {
+  final Image cardImage;
+  const SecurityPhotoViewerPage({super.key, required this.cardImage});
+
+  @override
+  Widget build(BuildContext context) {
+    Widget leading = IconButton(
+      icon: const Icon(Icons.arrow_back),
+      color: securityColorScheme.onBackground,
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    return Scaffold(
+      appBar: securityAppBar('', null, leading: leading),
+      body: Center(
+          child: PhotoView(
+        imageProvider: cardImage.image,
+        enableRotation: true,
+      )),
     );
   }
 }

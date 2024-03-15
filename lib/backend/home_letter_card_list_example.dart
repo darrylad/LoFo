@@ -14,7 +14,7 @@ List<LetterCardInfo> database1 = [
     cardTitle: 'Letter 1',
     cardDescription: 'This is a letter',
     cardLocation: 'Location 1',
-    cardTimeMisplaced: 'Time 1',
+    cardTimeLastSeen: 'Time 1',
     cardName: 'Name 1',
     cardImage:
         Image.asset('assets/images/photo-1643804926339-e94f0a655185.png'),
@@ -29,7 +29,7 @@ List<LetterCardInfo> database1 = [
           'Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 Letter 2 ',
       cardDescription: 'This is a letter',
       cardLocation: 'Location 2',
-      cardTimeMisplaced: 'Time 2',
+      cardTimeLastSeen: 'Time 2',
       cardName: 'Name 2',
       cardImage:
           Image.asset('assets/images/photo-1643804926339-e94f0a655185.png'),
@@ -43,7 +43,7 @@ List<LetterCardInfo> database1 = [
       cardDescription:
           'This is a letter. This is a letter. This is a letter. This is a letter. This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.This is a letter. This is a letter.',
       cardLocation: 'Location 3',
-      cardTimeMisplaced: 'Time 3',
+      cardTimeLastSeen: 'Time 3',
       cardName: 'Name 3',
       cardImage:
           Image.asset('assets/images/photo-1643804926339-e94f0a655185.png'),
@@ -56,7 +56,7 @@ List<LetterCardInfo> database1 = [
       cardTitle: 'Letter 4',
       cardDescription: 'This is a letter',
       cardLocation: 'Location 4',
-      cardTimeMisplaced: 'Time 4',
+      cardTimeLastSeen: 'Time 4',
       cardName: 'Name 4',
       cardImage: null,
       userImage: Image.asset(posterImagePath)),
@@ -68,7 +68,7 @@ List<LetterCardInfo> database1 = [
       cardTitle: 'Letter 5',
       cardDescription: 'This is a letter',
       cardLocation: 'Location 5',
-      cardTimeMisplaced: 'Time 5',
+      cardTimeLastSeen: 'Time 5',
       cardName: 'Name 5',
       cardImage:
           Image.asset('assets/images/photo-1643804926339-e94f0a655185.png'),
@@ -81,7 +81,7 @@ List<LetterCardInfo> database1 = [
       cardTitle: 'Letter 6',
       cardDescription: 'This is a letter',
       cardLocation: 'Location 6',
-      cardTimeMisplaced: null,
+      cardTimeLastSeen: null,
       cardName: 'Name 6',
       cardImage:
           Image.asset('assets/images/photo-1643804926339-e94f0a655185.png'),
@@ -94,7 +94,7 @@ List<LetterCardInfo> database1 = [
       cardTitle: 'Letter 7',
       cardDescription: 'This is a letter',
       cardLocation: 'Location 7',
-      cardTimeMisplaced: 'Time 7',
+      cardTimeLastSeen: 'Time 7',
       cardName: 'Name 7',
       cardImage:
           Image.asset('assets/images/photo-1643804926339-e94f0a655185.png'),

@@ -41,7 +41,7 @@ class _SecurityNewPostFloatingActionButtonState
                 value == SecurityRequestUploadStatus.uploaded;
         colorNotifier.value = (isNewSecurityPostAddable)
             ? secondaryButtonBackgroundSolidColor
-            : securityColorScheme.onError;
+            : securityColorScheme.outlineVariant;
 
         return AnimatedBuilder(
           animation: colorNotifier,
@@ -162,12 +162,14 @@ class _SecurityNewPostFloatingActionButtonState
                   ),
                   padding: const EdgeInsets.all(16),
                   child: Icon(
-                    (isNewSecurityPostAddable) ? Icons.add : Icons.close,
+                    (isNewSecurityPostAddable)
+                        ? Icons.add
+                        : Icons.circle_outlined,
                     color: (isNewSecurityPostAddable)
                         ? (_isPressed)
                             ? securityColorScheme.secondary
                             : securityColorScheme.primary
-                        : securityColorScheme.error,
+                        : securityColorScheme.outline,
                   ),
                 ),
               ),

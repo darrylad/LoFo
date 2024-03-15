@@ -120,6 +120,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
         Navigator.pop(context);
       },
     );
+
     return PopScope(
       onPopInvoked: (didPop) {
         nullifyNewPostPatameters();
@@ -251,11 +252,15 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
       },
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide.none,
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
             borderRadius: BorderRadius.circular(8)),
         focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(5)),
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.circular(8)),
         fillColor: Colors.white,
         filled: true,
       ),

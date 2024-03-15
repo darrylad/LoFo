@@ -4,6 +4,7 @@ import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/pages/about_page.dart';
+import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/theme/light_theme.dart';
 
 bool useMyAccountAsSecurityAccount = false;
@@ -57,11 +58,14 @@ class _MorePageState extends State<MorePage> {
             'Use my account as security account',
             style: bodyMedium,
           ),
+          subtitle: (useMyAccountAsSecurityAccount)
+              ? const Text('Log out to switch')
+              : null,
           onChanged: (value) {
             setState(() {
               useMyAccountAsSecurityAccount = value;
               (useMyAccountAsSecurityAccount)
-                  ? securityAccountEmail = 'me220003022@iiti.ac.in'
+                  ? securityAccountEmail = loginID!
                   : securityAccountEmail = 'securityoffice@iiti.ac.in';
             });
             debugPrint(
@@ -78,7 +82,8 @@ class _MorePageState extends State<MorePage> {
           // setState(() {
           //   // isUserLoggedIn = false;
           // });
-          Navigator.pushReplacement(context, PageRouteBuilder(
+          if (!mounted) return;
+          Navigator.pushReplacement(this.context, PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) {
             return const LogoutIntermediatePage();
           }));
@@ -100,6 +105,8 @@ class _MorePageState extends State<MorePage> {
                 setState(() {
                   // requestUploadStatus = 'Normal';
                   requestUploadStatus.value = RequestUploadStatus.normal;
+                  securityRequestUploadStatus.value =
+                      SecurityRequestUploadStatus.normal;
                 });
               },
               child: const Text('Normal')),
@@ -107,6 +114,8 @@ class _MorePageState extends State<MorePage> {
               onPressed: () {
                 setState(() {
                   requestUploadStatus.value = RequestUploadStatus.uploading;
+                  securityRequestUploadStatus.value =
+                      SecurityRequestUploadStatus.uploading;
                 });
               },
               child: const Text('Uploading')),
@@ -114,6 +123,8 @@ class _MorePageState extends State<MorePage> {
               onPressed: () {
                 setState(() {
                   requestUploadStatus.value = RequestUploadStatus.uploaded;
+                  securityRequestUploadStatus.value =
+                      SecurityRequestUploadStatus.uploaded;
                 });
               },
               child: const Text('Uploaded')),
@@ -122,6 +133,8 @@ class _MorePageState extends State<MorePage> {
                 setState(() {
                   requestUploadStatus.value =
                       RequestUploadStatus.someThingWentWrong;
+                  securityRequestUploadStatus.value =
+                      SecurityRequestUploadStatus.someThingWentWrong;
                 });
               },
               child: const Text('Something went wrong app bar')),
@@ -129,6 +142,8 @@ class _MorePageState extends State<MorePage> {
               onPressed: () {
                 setState(() {
                   requestUploadStatus.value = RequestUploadStatus.uploadError;
+                  securityRequestUploadStatus.value =
+                      SecurityRequestUploadStatus.uploadError;
                 });
               },
               child: const Text('uppload error app bar')),

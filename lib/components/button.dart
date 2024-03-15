@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lofo/theme/light_theme.dart';
 
@@ -108,12 +106,13 @@ class BasicButton {
           actionOnPressed();
         },
         style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            backgroundColor: secondaryButtonBackgroundSolidColor,
-            elevation: 0,
-            shadowColor: Colors.transparent),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          backgroundColor: secondaryButtonBackgroundSolidColor,
+          elevation: 0,
+          // shadowColor: Colors.transparent
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Row(

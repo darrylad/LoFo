@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class BasicTextFormField extends StatefulWidget {
@@ -54,16 +53,28 @@ class _BasicTextFormFieldState extends State<BasicTextFormField> {
       maxLength: widget.maxLength,
       maxLines: widget.maxLines,
       style: const TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         fontVariations: [FontVariation('wght', 400)],
       ),
       decoration: InputDecoration(
-        enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(8)),
+        // enabledBorder: UnderlineInputBorder(
+        //     borderSide: BorderSide.none,
+        //     borderRadius: BorderRadius.circular(8)),
         focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(5)),
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.circular(3)),
+        enabledBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.circular(8)),
+        // focusedBorder: OutlineInputBorder(
+        //   borderSide: BorderSide.none,
+        //   borderRadius: BorderRadius.circular(5),
+        //   gapPadding: 0,
+        // ),
         fillColor: Colors.white,
         filled: true,
         labelText: widget.labelText,
