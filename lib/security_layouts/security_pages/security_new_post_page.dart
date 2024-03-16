@@ -8,16 +8,6 @@ import 'package:lofo/main.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 
-File? pickedPostImage;
-int postCategory = 0;
-TextEditingController titleController = TextEditingController();
-TextEditingController descriptionController = TextEditingController();
-TextEditingController locationController = TextEditingController();
-TextEditingController leftBehindAtController = TextEditingController();
-DateTime? timeMisplaced;
-
-int sentTimer = 3;
-
 class CustomNavigatorObserver extends NavigatorObserver {
   final Function onPop;
 
@@ -38,6 +28,16 @@ class SecurityNewPostPage extends StatefulWidget {
 }
 
 class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
+  File? pickedPostImage;
+  int postCategory = 0;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController leftBehindAtController = TextEditingController();
+  DateTime? timeMisplaced;
+
+  int sentTimer = 3;
+
   // @override
 
   // void initState() {
@@ -48,6 +48,16 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
   final _formKey = GlobalKey<FormState>();
   final isRequestPostable = ValueNotifier<bool>(false);
   final isRequestFilledAdequately = ValueNotifier<bool>(false);
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    locationController.dispose();
+    leftBehindAtController.dispose();
+    pickedPostImage = null;
+    super.dispose();
+  }
 
   Future<void> _pickPostImage() async {
     final picker = ImagePicker();
@@ -106,6 +116,8 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
+
     void updateIsRequestPostable() {
       // isRequestPostable.value = _formKey.currentState?.validate() ?? false;
       isRequestFilledAdequately.value = titleController.text.isNotEmpty &&
@@ -262,7 +274,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
               color: Colors.transparent,
             ),
             borderRadius: BorderRadius.circular(8)),
-        fillColor: colorScheme.tertiary,
+        fillColor: themeData.colorScheme.tertiary,
         filled: true,
       ),
     );

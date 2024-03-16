@@ -48,6 +48,7 @@ class _BasicTextFormFieldState extends State<BasicTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
     return TextFormField(
       controller: widget.textController,
       readOnly: widget.readOnly ?? false,
@@ -76,7 +77,7 @@ class _BasicTextFormFieldState extends State<BasicTextFormField> {
         //   borderRadius: BorderRadius.circular(5),
         //   gapPadding: 0,
         // ),
-        fillColor: colorScheme.tertiary,
+        fillColor: themeData.colorScheme.tertiary,
         filled: true,
         labelText: widget.labelText,
         labelStyle: TextStyle(

@@ -278,7 +278,7 @@ class LoginImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
-    colorScheme = themeData.colorScheme;
+    ColorScheme colorScheme = themeData.colorScheme;
     return GestureDetector(
       onTap: (isUserLoggedIn)
           ? () {

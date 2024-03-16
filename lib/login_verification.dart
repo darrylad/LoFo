@@ -28,7 +28,7 @@ class _LoginVerificationState extends State<LoginVerification> {
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
-    colorScheme = themeData.colorScheme;
+    // colorScheme = themeData.colorScheme;
 
     return const Center(
       child: Scaffold(

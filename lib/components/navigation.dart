@@ -25,7 +25,6 @@ class _LayoutState extends State<Layout> {
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
-    colorScheme = themeData.colorScheme;
 
     switch (selectedPageIndex) {
       case 0:
@@ -63,6 +62,7 @@ class _LayoutState extends State<Layout> {
 
   BottomNavigationBar bottomNavigationBar() {
     return BottomNavigationBar(
+      selectedItemColor: themeData.colorScheme.primary,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.menu),

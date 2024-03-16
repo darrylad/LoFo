@@ -7,7 +7,7 @@ import 'package:lofo/theme/dark_theme.dart';
 import 'package:lofo/theme/default_theme.dart';
 
 ThemeData themeData = lightThemeData;
-ColorScheme colorScheme = lightColorScheme;
+// ColorScheme colorScheme = lightColorScheme;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -8,16 +8,6 @@ import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/theme/default_theme.dart';
 
-File? pickedPostImage;
-int postCategory = 1;
-TextEditingController titleController = TextEditingController();
-TextEditingController descriptionController = TextEditingController();
-TextEditingController locationController = TextEditingController();
-TextEditingController leftBehindAtController = TextEditingController();
-DateTime? timeMisplaced;
-
-int sentTimer = 3;
-
 class CustomNavigatorObserver extends NavigatorObserver {
   final Function onPop;
 
@@ -38,6 +28,15 @@ class NewPostPage extends StatefulWidget {
 }
 
 class _NewPostPageState extends State<NewPostPage> {
+  File? pickedPostImage;
+  int postCategory = 1;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController leftBehindAtController = TextEditingController();
+  DateTime? timeMisplaced;
+
+  int sentTimer = 3;
   // @override
 
   // void initState() {
@@ -48,6 +47,16 @@ class _NewPostPageState extends State<NewPostPage> {
   final _formKey = GlobalKey<FormState>();
   final isRequestPostable = ValueNotifier<bool>(false);
   final isRequestFilledAdequately = ValueNotifier<bool>(false);
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    locationController.dispose();
+    leftBehindAtController.dispose();
+    pickedPostImage = null;
+    super.dispose();
+  }
 
   Future<void> _pickPostImage() async {
     final picker = ImagePicker();
