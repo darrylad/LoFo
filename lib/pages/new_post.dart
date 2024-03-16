@@ -7,6 +7,7 @@ import 'package:lofo/backend/transmitter.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
+import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/theme/default_theme.dart';
 
@@ -310,16 +311,28 @@ class _NewPostPageState extends State<NewPostPage> {
                                       ? () async {
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            postAction(
-                                                context,
-                                                postCategory,
-                                                titleController.text.trim(),
-                                                descriptionController.text
-                                                    .trim(),
-                                                locationController.text.trim(),
-                                                leftBehindAtController.text
-                                                    .trim(),
-                                                loginProfileImageURL);
+                                            await verifyAppValidity()
+                                                .then((isValid) {
+                                              debugPrint('isValid: $isValid');
+                                              if (isValid) {
+                                                postAction(
+                                                    context,
+                                                    postCategory,
+                                                    titleController.text.trim(),
+                                                    descriptionController.text
+                                                        .trim(),
+                                                    locationController.text
+                                                        .trim(),
+                                                    leftBehindAtController.text
+                                                        .trim(),
+                                                    loginProfileImageURL);
+                                              } else {
+                                                requestUploadStatus.value =
+                                                    RequestUploadStatus
+                                                        .someThingWentWrong;
+                                                // Navigator.pop(context);
+                                              }
+                                            });
                                           }
                                           if (!mounted) return;
                                           Navigator.pop(this.context);

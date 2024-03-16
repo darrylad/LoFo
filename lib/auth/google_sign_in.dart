@@ -45,7 +45,7 @@ signUpWithGoogle(BuildContext context, State state) async {
   // user.user?.email;
 }
 
-signOut(BuildContext context) async {
+signOut() async {
   try {
     await GoogleSignIn().disconnect();
     // await FirebaseAuth.instance.signOut();
@@ -113,7 +113,7 @@ checkLoginStatus(BuildContext context, State state) async {
         loginProfileImageURL = '';
 
         if (!state.mounted) return;
-        await signOut(state.context);
+        await signOut();
         await saveLoginDetails();
       }
     } else {
@@ -122,7 +122,7 @@ checkLoginStatus(BuildContext context, State state) async {
       userName = '';
       loginProfileImageURL = '';
 
-      await signOut(context);
+      await signOut();
       await saveLoginDetails();
     }
   } catch (e) {
@@ -133,9 +133,9 @@ checkLoginStatus(BuildContext context, State state) async {
     debugPrint('Error: $e');
 
     if (!state.mounted) return;
-    await signOut(state.context);
+    await signOut();
     // await saveLoginDetails();
     if (!state.mounted) return;
-    await performLogout(state.context);
+    await performLogout();
   }
 }

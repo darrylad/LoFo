@@ -207,3 +207,35 @@ class _LoginFailedPageState extends State<LoginFailedPage> {
     );
   }
 }
+
+class AppNotValidPage extends StatefulWidget {
+  const AppNotValidPage({super.key});
+
+  @override
+  State<AppNotValidPage> createState() => _AppNotValidPageState();
+}
+
+class _AppNotValidPageState extends State<AppNotValidPage> {
+  @override
+  void initState() {
+    super.initState();
+    performLogout();
+    Future.delayed(const Duration(seconds: 5), () {
+      SystemNavigator.pop();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('This version of the app is not valid.'),
+          ],
+        ),
+      ),
+    );
+  }
+}

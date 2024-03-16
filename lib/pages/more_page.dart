@@ -106,7 +106,7 @@ class _MorePageState extends State<MorePage> {
           style: themeData.textTheme.bodyLarge,
         ),
         onTap: () async {
-          await performLogout(context);
+          await performLogout();
           // setState(() {
           //   // isUserLoggedIn = false;
           // });

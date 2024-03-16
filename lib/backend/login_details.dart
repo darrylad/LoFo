@@ -121,7 +121,7 @@ void performLogin(BuildContext context, State state) async {
     debugPrint('Login Successful');
   } else {
     if (!state.mounted) return;
-    await signOut(state.context);
+    await signOut();
     debugPrint('Login Failed');
     if (!state.mounted) return;
     Navigator.pushReplacement(
@@ -140,8 +140,8 @@ void performLogin(BuildContext context, State state) async {
   }
 }
 
-performLogout(BuildContext context) async {
-  await signOut(context);
+performLogout() async {
+  await signOut();
 
   loginID = '';
   userName = '';
