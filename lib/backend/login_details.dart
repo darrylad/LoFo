@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/animation/login_intermediate.dart';
-import 'package:lofo/backend/google_sign_in.dart';
+import 'package:lofo/auth/google_sign_in.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/main.dart';

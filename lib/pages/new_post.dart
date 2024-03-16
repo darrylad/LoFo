@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lofo/backend/login_details.dart';
+import 'package:lofo/backend/transmitter.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
@@ -85,31 +87,103 @@ class _NewPostPageState extends State<NewPostPage> {
     });
   }
 
-  void postAction(BuildContext context) {
+  postAction(
+    BuildContext context,
+    int postCategory,
+    String postTitle,
+    String postDescription,
+    String postLocation,
+    String? postTimeLastSeen,
+    String userImageURL,
+  ) async {
+    RequestUploadStatus previousRequestUploadStatus = requestUploadStatus.value;
+
     requestUploadStatus.value = RequestUploadStatus.uploading;
 
-    // code for uploading the post to firebase
+    DateTime cardPostedAt = DateTime.now();
+    String yearLastTwoDigits = cardPostedAt.year.toString().substring(2);
+    String cardID =
+        '${loginID?.substring(0, loginID!.length - 10)}${cardPostedAt.day}.${cardPostedAt.month}.$yearLastTwoDigits.${cardPostedAt.hour}:${cardPostedAt.minute}:${cardPostedAt.second}';
 
-    nullifyNewPostPatameters();
-    Navigator.pop(context);
-    setState(() {});
+    debugPrint('cardPostedAt: $cardPostedAt');
+    debugPrint('cardID: $cardID');
 
-    Timer(Duration(seconds: sentTimer), () {
-      sendFailure();
+    // await sendRequest(
+    //         postCategory,
+    //         cardPostedAt,
+    //         cardID,
+    //         loginID!,
+    //         titleController.text,
+    //         descriptionController.text,
+    //         locationController.text,
+    //         leftBehindAtController.text,
+    //         userName!,
+    //         loginProfileImageURL)
+    //     .then((sendStatus) {
+    //   if (sendStatus == 0) {
+    //     sendCompletion(previousRequestUploadStatus);
+    //   } else if (sendStatus == 2) {
+    //     previousRequestUploadStatus = RequestUploadStatus.someThingWentWrong;
+    //     sendFailure(previousRequestUploadStatus);
+    //   } else {
+    //     sendFailure(previousRequestUploadStatus);
+    //   }
+    // });
+
+    await midLoginCheck().then((isLoginValid) async {
+      if (isLoginValid) {
+        await sendRequest(
+                postCategory,
+                cardPostedAt,
+                cardID,
+                loginID!,
+                postTitle,
+                postDescription,
+                postLocation,
+                postTimeLastSeen,
+                userName!,
+                loginProfileImageURL)
+            .then((isSendSuccessful) {
+          if (isSendSuccessful) {
+            sendCompletion(previousRequestUploadStatus);
+          } else {
+            sendFailure(previousRequestUploadStatus);
+          }
+        });
+      } else {
+        previousRequestUploadStatus = RequestUploadStatus.someThingWentWrong;
+        sendFailure(previousRequestUploadStatus);
+      }
     });
+
+    // if (!mounted) return;
+
+    // nullifyNewPostPatameters();
+
+    // setState(() {});
+
+    // if (isSendSuccessful) {
+    //   sendCompletion();
+    // } else {
+    //   sendFailure();
+    // }
+
+    // Timer(Duration(seconds: sentTimer), () {
+    //   sendFailure();
+    // });
   }
 
-  void sendCompletion() {
+  void sendCompletion(RequestUploadStatus previousRequestUploadStatus) {
     requestUploadStatus.value = RequestUploadStatus.uploaded;
     Timer(const Duration(seconds: 1), () {
-      requestUploadStatus.value = RequestUploadStatus.normal;
+      requestUploadStatus.value = previousRequestUploadStatus;
     });
   }
 
-  void sendFailure() {
+  void sendFailure(RequestUploadStatus previousRequestUploadStatus) {
     requestUploadStatus.value = RequestUploadStatus.uploadError;
     Timer(const Duration(seconds: 1), () {
-      requestUploadStatus.value = RequestUploadStatus.normal;
+      requestUploadStatus.value = previousRequestUploadStatus;
     });
   }
 
@@ -168,7 +242,7 @@ class _NewPostPageState extends State<NewPostPage> {
                     basicDropDownFormField(),
                     const SizedBox(height: 20),
                     BasicTextFormField(
-                      maxLength: 40,
+                      maxLength: 50,
                       maxLines: 1,
                       isRequiredField: true,
                       labelText: 'Title',
@@ -177,7 +251,7 @@ class _NewPostPageState extends State<NewPostPage> {
                     ),
                     const SizedBox(height: 20),
                     BasicTextFormField(
-                      maxLength: 200,
+                      maxLength: 250,
                       maxLines: null,
                       isRequiredField: true,
                       labelText: 'Description',
@@ -233,11 +307,22 @@ class _NewPostPageState extends State<NewPostPage> {
                               child: BasicButton.primaryButton(
                                   'Send',
                                   isRequestFilledAdequately
-                                      ? () {
+                                      ? () async {
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            postAction(context);
+                                            postAction(
+                                                context,
+                                                postCategory,
+                                                titleController.text.trim(),
+                                                descriptionController.text
+                                                    .trim(),
+                                                locationController.text.trim(),
+                                                leftBehindAtController.text
+                                                    .trim(),
+                                                loginProfileImageURL);
                                           }
+                                          if (!mounted) return;
+                                          Navigator.pop(this.context);
                                         }
                                       : null));
                         }),

@@ -31,7 +31,7 @@ class _SecurityHomePageState extends State<SecurityHomePage> {
               cardTimeLastSeen: database1[index].cardTimeLastSeen,
               cardName: database1[index].cardName,
               cardImage: database1[index].cardImage,
-              userImage: database1[index].userImage,
+              userImage: database1[index].userImage!,
             );
           }),
       floatingActionButton:

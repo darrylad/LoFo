@@ -26,7 +26,7 @@ class _SecurityInboxPageState extends State<SecurityInboxPage> {
                 cardTimeLastSeen: databaseSecurityInbox[index].cardTimeLastSeen,
                 cardName: databaseSecurityInbox[index].cardName,
                 cardImage: databaseSecurityInbox[index].cardImage,
-                userImage: databaseSecurityInbox[index].userImage,
+                userImage: databaseSecurityInbox[index].userImage!,
                 cardPostedAt: databaseSecurityInbox[index].cardPostedAt);
           }),
     );

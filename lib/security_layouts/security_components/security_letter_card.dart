@@ -244,7 +244,7 @@ Row securityCardLocationInfo(String cardLocation) {
 }
 
 Row securityCardTimeInfo(String? cardLeftBehindAt) {
-  if (cardLeftBehindAt != null) {
+  if (cardLeftBehindAt != null && cardLeftBehindAt.isNotEmpty) {
     return Row(
       children: [
         const Icon(

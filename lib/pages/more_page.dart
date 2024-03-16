@@ -41,7 +41,7 @@ class _MorePageState extends State<MorePage> {
         child: Material(
           type: MaterialType.transparency,
           child: ListTile(
-            title: Text('About', style: themeData.textTheme.bodyMedium),
+            title: Text('About', style: themeData.textTheme.bodyLarge),
             onTap: () {
               Navigator.push(
                   context,
@@ -67,7 +67,7 @@ class _MorePageState extends State<MorePage> {
           value: useMyAccountAsSecurityAccount,
           title: Text(
             'Use my account as security account',
-            style: themeData.textTheme.bodyMedium,
+            style: themeData.textTheme.bodyLarge,
             // style: bodyMedium,
           ),
           subtitle: (useMyAccountAsSecurityAccount)
@@ -88,7 +88,7 @@ class _MorePageState extends State<MorePage> {
           value: forceLightTheme.value,
           title: Text(
             'Force light theme',
-            style: themeData.textTheme.bodyMedium,
+            style: themeData.textTheme.bodyLarge,
           ),
           subtitle: (showForceLightThemeSubtitle)
               ? const Text('Restart to fully apply theme')
@@ -102,8 +102,8 @@ class _MorePageState extends State<MorePage> {
           }),
       ListTile(
         title: Text(
-          'Log Out',
-          style: themeData.textTheme.bodyMedium,
+          'Logout and delete',
+          style: themeData.textTheme.bodyLarge,
         ),
         onTap: () async {
           await performLogout(context);

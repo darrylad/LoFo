@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/login_verification.dart';
+import 'package:lofo/main.dart';
 
 signUpWithGoogle(BuildContext context, State state) async {
   try {
@@ -33,6 +34,7 @@ signUpWithGoogle(BuildContext context, State state) async {
     // debugPrint('UserName: $userName');
     loginProfileImageURL = user.user?.photoURL ?? '';
     // loginProfileImage = Image.network(user.user?.photoURL ?? '');
+
     if (!state.mounted) return;
     Navigator.pop(state.context);
   } catch (e) {
@@ -73,19 +75,22 @@ signOut(BuildContext context) async {
 void showLoadingScreen(BuildContext context) {
   showDialog(
       barrierDismissible: false,
+      barrierColor: themeData.scaffoldBackgroundColor.withOpacity(0.5),
       context: context,
       builder: ((context) {
-        return const Center(
+        return Center(
             child: CircularProgressIndicator(
-          color: Colors.white,
+          color: themeData.colorScheme.onBackground,
         ));
       }));
 }
 
+// called when app is opened with a pre-existing login
 checkLoginStatus(BuildContext context, State state) async {
   try {
     User? user = FirebaseAuth.instance.currentUser;
-    // debugPrint('current User: $user');
+    debugPrint('current User: $user');
+    debugPrint('current User: ${user?.uid}');
 
     if (user != null) {
       await user.reload();

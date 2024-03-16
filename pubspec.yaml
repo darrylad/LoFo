@@ -44,6 +44,7 @@ dependencies:
   google_sign_in_ios: ^5.7.4
   popover: ^0.3.0
   photo_view: ^0.14.0
+  cloud_firestore: ^4.15.9
 
 dev_dependencies:
   flutter_test:

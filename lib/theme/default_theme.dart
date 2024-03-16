@@ -27,6 +27,11 @@ ThemeData lightThemeData = ThemeData(
       fontFamily: fonts[fontIndex],
       fontVariations: const [FontVariation('wght', 400)],
     ),
+    bodyLarge: TextStyle(
+      fontSize: 18,
+      fontFamily: fonts[fontIndex],
+      fontVariations: const [FontVariation('wght', 400)],
+    ),
     titleLarge: TextStyle(
       fontSize: 25,
       fontFamily: fonts[0],
@@ -64,10 +69,10 @@ ColorScheme lightColorScheme = lightThemeData.colorScheme;
 // Color secondaryTextColor = Colors.blueGrey[400]!;
 // Color primaryTextColor = Colors.blueGrey[700]!;
 
-TextStyle? bodyMedium = themeData.textTheme.bodyMedium;
-TextStyle? titleLarge = themeData.textTheme.titleLarge;
-TextStyle? titleSmall = themeData.textTheme.titleSmall;
-TextStyle? titleMedium = themeData.textTheme.titleMedium;
+// TextStyle? bodyMedium = themeData.textTheme.bodyMedium;
+// TextStyle? titleLarge = themeData.textTheme.titleLarge;
+// TextStyle? titleSmall = themeData.textTheme.titleSmall;
+// TextStyle? titleMedium = themeData.textTheme.titleMedium;
 
 Color primaryGreen = ColorScheme.fromSeed(
         seedColor: Colors.green, brightness: themeData.brightness)

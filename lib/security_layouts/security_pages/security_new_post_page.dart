@@ -153,7 +153,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                     basicSecurityDropDownFormField(),
                     const SizedBox(height: 20),
                     BasicTextFormField(
-                      maxLength: 40,
+                      maxLength: 50,
                       maxLines: 1,
                       isRequiredField: true,
                       labelText: 'Title',
@@ -162,7 +162,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                     ),
                     const SizedBox(height: 20),
                     BasicTextFormField(
-                      maxLength: 100,
+                      maxLength: 250,
                       maxLines: null,
                       isRequiredField: true,
                       labelText: 'Description',

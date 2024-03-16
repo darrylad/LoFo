@@ -107,9 +107,10 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: BasicTextBox(
+                  hintText: 'this field is depricated',
                   maxLength: 30,
                   maxLines: 1,
-                  labelText: 'Login ID',
+                  // labelText: 'Login ID',
                   textController: loginText),
             ),
             const SizedBox(height: 20),
@@ -117,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Hero(
                 tag: 'loginButton',
-                child: BasicButton.primaryButton('Login', () {
+                child: BasicButton.primaryButton('Login with Google', () {
                   // loginID = 'ex220003002@iiti.ac.in';
                   // loginID = 'meow';
 

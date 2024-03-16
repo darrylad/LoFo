@@ -11,7 +11,8 @@ class LetterCardInfo {
   String? cardTimeLastSeen;
   String cardName;
   Image? cardImage;
-  Image userImage;
+  Image? userImage;
+  String? userImageURL;
 
   LetterCardInfo(
       {required this.cardCategory,
@@ -24,5 +25,6 @@ class LetterCardInfo {
       required this.cardTimeLastSeen,
       required this.cardName,
       required this.cardImage,
-      required this.userImage});
+      this.userImage,
+      this.userImageURL});
 }

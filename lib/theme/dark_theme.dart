@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
+
 // import 'package:google_fonts/google_fonts.dart';
 
 List<String> fonts = ['Manrope', 'Rubik'];
 int fontIndex = 1;
 // ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: Colors.blue);
-Color? darkThemeScaffoldBackgroundColor = Color.fromARGB(255, 30, 41, 53);
+Color? darkThemeScaffoldBackgroundColor = const Color.fromARGB(255, 30, 41, 53);
+// ColorScheme darkBlueColorScheme =
+//     ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark);
 
 ThemeData darkThemeData = ThemeData(
   brightness: Brightness.dark,
   useMaterial3: true,
+
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.blue,
     brightness: Brightness.dark,
     tertiary: const Color.fromARGB(255, 11, 14, 16),
   ),
+
+  // scaffoldBackgroundColor:
+  //     ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark)
+  //         .secondaryContainer,
+
   scaffoldBackgroundColor: darkThemeScaffoldBackgroundColor,
+
   // textTheme: GoogleFonts.manropeTextTheme(),
 
   fontFamily: fonts[fontIndex],
   textTheme: TextTheme(
     bodyMedium: TextStyle(
+      fontFamily: fonts[fontIndex],
+      fontVariations: const [FontVariation('wght', 400)],
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 18,
       fontFamily: fonts[fontIndex],
       fontVariations: const [FontVariation('wght', 400)],
     ),
