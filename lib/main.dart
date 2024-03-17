@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
         valueListenable: forceLightTheme,
         builder: (context, value, child) {
           return MaterialApp(
-            debugShowCheckedModeBanner: false,
             theme: lightThemeData,
             darkTheme: darkThemeData,
             themeMode: value ? ThemeMode.light : ThemeMode.system,

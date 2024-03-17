@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/backend/CRUD/fetcher.dart';
 // import 'package:lofo/components/app_bar.dart';
 
 class YourPostsPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _YourPostsPageState extends State<YourPostsPage> {
     return const Scaffold(
       // appBar: appBar('Your Requests', userImageExample),
       body: Center(
-        child: Text('Your Requests'),
+        child: GetYourPosts(),
       ),
     );
   }

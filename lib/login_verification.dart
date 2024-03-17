@@ -1,7 +1,6 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/login_details.dart';
-import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/login_page.dart';
 
@@ -19,30 +18,30 @@ class LoginVerification extends StatefulWidget {
 }
 
 class _LoginVerificationState extends State<LoginVerification> {
-  @override
-  initState() {
-    WidgetsFlutterBinding.ensureInitialized();
-
+  fetchRemoteConfigKey() async {
     try {
       Key appKey = const Key('appValidity001');
       // String appKey = 'appValidity001';
 
       final remoteConfig = FirebaseRemoteConfig.instance;
 
-      remoteConfig.setConfigSettings(RemoteConfigSettings(
+      await remoteConfig.setConfigSettings(RemoteConfigSettings(
           fetchTimeout: const Duration(minutes: 1),
           minimumFetchInterval: const Duration(minutes: 1)));
 
-      remoteConfig.fetchAndActivate().then((_) {
-        // Key receivedKey = Key(remoteConfig.getString('app_key'));
-
+      await remoteConfig.fetchAndActivate().then((_) {
         Key receivedKey = Key(remoteConfig.getString('app_key'));
+        securityAccountEmail = remoteConfig.getString('security_account_email');
 
         if (receivedKey == appKey) {
+          // app is valid, go about it as usual
+
           getLoginDetails().then((value) {
             navigateToAppropriatePostVerificationPage(context, this);
           });
         } else {
+          // app is not valid, show the app not valid page
+
           if (!mounted) return;
 
           Navigator.pushReplacement(
@@ -60,10 +59,22 @@ class _LoginVerificationState extends State<LoginVerification> {
                 },
               ));
         }
+      }).catchError((error) {
+        if (error.toString().contains('firebase_remote_config/internal')) {
+          debugPrint('Remote Config fetch cancelled');
+        } else {
+          throw error;
+        }
       });
     } catch (e) {
       debugPrint("$e");
     }
+  }
+
+  @override
+  initState() {
+    WidgetsFlutterBinding.ensureInitialized();
+    fetchRemoteConfigKey();
 
     super.initState();
   }
@@ -87,27 +98,5 @@ class _LoginVerificationState extends State<LoginVerification> {
         ),
       ),
     );
-  }
-}
-
-Future<bool> verifyAppValidity() async {
-  Key appKey = const Key('appValidity001');
-
-  try {
-    final remoteConfig = FirebaseRemoteConfig.instance;
-
-    await remoteConfig.fetchAndActivate();
-    Key receivedKey = Key(remoteConfig.getString('app_key'));
-    debugPrint('Received Key: $receivedKey');
-
-    if (receivedKey == appKey) {
-      return true;
-    } else {
-      requestUploadStatus.value = RequestUploadStatus.someThingWentWrong;
-      return false;
-    }
-  } catch (e) {
-    debugPrint("$e");
-    return false;
   }
 }

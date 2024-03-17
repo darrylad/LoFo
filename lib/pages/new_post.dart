@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lofo/backend/login_details.dart';
-import 'package:lofo/backend/transmitter.dart';
+import 'package:lofo/backend/CRUD/transmitter.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
-import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/services/verify_app_validity.dart';
 import 'package:lofo/theme/default_theme.dart';
 
 class CustomNavigatorObserver extends NavigatorObserver {
@@ -96,16 +96,22 @@ class _NewPostPageState extends State<NewPostPage> {
     String postLocation,
     String? postTimeLastSeen,
     String userImageURL,
+    File? pickedPostImage,
   ) async {
     RequestUploadStatus previousRequestUploadStatus = requestUploadStatus.value;
 
     requestUploadStatus.value = RequestUploadStatus.uploading;
 
-    DateTime cardPostedAt = DateTime.now();
-    String yearLastTwoDigits = cardPostedAt.year.toString().substring(2);
+    DateTime cardPostedAtDatetime = DateTime.now();
+    String yearLastTwoDigits =
+        cardPostedAtDatetime.year.toString().substring(2);
     String cardID =
-        '${loginID?.substring(0, loginID!.length - 10)}${cardPostedAt.day}.${cardPostedAt.month}.$yearLastTwoDigits.${cardPostedAt.hour}:${cardPostedAt.minute}:${cardPostedAt.second}';
+        '${loginID?.substring(0, loginID!.length - 10)}${cardPostedAtDatetime.day}.${cardPostedAtDatetime.month}.$yearLastTwoDigits.${cardPostedAtDatetime.hour}:${cardPostedAtDatetime.minute}:${cardPostedAtDatetime.second}';
 
+    debugPrint('cardPostedAtDatetime: $cardPostedAtDatetime');
+
+    String cardPostedAt =
+        '${cardPostedAtDatetime.year}-${cardPostedAtDatetime.month.toString().padLeft(2, '0')}-${cardPostedAtDatetime.day.toString().padLeft(2, '0')} ${cardPostedAtDatetime.hour.toString().padLeft(2, '0')}:${cardPostedAtDatetime.minute.toString().padLeft(2, '0')}:${cardPostedAtDatetime.second.toString().padLeft(2, '0')}.${cardPostedAtDatetime.millisecond.toString().padLeft(3, '0')}';
     debugPrint('cardPostedAt: $cardPostedAt');
     debugPrint('cardID: $cardID');
 
@@ -143,7 +149,8 @@ class _NewPostPageState extends State<NewPostPage> {
                 postLocation,
                 postTimeLastSeen,
                 userName!,
-                loginProfileImageURL)
+                loginProfileImageURL,
+                pickedPostImage)
             .then((isSendSuccessful) {
           if (isSendSuccessful) {
             sendCompletion(previousRequestUploadStatus);
@@ -158,17 +165,13 @@ class _NewPostPageState extends State<NewPostPage> {
     });
 
     // if (!mounted) return;
-
     // nullifyNewPostPatameters();
-
     // setState(() {});
-
     // if (isSendSuccessful) {
     //   sendCompletion();
     // } else {
     //   sendFailure();
     // }
-
     // Timer(Duration(seconds: sentTimer), () {
     //   sendFailure();
     // });
@@ -224,6 +227,7 @@ class _NewPostPageState extends State<NewPostPage> {
         Navigator.pop(context);
       },
     );
+
     return PopScope(
       onPopInvoked: (didPop) {
         nullifyNewPostPatameters();
@@ -325,7 +329,8 @@ class _NewPostPageState extends State<NewPostPage> {
                                                         .trim(),
                                                     leftBehindAtController.text
                                                         .trim(),
-                                                    loginProfileImageURL);
+                                                    loginProfileImageURL,
+                                                    pickedPostImage);
                                               } else {
                                                 requestUploadStatus.value =
                                                     RequestUploadStatus

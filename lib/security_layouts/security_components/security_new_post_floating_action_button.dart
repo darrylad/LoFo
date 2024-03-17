@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:lofo/components/pulsing_child.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 import 'package:lofo/security_layouts/security_pages/security_new_post_page.dart';
@@ -161,16 +162,20 @@ class _SecurityNewPostFloatingActionButtonState
                     ],
                   ),
                   padding: const EdgeInsets.all(16),
-                  child: Icon(
-                    (isNewSecurityPostAddable)
-                        ? Icons.add
-                        : Icons.circle_outlined,
-                    color: (isNewSecurityPostAddable)
-                        ? (_isPressed)
-                            ? securityColorScheme.secondary
-                            : securityColorScheme.primary
-                        : securityColorScheme.outline,
-                  ),
+                  child: (isNewSecurityPostAddable)
+                      ? Icon(
+                          Icons.add,
+                          color: (isNewSecurityPostAddable)
+                              ? (_isPressed)
+                                  ? securityColorScheme.secondary
+                                  : securityColorScheme.primary
+                              : securityColorScheme.outline,
+                        )
+                      : PulsingChild(
+                          child: Icon(
+                          Icons.circle_outlined,
+                          color: securityColorScheme.outline,
+                        )),
                 ),
               ),
             );

@@ -14,22 +14,22 @@ class LetterCard extends StatelessWidget {
       required this.cardLocation,
       required this.cardTimeLastSeen,
       required this.cardName,
-      required this.cardImage,
-      required this.userImage,
+      required this.cardImageURL,
+      required this.userImageURL,
       required this.cardPostedAt,
       required this.cardCategory});
 
   final int cardCategory; // 0 for found, 1 for lost
   final String cardTitle;
   final String cardID;
-  final DateTime cardPostedAt;
+  final String cardPostedAt;
   final String cardDescription;
   final String cardLocation;
   final String? cardTimeLastSeen;
   final String cardName;
   // final String cardImage = 'assets/images/photo-1643804926339-e94f0a655185.png';
-  final Image? cardImage;
-  final Image userImage;
+  final String? cardImageURL;
+  final String userImageURL;
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class LetterCard extends StatelessWidget {
         cardLocation,
         cardTimeLastSeen,
         cardName,
-        cardImage,
-        userImage,
+        cardImageURL,
+        userImageURL,
         context);
   }
 }
@@ -52,19 +52,19 @@ Column cardLayout(
     int cardCategory,
     String cardID,
     String cardTitle,
-    DateTime cardPostedAt,
+    String cardPostedAt,
     String cardDescription,
     String cardLocation,
     String? cardTimeMisplaced,
     String cardName,
-    Image? cardImage,
-    Image posterImage,
+    String? cardImageURL,
+    String posterImageURL,
     BuildContext context) {
   themeData = Theme.of(context);
   return Column(
     children: [
       const SizedBox(height: 20),
-      posterInfoRow(cardCategory, posterImage, cardName, cardPostedAt),
+      posterInfoRow(cardCategory, posterImageURL, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
         color: themeData.colorScheme.tertiary,
@@ -79,7 +79,7 @@ Column cardLayout(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  letterImage(cardImage, context),
+                  letterImage(cardImageURL, context),
                   const SizedBox(width: 14),
                   Expanded(
                     child: Column(
@@ -128,11 +128,12 @@ Column cardLayout(
   );
 }
 
-Row posterInfoRow(int cardCategory, Image posterImage, String cardName,
-    DateTime cardPostedAt) {
-  String yearLastTwoDigits = cardPostedAt.year.toString().substring(2);
+Row posterInfoRow(int cardCategory, String posterImageURL, String cardName,
+    String cardPostedAt) {
+  DateTime cardPostedAtDatetime = DateTime.parse(cardPostedAt);
+  String yearLastTwoDigits = cardPostedAtDatetime.year.toString().substring(2);
   String formattedDate =
-      '${cardPostedAt.day}/${cardPostedAt.month}/$yearLastTwoDigits at ${cardPostedAt.hour}:${cardPostedAt.minute}';
+      '${cardPostedAtDatetime.day}/${cardPostedAtDatetime.month}/$yearLastTwoDigits at ${cardPostedAtDatetime.hour}:${cardPostedAtDatetime.minute}';
   return Row(
     children: [
       const SizedBox(width: 15),
@@ -142,7 +143,7 @@ Row posterInfoRow(int cardCategory, Image posterImage, String cardName,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
-            image: posterImage.image,
+            image: NetworkImage(posterImageURL),
             fit: BoxFit.cover,
           ),
         ),
@@ -237,8 +238,9 @@ Row timeInfo(String? cardLeftBehindAt) {
   }
 }
 
-GestureDetector letterImage(Image? cardImage, BuildContext context) {
-  if (cardImage != null) {
+GestureDetector letterImage(String? cardImageURL, BuildContext context) {
+  if (cardImageURL != null && cardImageURL.isNotEmpty) {
+    Image cardImage = Image.network(cardImageURL);
     return GestureDetector(
       onTap: () {
         debugPrint('Card image pressed');
@@ -254,7 +256,7 @@ GestureDetector letterImage(Image? cardImage, BuildContext context) {
         width: 140,
         height: 140,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 247, 131, 125),
+          color: secondaryButtonBackGroundColor,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             image: cardImage.image,

@@ -1,12 +1,15 @@
 // import 'dart:ui';
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 Future<bool> sendRequest(
   int postCategory,
-  DateTime postPostedAt,
+  String postPostedAt,
   String postID,
   String postPosterID,
   String postTitle,
@@ -15,10 +18,21 @@ Future<bool> sendRequest(
   String? postTimeLastSeen,
   String postName,
   String userImageURL,
+  File? postImage,
   // Image? postImage,
   // Image userImage,
 ) async {
   try {
+    String postImageURL = '';
+    if (postImage != null) {
+      final storageRef =
+          FirebaseStorage.instance.ref().child('postImages/$postID');
+
+      await storageRef.putFile(postImage);
+
+      postImageURL = await storageRef.getDownloadURL();
+    }
+
     await FirebaseFirestore.instance
         .collection('privateRequests')
         .doc(postID)
@@ -33,6 +47,7 @@ Future<bool> sendRequest(
       'postPostedAt': postPostedAt,
       'postPosterID': postPosterID,
       // 'image': postImage,
+      'postImageURL': postImageURL,
       'userImageURL': userImageURL,
     });
     return true;

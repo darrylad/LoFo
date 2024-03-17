@@ -2,11 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/security_layouts/security_backend/security_CRUD/security_transmitter.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
+import 'package:lofo/services/verify_app_validity.dart';
 
 class CustomNavigatorObserver extends NavigatorObserver {
   final Function onPop;
@@ -86,31 +89,124 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
     });
   }
 
-  void postAction(BuildContext context) {
+  // void postAction(BuildContext context) {
+  //   securityRequestUploadStatus.value = SecurityRequestUploadStatus.uploading;
+
+  //   // code for uploading the post to firebase
+
+  //   nullifyNewPostPatameters();
+  //   Navigator.pop(context);
+  //   setState(() {});
+
+  //   Timer(Duration(seconds: sentTimer), () {
+  //     sendFailure();
+  //   });
+  // }
+
+  postAction(
+    BuildContext context,
+    int postCategory,
+    String postTitle,
+    String postDescription,
+    String postLocation,
+    String? postTimeLastSeen,
+    String userImageURL,
+    File? pickedPostImage,
+  ) async {
+    SecurityRequestUploadStatus previousRequestUploadStatus =
+        securityRequestUploadStatus.value;
+
     securityRequestUploadStatus.value = SecurityRequestUploadStatus.uploading;
 
-    // code for uploading the post to firebase
+    DateTime cardPostedAtDatetime = DateTime.now();
+    String yearLastTwoDigits =
+        cardPostedAtDatetime.year.toString().substring(2);
+    String cardID =
+        '${loginID?.substring(0, loginID!.length - 10)}${cardPostedAtDatetime.day}.${cardPostedAtDatetime.month}.$yearLastTwoDigits.${cardPostedAtDatetime.hour}:${cardPostedAtDatetime.minute}:${cardPostedAtDatetime.second}';
 
-    nullifyNewPostPatameters();
-    Navigator.pop(context);
-    setState(() {});
+    debugPrint('cardPostedAtDatetime: $cardPostedAtDatetime');
 
-    Timer(Duration(seconds: sentTimer), () {
-      sendFailure();
+    String cardPostedAt =
+        '${cardPostedAtDatetime.year}-${cardPostedAtDatetime.month.toString().padLeft(2, '0')}-${cardPostedAtDatetime.day.toString().padLeft(2, '0')} ${cardPostedAtDatetime.hour.toString().padLeft(2, '0')}:${cardPostedAtDatetime.minute.toString().padLeft(2, '0')}:${cardPostedAtDatetime.second.toString().padLeft(2, '0')}.${cardPostedAtDatetime.millisecond.toString().padLeft(3, '0')}';
+    debugPrint('cardPostedAt: $cardPostedAt');
+    debugPrint('cardID: $cardID');
+
+    // await sendRequest(
+    //         postCategory,
+    //         cardPostedAt,
+    //         cardID,
+    //         loginID!,
+    //         titleController.text,
+    //         descriptionController.text,
+    //         locationController.text,
+    //         leftBehindAtController.text,
+    //         userName!,
+    //         loginProfileImageURL)
+    //     .then((sendStatus) {
+    //   if (sendStatus == 0) {
+    //     sendCompletion(previousRequestUploadStatus);
+    //   } else if (sendStatus == 2) {
+    //     previousRequestUploadStatus = RequestUploadStatus.someThingWentWrong;
+    //     sendFailure(previousRequestUploadStatus);
+    //   } else {
+    //     sendFailure(previousRequestUploadStatus);
+    //   }
+    // });
+
+    await midLoginCheck().then((isLoginValid) async {
+      if (isLoginValid) {
+        await sendSecurityRequest(
+                postCategory,
+                cardPostedAt,
+                cardID,
+                loginID!,
+                postTitle,
+                postDescription,
+                postLocation,
+                postTimeLastSeen,
+                userName!,
+                loginProfileImageURL,
+                pickedPostImage)
+            .then((isSendSuccessful) {
+          if (isSendSuccessful) {
+            sendCompletion(previousRequestUploadStatus);
+          } else {
+            sendFailure(previousRequestUploadStatus);
+          }
+        });
+      } else {
+        previousRequestUploadStatus =
+            SecurityRequestUploadStatus.someThingWentWrong;
+        sendFailure(previousRequestUploadStatus);
+      }
     });
+
+    // if (!mounted) return;
+    // nullifyNewPostPatameters();
+    // setState(() {});
+    // if (isSendSuccessful) {
+    //   sendCompletion();
+    // } else {
+    //   sendFailure();
+    // }
+    // Timer(Duration(seconds: sentTimer), () {
+    //   sendFailure();
+    // });
   }
 
-  void sendCompletion() {
+  void sendCompletion(
+      SecurityRequestUploadStatus previousSecurityRequestUploadStatus) {
     securityRequestUploadStatus.value = SecurityRequestUploadStatus.uploaded;
     Timer(const Duration(seconds: 1), () {
-      securityRequestUploadStatus.value = SecurityRequestUploadStatus.normal;
+      securityRequestUploadStatus.value = previousSecurityRequestUploadStatus;
     });
   }
 
-  void sendFailure() {
+  void sendFailure(
+      SecurityRequestUploadStatus previousSecurityRequestUploadStatus) {
     securityRequestUploadStatus.value = SecurityRequestUploadStatus.uploadError;
     Timer(const Duration(seconds: 1), () {
-      securityRequestUploadStatus.value = SecurityRequestUploadStatus.normal;
+      securityRequestUploadStatus.value = previousSecurityRequestUploadStatus;
     });
   }
 
@@ -218,11 +314,36 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                               child: BasicButton.primaryButton(
                                   'Send',
                                   isRequestFilledAdequately
-                                      ? () {
+                                      ? () async {
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            postAction(context);
+                                            await verifyAppValidity()
+                                                .then((isValid) {
+                                              debugPrint('isValid: $isValid');
+                                              if (isValid) {
+                                                postAction(
+                                                    context,
+                                                    postCategory,
+                                                    titleController.text.trim(),
+                                                    descriptionController.text
+                                                        .trim(),
+                                                    locationController.text
+                                                        .trim(),
+                                                    leftBehindAtController.text
+                                                        .trim(),
+                                                    loginProfileImageURL,
+                                                    pickedPostImage);
+                                              } else {
+                                                securityRequestUploadStatus
+                                                        .value =
+                                                    SecurityRequestUploadStatus
+                                                        .someThingWentWrong;
+                                                // Navigator.pop(context);
+                                              }
+                                            });
                                           }
+                                          if (!mounted) return;
+                                          Navigator.pop(this.context);
                                         }
                                       : null));
                         }),
