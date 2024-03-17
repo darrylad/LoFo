@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lofo/main.dart';
 import 'package:lofo/security_layouts/security_components/security_letter_card.dart';
 
 class GetSecurityInbox extends StatefulWidget {
@@ -10,45 +11,83 @@ class GetSecurityInbox extends StatefulWidget {
 }
 
 class _GetSecurityInboxState extends State<GetSecurityInbox> {
-  List<Map<String, dynamic>> docIDs = [];
-  Future getDocId() async {
+  Stream<QuerySnapshot> getDocIdStream() {
     try {
-      await FirebaseFirestore.instance
+      return FirebaseFirestore.instance
           .collection('privateRequests')
-          .get()
-          .then((snapshot) => snapshot.docs.forEach((element) {
-                docIDs.add({
-                  'id': element.reference.id,
-                  'timestamp': element['postPostedAt'],
-                  'data': element.data(),
-                });
-                debugPrint(docIDs.toString());
-              }));
-      docIDs.sort((a, b) {
-        DateTime aDate = DateTime.parse(a['timestamp']);
-        DateTime bDate = DateTime.parse(b['timestamp']);
-        return bDate.compareTo(aDate);
-      });
+          .snapshots();
     } catch (e) {
       debugPrint(e.toString());
+      rethrow;
     }
   }
 
+  // List<Map<String, dynamic>> docIDs = [];
+  // Future getDocId() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('privateRequests')
+  //         .get()
+  //         .then((snapshot) => snapshot.docs.forEach((element) {
+  //               docIDs.add({
+  //                 'id': element.reference.id,
+  //                 'timestamp': element['postPostedAt'],
+  //                 'data': element.data(),
+  //               });
+  //               debugPrint(docIDs.toString());
+  //             }));
+  //     docIDs.sort((a, b) {
+  //       DateTime aDate = DateTime.parse(a['timestamp']);
+  //       DateTime bDate = DateTime.parse(b['timestamp']);
+  //       return bDate.compareTo(aDate);
+  //     });
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getDocId(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return ListView.builder(
-                itemCount: docIDs.length,
-                itemBuilder: (context, index) {
-                  return GetSecurityInboxDetails(
-                    // docID: docIDs[index],
-                    docID: docIDs[index]['id'],
-                    data: docIDs[index]['data'],
-                  );
-                });
+    return StreamBuilder(
+        stream: getDocIdStream(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            List<Map<String, dynamic>> docIDs = snapshot.data!.docs
+                .map((doc) => {
+                      'id': doc.reference.id,
+                      'timestamp': doc['postPostedAt'],
+                      'data': doc.data(),
+                    })
+                .toList();
+
+            docIDs.sort((a, b) {
+              DateTime aDate = DateTime.parse(a['timestamp']);
+              DateTime bDate = DateTime.parse(b['timestamp']);
+              return bDate.compareTo(aDate);
+            });
+
+            if (docIDs.isEmpty) {
+              return Center(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                child: Text('Nothing to show here.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: themeData.colorScheme.secondary,
+                      fontSize: 20,
+                    )),
+              ));
+            } else {
+              return ListView.builder(
+                  itemCount: docIDs.length,
+                  itemBuilder: (context, index) {
+                    return GetSecurityInboxDetails(
+                      // docID: docIDs[index],
+                      docID: docIDs[index]['id'],
+                      data: docIDs[index]['data'],
+                    );
+                  });
+            }
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -90,41 +129,80 @@ class GetSecurityHomePosts extends StatefulWidget {
 }
 
 class _GetSecurityHomePostsState extends State<GetSecurityHomePosts> {
-  List<Map<String, dynamic>> docIDs = [];
-
-  Future getDocId() async {
+  Stream<QuerySnapshot> getDocIdStream() {
     try {
-      await FirebaseFirestore.instance
+      return FirebaseFirestore.instance
           .collection('publicRequests')
-          .get()
-          .then((snapshot) => snapshot.docs.forEach((element) {
-                docIDs.add({
-                  'id': element.reference.id,
-                  'timestamp': element['postPostedAt'],
-                  'data': element.data(),
-                });
-                debugPrint(docIDs.toString());
-              }));
-      docIDs.sort((a, b) {
-        DateTime aDate = DateTime.parse(a['timestamp']);
-        DateTime bDate = DateTime.parse(b['timestamp']);
-        return bDate.compareTo(aDate);
-      });
+          .snapshots();
     } catch (e) {
       debugPrint(e.toString());
+      rethrow;
     }
   }
 
+  // List<Map<String, dynamic>> docIDs = [];
+  // Future getDocId() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('publicRequests')
+  //         .get()
+  //         .then((snapshot) => snapshot.docs.forEach((element) {
+  //               docIDs.add({
+  //                 'id': element.reference.id,
+  //                 'timestamp': element['postPostedAt'],
+  //                 'data': element.data(),
+  //               });
+  //               debugPrint(docIDs.toString());
+  //             }));
+  //     docIDs.sort((a, b) {
+  //       DateTime aDate = DateTime.parse(a['timestamp']);
+  //       DateTime bDate = DateTime.parse(b['timestamp']);
+  //       return bDate.compareTo(aDate);
+  //     });
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getDocId(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+    return StreamBuilder(
+        stream: getDocIdStream(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            List<Map<String, dynamic>> docIDs = snapshot.data!.docs
+                .map((doc) => {
+                      'id': doc.reference.id,
+                      'timestamp': doc['postPostedAt'],
+                      'data': doc.data(),
+                    })
+                .toList();
+
+            docIDs.sort((a, b) {
+              DateTime aDate = DateTime.parse(a['timestamp']);
+              DateTime bDate = DateTime.parse(b['timestamp']);
+              return bDate.compareTo(aDate);
+            });
+
             if (docIDs.isEmpty) {
-              return const Center(
-                child: Text(
-                  'No Posts',
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.add_circle_rounded,
+                        size: 100, color: themeData.colorScheme.secondary),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: Text(
+                          'Nothing to show here. Tap the floating + button to add a post.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: themeData.colorScheme.secondary,
+                            fontSize: 20,
+                          )),
+                    ),
+                  ],
                 ),
               );
             } else {

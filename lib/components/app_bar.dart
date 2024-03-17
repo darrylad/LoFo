@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/main.dart';
 import 'package:lofo/theme/default_theme.dart';
 
 enum RequestUploadStatus {
@@ -7,6 +8,9 @@ enum RequestUploadStatus {
   uploaded,
   uploadError,
   someThingWentWrong,
+  deleting,
+  deleted,
+  deleteError,
 }
 
 ValueNotifier<RequestUploadStatus> requestUploadStatus =
@@ -51,6 +55,14 @@ PreferredSize appBar(String title, Widget? actionImage, {Widget? leading}) {
             case RequestUploadStatus.someThingWentWrong:
               currentAppBar = someThingWentWrongAppBar();
               break;
+            case RequestUploadStatus.deleting:
+              currentAppBar = deletingAppBar();
+              break;
+            case RequestUploadStatus.deleted:
+              currentAppBar = deletedAppBar();
+              break;
+            case RequestUploadStatus.deleteError:
+              currentAppBar = deleteErrorAppBar();
             default:
               currentAppBar =
                   normalAppBar(title, actionImage, leading: leading);
@@ -94,7 +106,7 @@ PreferredSize appBar(String title, Widget? actionImage, {Widget? leading}) {
 
 AppBar uploadedAppBar() {
   return AppBar(
-    key: const ValueKey(2),
+    key: const ValueKey(0),
     centerTitle: true,
     title: const Text(
       'Sent',
@@ -113,9 +125,49 @@ AppBar uploadedAppBar() {
   );
 }
 
-AppBar uploadingAppBar() {
+AppBar deletedAppBar() {
   return AppBar(
     key: const ValueKey(1),
+    centerTitle: true,
+    title: const Text(
+      'Deleted',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: ColorScheme.fromSeed(seedColor: Colors.green).primary,
+  );
+}
+
+AppBar deletingAppBar() {
+  return AppBar(
+    key: const ValueKey(2),
+    centerTitle: true,
+    title: const Text(
+      'Deleting',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor:
+        ColorScheme.fromSeed(seedColor: Colors.amber[900]!).primary,
+  );
+}
+
+AppBar deleteErrorAppBar() {
+  return AppBar(
+    key: const ValueKey(3),
+    centerTitle: true,
+    title: const Text(
+      'Could not delete',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: themeData.colorScheme.error,
+  );
+}
+
+AppBar uploadingAppBar() {
+  return AppBar(
+    key: const ValueKey(4),
     centerTitle: true,
     title: const Text(
       'Sending',
@@ -136,20 +188,20 @@ AppBar uploadingAppBar() {
 
 AppBar uploadErrorAppBar() {
   return AppBar(
-    key: const ValueKey(3),
+    key: const ValueKey(5),
     centerTitle: true,
     title: const Text(
       'Could not send',
       style: TextStyle(
           color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
     ),
-    backgroundColor: lightThemeData.colorScheme.error,
+    backgroundColor: themeData.colorScheme.error,
   );
 }
 
 AppBar someThingWentWrongAppBar() {
   return AppBar(
-    key: const ValueKey(4),
+    key: const ValueKey(6),
     centerTitle: true,
     title: const PulsingText(
       text: 'Something went wrong',

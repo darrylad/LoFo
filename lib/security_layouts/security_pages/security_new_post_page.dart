@@ -261,7 +261,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                       maxLength: 250,
                       maxLines: null,
                       isRequiredField: true,
-                      labelText: 'Description',
+                      labelText: 'Notes, and where to collect',
                       textController: descriptionController,
                       onChanged: updateIsRequestPostable,
                     ),

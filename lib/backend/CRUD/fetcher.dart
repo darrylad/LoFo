@@ -12,46 +12,66 @@ class GetYourPosts extends StatefulWidget {
 }
 
 class _GetYourPostsState extends State<GetYourPosts> {
-  List<Map<String, dynamic>> docIDs = [];
-  Future getDocId() async {
+  Stream<QuerySnapshot> getDocIdStream() {
     try {
-      await FirebaseFirestore.instance
+      return FirebaseFirestore.instance
           .collection('privateRequests')
-          .get()
-          .then((snapshot) => snapshot.docs.forEach((element) {
-                if (element['postPosterID'] == loginID) {
-                  docIDs.add({
-                    'id': element.reference.id,
-                    'timestamp': element['postPostedAt'],
-                    'data': element.data(),
-                  });
-                  debugPrint(docIDs.toString());
-                }
-              }));
-      docIDs.sort((a, b) {
-        DateTime aDate = DateTime.parse(a['timestamp']);
-        DateTime bDate = DateTime.parse(b['timestamp']);
-        return bDate.compareTo(aDate);
-      });
+          .snapshots();
     } catch (e) {
       debugPrint(e.toString());
+      rethrow;
     }
   }
 
+  // List<Map<String, dynamic>> docIDs = [];
+  // Future getDocId() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('privateRequests')
+  //         .get()
+  //         .then((snapshot) => snapshot.docs.forEach((element) {
+  //               if (element['postPosterID'] == loginID) {
+  //                 docIDs.add({
+  //                   'id': element.reference.id,
+  //                   'timestamp': element['postPostedAt'],
+  //                   'data': element.data(),
+  //                 });
+  //                 debugPrint(docIDs.toString());
+  //               }
+  //             }));
+  //     docIDs.sort((a, b) {
+  //       DateTime aDate = DateTime.parse(a['timestamp']);
+  //       DateTime bDate = DateTime.parse(b['timestamp']);
+  //       return bDate.compareTo(aDate);
+  //     });
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getDocId(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+    return StreamBuilder(
+        stream: getDocIdStream(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            List<Map<String, dynamic>> docIDs = snapshot.data!.docs
+                .where((doc) => doc['postPosterID'] == loginID)
+                .map((doc) => {
+                      'id': doc.reference.id,
+                      'timestamp': doc['postPostedAt'],
+                      'data': doc.data(),
+                    })
+                .toList();
+
+            docIDs.sort((a, b) {
+              DateTime aDate = DateTime.parse(a['timestamp']);
+              DateTime bDate = DateTime.parse(b['timestamp']);
+              return bDate.compareTo(aDate);
+            });
+
             if (docIDs.isEmpty) {
-              return Center(
-                child: Text('Nothing to show here',
-                    style: TextStyle(
-                      color: themeData.colorScheme.secondary,
-                      fontSize: 20,
-                    )),
-              );
+              return nothingToShowHerePage();
             } else {
               return ListView.builder(
                   itemCount: docIDs.length,
@@ -67,6 +87,29 @@ class _GetYourPostsState extends State<GetYourPosts> {
             return const Center(child: CircularProgressIndicator());
           }
         });
+  }
+
+  Center nothingToShowHerePage() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.add_circle_rounded,
+              size: 100, color: themeData.colorScheme.secondary),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: Text(
+                'Nothing to show here. Tap the floating + button to add a post.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: themeData.colorScheme.secondary,
+                  fontSize: 20,
+                )),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -88,6 +131,7 @@ class YourPostsDetails extends StatelessWidget {
     //           snapshot.data!.data() as Map<String, dynamic>;
 
     return LetterCard(
+        cardType: 1,
         cardTitle: data['postTitle'],
         cardID: data['postID'],
         cardDescription: data['postDescription'],
@@ -138,37 +182,62 @@ class GetHomePosts extends StatefulWidget {
 }
 
 class _GetHomePostsState extends State<GetHomePosts> {
-  List<Map<String, dynamic>> docIDs = [];
-
-  Future getDocId() async {
+  Stream<QuerySnapshot> getDocIdStream() {
     try {
-      await FirebaseFirestore.instance
+      return FirebaseFirestore.instance
           .collection('publicRequests')
-          .get()
-          .then((snapshot) => snapshot.docs.forEach((element) {
-                docIDs.add({
-                  'id': element.reference.id,
-                  'timestamp': element['postPostedAt'],
-                  'data': element.data(),
-                });
-                debugPrint(docIDs.toString());
-              }));
-      docIDs.sort((a, b) {
-        DateTime aDate = DateTime.parse(a['timestamp']);
-        DateTime bDate = DateTime.parse(b['timestamp']);
-        return bDate.compareTo(aDate);
-      });
+          .snapshots();
     } catch (e) {
       debugPrint(e.toString());
+      rethrow;
     }
   }
 
+  // List<Map<String, dynamic>> docIDs = [];
+
+  // Future getDocId() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('publicRequests')
+  //         .get()
+  //         .then((snapshot) => snapshot.docs.forEach((element) {
+  //               docIDs.add({
+  //                 'id': element.reference.id,
+  //                 'timestamp': element['postPostedAt'],
+  //                 'data': element.data(),
+  //               });
+  //               debugPrint(docIDs.toString());
+  //             }));
+  //     docIDs.sort((a, b) {
+  //       DateTime aDate = DateTime.parse(a['timestamp']);
+  //       DateTime bDate = DateTime.parse(b['timestamp']);
+  //       return bDate.compareTo(aDate);
+  //     });
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getDocId(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+    return StreamBuilder(
+        stream: getDocIdStream(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            List<Map<String, dynamic>> docIDs = snapshot.data!.docs
+                .map((doc) => {
+                      'id': doc.reference.id,
+                      'timestamp': doc['postPostedAt'],
+                      'data': doc.data(),
+                    })
+                .toList();
+
+            docIDs.sort((a, b) {
+              DateTime aDate = DateTime.parse(a['timestamp']);
+              DateTime bDate = DateTime.parse(b['timestamp']);
+              return bDate.compareTo(aDate);
+            });
+
             if (docIDs.isEmpty) {
               return Center(
                 child: Text('Nothing to show here',
@@ -204,6 +273,7 @@ class GetHomePostsDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LetterCard(
+        cardType: 0,
         cardTitle: data['postTitle'],
         cardID: data['postID'],
         cardDescription: data['postDescription'],

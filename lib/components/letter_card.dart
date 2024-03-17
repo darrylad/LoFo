@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/backend/CRUD/deleter.dart';
+import 'package:lofo/backend/CRUD/transmitter.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
@@ -17,8 +19,10 @@ class LetterCard extends StatelessWidget {
       required this.cardImageURL,
       required this.userImageURL,
       required this.cardPostedAt,
-      required this.cardCategory});
+      required this.cardCategory,
+      required this.cardType});
 
+  final int cardType; // 0 for home, 1 for your posts
   final int cardCategory; // 0 for found, 1 for lost
   final String cardTitle;
   final String cardID;
@@ -34,6 +38,7 @@ class LetterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return cardLayout(
+        cardType,
         cardCategory,
         cardID,
         cardTitle,
@@ -49,6 +54,7 @@ class LetterCard extends StatelessWidget {
 }
 
 Column cardLayout(
+    int cardType,
     int cardCategory,
     String cardID,
     String cardTitle,
@@ -114,11 +120,7 @@ Column cardLayout(
               const SizedBox(height: 10),
               timeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
-              BasicButton.secondaryButton('Claim', () {
-                debugPrint('Claim button pressed');
-                debugPrint('Card ID: $cardID');
-                debugPrint('Card Title: $cardTitle');
-              }),
+              actionButtonRow(cardID, cardTitle, cardType, cardImageURL),
               const SizedBox(height: 5),
             ],
           ),
@@ -126,6 +128,44 @@ Column cardLayout(
       ),
     ],
   );
+}
+
+Widget actionButtonRow(
+    String cardID, String cardTitle, int cardType, String? cardImageURL) {
+  if (cardType == 0) {
+    // card is displayed in home page
+    return BasicButton.secondaryButton('Ping', () {
+      debugPrint('Claim button pressed');
+      debugPrint('Card ID: $cardID');
+      debugPrint('Card Title: $cardTitle');
+    });
+  } else if (cardType == 1) {
+    return BasicButton.warningSecondaryButton('Delete', () async {
+      debugPrint('Delete button pressed');
+      debugPrint('Card ID: $cardID');
+      debugPrint('Card Title: $cardTitle');
+
+      RequestUploadStatus previousRequestUploadStatus =
+          requestUploadStatus.value;
+
+      await midLoginCheck().then((isLoginValid) async {
+        if (isLoginValid) {
+          await deleteRequest(cardID, cardImageURL).then((isDeleteSuccessful) {
+            if (isDeleteSuccessful) {
+              deleteSuccess(previousRequestUploadStatus);
+            } else {
+              deleteFailure(previousRequestUploadStatus);
+            }
+          });
+        } else {
+          previousRequestUploadStatus = RequestUploadStatus.someThingWentWrong;
+          deleteFailure(previousRequestUploadStatus);
+        }
+      });
+    });
+  } else {
+    return const SizedBox();
+  }
 }
 
 Row posterInfoRow(int cardCategory, String posterImageURL, String cardName,

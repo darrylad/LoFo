@@ -8,6 +8,12 @@ enum SecurityRequestUploadStatus {
   uploaded,
   uploadError,
   someThingWentWrong,
+  deleting,
+  deleted,
+  deleteError,
+  publicizing,
+  publicized,
+  publicizeError
 }
 
 // String requestUploadStatus = 'Normal';
@@ -43,6 +49,23 @@ PreferredSize securityAppBar(String title, Widget? actionImage,
             case SecurityRequestUploadStatus.someThingWentWrong:
               currentSecurityAppBar = someThingWentWrongSecurityAppBar();
               break;
+            case SecurityRequestUploadStatus.deleteError:
+              currentSecurityAppBar = deleteErrorSecurityAppBar();
+              break;
+            case SecurityRequestUploadStatus.deleted:
+              currentSecurityAppBar = deletedSecurityAppBar();
+              break;
+            case SecurityRequestUploadStatus.deleting:
+              currentSecurityAppBar = deletingSecurityAppBar();
+            case SecurityRequestUploadStatus.publicizing:
+              currentSecurityAppBar = publicizingSecurityAppBar();
+              break;
+            case SecurityRequestUploadStatus.publicized:
+              currentSecurityAppBar = publicizedSecurityAppBar();
+              break;
+            case SecurityRequestUploadStatus.publicizeError:
+              currentSecurityAppBar = publicizeErrowSecurityAppBar();
+              break;
             default:
               currentSecurityAppBar =
                   normalSecurityAppBar(title, actionImage, leading: leading);
@@ -59,9 +82,49 @@ PreferredSize securityAppBar(String title, Widget? actionImage,
       ));
 }
 
-AppBar uploadedSecurityAppBar() {
+AppBar deletingSecurityAppBar() {
+  return AppBar(
+    key: const ValueKey(1),
+    centerTitle: true,
+    title: const Text(
+      'Deleting',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor:
+        ColorScheme.fromSeed(seedColor: Colors.amber[900]!).primary,
+  );
+}
+
+AppBar deletedSecurityAppBar() {
   return AppBar(
     key: const ValueKey(2),
+    centerTitle: true,
+    title: const Text(
+      'Deleted',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: ColorScheme.fromSeed(seedColor: Colors.green).primary,
+  );
+}
+
+AppBar deleteErrorSecurityAppBar() {
+  return AppBar(
+    key: const ValueKey(3),
+    centerTitle: true,
+    title: const Text(
+      'Could not delete',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: securityThemeData.colorScheme.onError,
+  );
+}
+
+AppBar uploadedSecurityAppBar() {
+  return AppBar(
+    key: const ValueKey(4),
     centerTitle: true,
     title: const Text(
       'Sent',
@@ -80,9 +143,22 @@ AppBar uploadedSecurityAppBar() {
   );
 }
 
+AppBar publicizingSecurityAppBar() {
+  return AppBar(
+    key: const ValueKey(5),
+    centerTitle: true,
+    title: const Text(
+      'Publicizing copy',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: lightThemeData.colorScheme.primary,
+  );
+}
+
 AppBar uploadingSecurityAppBar() {
   return AppBar(
-    key: const ValueKey(1),
+    key: const ValueKey(6),
     centerTitle: true,
     title: const Text(
       'Sending',
@@ -103,7 +179,7 @@ AppBar uploadingSecurityAppBar() {
 
 AppBar uploadErrorSecurityAppBar() {
   return AppBar(
-    key: const ValueKey(3),
+    key: const ValueKey(7),
     centerTitle: true,
     title: const Text(
       'Could not send',
@@ -117,7 +193,7 @@ AppBar uploadErrorSecurityAppBar() {
 AppBar someThingWentWrongSecurityAppBar() {
   return AppBar(
     backgroundColor: securityColorScheme.background,
-    key: const ValueKey(4),
+    key: const ValueKey(8),
     centerTitle: true,
     title: const PulsingText(
       text: 'Something went wrong',
@@ -125,6 +201,32 @@ AppBar someThingWentWrongSecurityAppBar() {
           color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
     ),
     // backgroundColor: lightThemeData.colorScheme.error,
+  );
+}
+
+AppBar publicizedSecurityAppBar() {
+  return AppBar(
+    key: const ValueKey(9),
+    centerTitle: true,
+    title: const Text(
+      'Publicized copy',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: ColorScheme.fromSeed(seedColor: Colors.green).primary,
+  );
+}
+
+AppBar publicizeErrowSecurityAppBar() {
+  return AppBar(
+    key: const ValueKey(10),
+    centerTitle: true,
+    title: const Text(
+      'Could not publicize',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: securityThemeData.colorScheme.onError,
   );
 }
 

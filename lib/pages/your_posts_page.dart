@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/CRUD/fetcher.dart';
+import 'package:lofo/components/new_post_floating_action_button.dart';
 // import 'package:lofo/components/app_bar.dart';
 
 class YourPostsPage extends StatefulWidget {
@@ -10,13 +11,15 @@ class YourPostsPage extends StatefulWidget {
 }
 
 class _YourPostsPageState extends State<YourPostsPage> {
+  final GlobalKey _fabKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       // appBar: appBar('Your Requests', userImageExample),
-      body: Center(
+      body: const Center(
         child: GetYourPosts(),
       ),
+      floatingActionButton: NewPostFloatingActionButton(fabKey: _fabKey),
     );
   }
 }

@@ -132,6 +132,36 @@ class _MorePageState extends State<MorePage> {
               onPressed: () {
                 setState(() {
                   // requestUploadStatus = 'Normal';
+                  requestUploadStatus.value = RequestUploadStatus.deleting;
+                  securityRequestUploadStatus.value =
+                      SecurityRequestUploadStatus.deleting;
+                });
+              },
+              child: const Text('Deleting')),
+          FilledButton(
+              onPressed: () {
+                setState(() {
+                  // requestUploadStatus = 'Normal';
+                  requestUploadStatus.value = RequestUploadStatus.deleted;
+                  securityRequestUploadStatus.value =
+                      SecurityRequestUploadStatus.deleted;
+                });
+              },
+              child: const Text('Deleted')),
+          FilledButton(
+              onPressed: () {
+                setState(() {
+                  // requestUploadStatus = 'Normal';
+                  requestUploadStatus.value = RequestUploadStatus.deleteError;
+                  securityRequestUploadStatus.value =
+                      SecurityRequestUploadStatus.deleteError;
+                });
+              },
+              child: const Text('deleteError')),
+          FilledButton(
+              onPressed: () {
+                setState(() {
+                  // requestUploadStatus = 'Normal';
                   requestUploadStatus.value = RequestUploadStatus.normal;
                   securityRequestUploadStatus.value =
                       SecurityRequestUploadStatus.normal;

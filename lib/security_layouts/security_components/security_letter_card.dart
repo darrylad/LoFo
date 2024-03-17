@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lofo/backend/CRUD/deleter.dart';
+import 'package:lofo/backend/CRUD/transmitter.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/security_layouts/security_backend/security_CRUD/security_deleter.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 import 'package:photo_view/photo_view.dart';
@@ -120,7 +123,7 @@ Column securityCardLayout(
               const SizedBox(height: 10),
               securityCardTimeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
-              securityCardActionRow(cardType),
+              securityCardActionRow(cardType, cardID, cardImageURL),
               const SizedBox(height: 5),
             ],
           ),
@@ -130,13 +133,33 @@ Column securityCardLayout(
   );
 }
 
-Widget securityCardActionRow(int cardType) {
+Widget securityCardActionRow(
+    int cardType, String cardID, String? cardImageURL) {
   Row type1ActionRow() {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        BasicButton.warningSecondaryButton('Delete', () {}),
+        BasicButton.warningSecondaryButton('Delete', () async {
+          SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
+              securityRequestUploadStatus.value;
+
+          await midLoginCheck().then((isLoginValid) {
+            if (isLoginValid) {
+              deleteRequest(cardID, cardImageURL).then((isDeleted) {
+                if (isDeleted) {
+                  securityDeleteSuccess(previousSecurityRequestUploadStatus);
+                } else {
+                  securityDeleteFailure(previousSecurityRequestUploadStatus);
+                }
+              });
+            } else {
+              previousSecurityRequestUploadStatus =
+                  SecurityRequestUploadStatus.someThingWentWrong;
+              securityDeleteFailure(previousSecurityRequestUploadStatus);
+            }
+          });
+        }),
         const SizedBox(width: 10),
         BasicButton.secondaryButton('Publicize', () {}),
       ],
@@ -144,8 +167,29 @@ Widget securityCardActionRow(int cardType) {
   }
 
   if (cardType == 0) {
-    return BasicButton.warningSecondaryButton('Delete', () {});
+    // security card is in home page
+    return BasicButton.warningSecondaryButton('Delete', () async {
+      SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
+          securityRequestUploadStatus.value;
+
+      await midLoginCheck().then((isLoginValid) {
+        if (isLoginValid) {
+          deleteSecurityRequest(cardID, cardImageURL).then((isDeleted) {
+            if (isDeleted) {
+              securityDeleteSuccess(previousSecurityRequestUploadStatus);
+            } else {
+              securityDeleteFailure(previousSecurityRequestUploadStatus);
+            }
+          });
+        } else {
+          previousSecurityRequestUploadStatus =
+              SecurityRequestUploadStatus.someThingWentWrong;
+          securityDeleteFailure(previousSecurityRequestUploadStatus);
+        }
+      });
+    });
   } else if (cardType == 1) {
+    // security card is in inbox page
     return type1ActionRow();
   } else {
     return const SizedBox();
