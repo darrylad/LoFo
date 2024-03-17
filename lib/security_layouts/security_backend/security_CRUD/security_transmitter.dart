@@ -19,11 +19,11 @@ Future<bool> sendSecurityRequest(
   String postName,
   String userImageURL,
   File? postImage,
+  String? postImageURL,
   // Image? postImage,
   // Image userImage,
 ) async {
   try {
-    String postImageURL = '';
     if (postImage != null) {
       final storageRef =
           FirebaseStorage.instance.ref().child('postImages/$postID');

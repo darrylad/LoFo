@@ -105,17 +105,19 @@ class GetSecurityInboxDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SecurityLetterCard(
-        cardType: 1,
-        cardTitle: data['postTitle'],
-        cardID: data['postID'],
-        cardDescription: data['postDescription'],
-        cardLocation: data['postLocation'],
-        cardTimeLastSeen: data['postTimeLastSeen'],
-        cardName: data['postName'],
-        cardImageURL: data['postImageURL'],
-        userImageURL: data['userImageURL'],
-        cardPostedAt: data['postPostedAt'],
-        cardCategory: data['postCategory']);
+      cardType: 1,
+      cardTitle: data['postTitle'],
+      cardID: data['postID'],
+      cardDescription: data['postDescription'],
+      cardLocation: data['postLocation'],
+      cardTimeLastSeen: data['postTimeLastSeen'],
+      cardName: data['postName'],
+      cardImageURL: data['postImageURL'],
+      userImageURL: data['userImageURL'],
+      cardPostedAt: data['postPostedAt'],
+      cardCategory: data['postCategory'],
+      cardPosterID: data['postPosterID'],
+    );
   }
 }
 
@@ -232,16 +234,18 @@ class GetSecurityHomePostsDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SecurityLetterCard(
-        cardType: 0,
-        cardTitle: data['postTitle'],
-        cardID: data['postID'],
-        cardDescription: data['postDescription'],
-        cardLocation: data['postLocation'],
-        cardTimeLastSeen: data['postTimeLastSeen'],
-        cardName: data['postName'],
-        cardImageURL: data['postImageURL'],
-        userImageURL: data['userImageURL'],
-        cardPostedAt: data['postPostedAt'],
-        cardCategory: data['postCategory']);
+      cardType: 0,
+      cardTitle: data['postTitle'],
+      cardID: data['postID'],
+      cardDescription: data['postDescription'],
+      cardLocation: data['postLocation'],
+      cardTimeLastSeen: data['postTimeLastSeen'],
+      cardName: data['postName'],
+      cardImageURL: data['postImageURL'],
+      userImageURL: data['userImageURL'],
+      cardPostedAt: data['postPostedAt'],
+      cardCategory: data['postCategory'],
+      cardPosterID: data['postPosterID'],
+    );
   }
 }

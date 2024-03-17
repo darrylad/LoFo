@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:lofo/backend/CRUD/deleter.dart';
-import 'package:lofo/backend/CRUD/transmitter.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/security_layouts/security_backend/security_CRUD/security_deleter.dart';
+import 'package:lofo/security_layouts/security_backend/security_CRUD/security_transmitter.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 import 'package:photo_view/photo_view.dart';
@@ -21,7 +23,8 @@ class SecurityLetterCard extends StatelessWidget {
       required this.cardPostedAt,
       required this.cardID,
       required this.cardType,
-      required this.cardCategory});
+      required this.cardCategory,
+      required this.cardPosterID});
 
   final int cardType; // 0 for Public, 1 for Inbox
   final int cardCategory; // 0 for found, 1 for lost
@@ -36,6 +39,7 @@ class SecurityLetterCard extends StatelessWidget {
   final String? cardImageURL;
   // final Image userImage;
   final String userImageURL;
+  final String cardPosterID;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,8 @@ class SecurityLetterCard extends StatelessWidget {
         cardName,
         cardImageURL,
         userImageURL,
-        context);
+        context,
+        cardPosterID);
   }
 }
 
@@ -67,7 +72,8 @@ Column securityCardLayout(
     String cardName,
     String? cardImageURL,
     String posterImageURL,
-    BuildContext context) {
+    BuildContext context,
+    String cardPosterID) {
   themeData = Theme.of(context);
   return Column(
     children: [
@@ -119,11 +125,23 @@ Column securityCardLayout(
                 ],
               ),
               const SizedBox(height: 12),
-              securityCardLocationInfo(cardLocation),
+              securityCardLocationInfo(cardLocation, cardCategory),
               const SizedBox(height: 10),
               securityCardTimeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
-              securityCardActionRow(cardType, cardID, cardImageURL),
+              securityCardActionRow(
+                  cardType,
+                  cardID,
+                  cardImageURL,
+                  cardCategory,
+                  cardPostedAt,
+                  cardPosterID,
+                  cardTitle,
+                  cardDescription,
+                  cardLocation,
+                  cardTimeMisplaced,
+                  cardName,
+                  posterImageURL),
               const SizedBox(height: 5),
             ],
           ),
@@ -134,19 +152,39 @@ Column securityCardLayout(
 }
 
 Widget securityCardActionRow(
-    int cardType, String cardID, String? cardImageURL) {
+  int cardType,
+  String cardID,
+  String? cardImageURL,
+  int cardCategory,
+  String cardPostedAt,
+  String cardPosterID,
+  String cardTitle,
+  String cardDescription,
+  String cardLocation,
+  String? cardTimeLastSeen,
+  String userName,
+  String loginProfileImageURL,
+) {
   Row type1ActionRow() {
+    // security card is in inbox page
+
     return Row(
-      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         BasicButton.warningSecondaryButton('Delete', () async {
+          // initiate deletion of private request
+
           SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
               securityRequestUploadStatus.value;
 
-          await midLoginCheck().then((isLoginValid) {
+          securityRequestUploadStatus.value =
+              SecurityRequestUploadStatus.deleting;
+
+          await midLoginCheck().then((isLoginValid) async {
             if (isLoginValid) {
-              deleteRequest(cardID, cardImageURL).then((isDeleted) {
+              // delete private request
+
+              await deleteRequest(cardID, cardImageURL).then((isDeleted) {
                 if (isDeleted) {
                   securityDeleteSuccess(previousSecurityRequestUploadStatus);
                 } else {
@@ -161,20 +199,89 @@ Widget securityCardActionRow(
           });
         }),
         const SizedBox(width: 10),
-        BasicButton.secondaryButton('Publicize', () {}),
+        BasicButton.secondaryButton('Publicize', () async {
+          // initiate publicizing of private request
+
+          SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
+              securityRequestUploadStatus.value;
+
+          securityRequestUploadStatus.value =
+              SecurityRequestUploadStatus.publicizing;
+
+          void publicizeCompletion(
+              SecurityRequestUploadStatus previousSecurityRequestUploadStatus) {
+            securityRequestUploadStatus.value =
+                SecurityRequestUploadStatus.publicized;
+            Timer(const Duration(seconds: 1), () {
+              securityRequestUploadStatus.value =
+                  previousSecurityRequestUploadStatus;
+            });
+          }
+
+          void publicizeFailure(
+              SecurityRequestUploadStatus previousSecurityRequestUploadStatus) {
+            securityRequestUploadStatus.value =
+                SecurityRequestUploadStatus.publicizeError;
+            Timer(const Duration(seconds: 1), () {
+              securityRequestUploadStatus.value =
+                  previousSecurityRequestUploadStatus;
+            });
+          }
+
+          await midLoginCheck().then((isLoginValid) async {
+            if (isLoginValid) {
+              await sendSecurityRequest(
+                      cardCategory,
+                      cardPostedAt,
+                      cardID,
+                      cardPosterID,
+                      cardTitle,
+                      cardDescription,
+                      cardLocation,
+                      cardTimeLastSeen,
+                      userName,
+                      loginProfileImageURL,
+                      null,
+                      cardImageURL)
+                  .then((isSendSuccessful) async {
+                if (isSendSuccessful) {
+                  await deleteRequest(cardID, cardImageURL).then(
+                    (isDeleted) {
+                      if (isDeleted) {
+                        publicizeCompletion(
+                            previousSecurityRequestUploadStatus);
+                      } else {
+                        publicizeFailure(previousSecurityRequestUploadStatus);
+                      }
+                    },
+                  );
+                } else {
+                  publicizeFailure(previousSecurityRequestUploadStatus);
+                }
+              });
+            } else {
+              previousSecurityRequestUploadStatus =
+                  SecurityRequestUploadStatus.someThingWentWrong;
+              publicizeFailure(previousSecurityRequestUploadStatus);
+            }
+          });
+        }),
       ],
     );
   }
 
   if (cardType == 0) {
     // security card is in home page
+
     return BasicButton.warningSecondaryButton('Delete', () async {
       SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
           securityRequestUploadStatus.value;
 
-      await midLoginCheck().then((isLoginValid) {
+      securityRequestUploadStatus.value = SecurityRequestUploadStatus.deleting;
+
+      await midLoginCheck().then((isLoginValid) async {
         if (isLoginValid) {
-          deleteSecurityRequest(cardID, cardImageURL).then((isDeleted) {
+          await deleteSecurityRequest(cardID, cardImageURL).then((isDeleted) {
             if (isDeleted) {
               securityDeleteSuccess(previousSecurityRequestUploadStatus);
             } else {
@@ -276,7 +383,19 @@ Container securityCardCategoryBox(int cardCategory) {
   }
 }
 
-Row securityCardLocationInfo(String cardLocation) {
+Row securityCardLocationInfo(String cardLocation, int cardCategory) {
+  Widget locationText(String cardLocation, int cardCategory) {
+    if (cardCategory == 0) {
+      // found
+      return Text('Location found: $cardLocation');
+    } else if (cardCategory == 1) {
+      //lost
+      return Text('Location lost: $cardLocation');
+    } else {
+      return const SizedBox();
+    }
+  }
+
   return Row(
     children: [
       const Icon(
@@ -284,7 +403,7 @@ Row securityCardLocationInfo(String cardLocation) {
         size: 20,
       ),
       const SizedBox(width: 10),
-      Text('Location: $cardLocation'),
+      locationText(cardLocation, cardCategory),
     ],
   );
 }
@@ -298,7 +417,7 @@ Row securityCardTimeInfo(String? cardLeftBehindAt) {
           size: 20,
         ),
         const SizedBox(width: 10),
-        Text('Left behind at: $cardLeftBehindAt'),
+        Text('Time Last seen: $cardLeftBehindAt'),
       ],
     );
   } else {
@@ -312,7 +431,6 @@ GestureDetector securityCardLetterImage(
     Image cardImage = Image.network(cardImageURL);
     return GestureDetector(
       onTap: () {
-        debugPrint('Card image pressed');
         Navigator.push(
           context,
           MaterialPageRoute(

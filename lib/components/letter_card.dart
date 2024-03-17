@@ -116,7 +116,7 @@ Column cardLayout(
                 ],
               ),
               const SizedBox(height: 12),
-              locationInfo(cardLocation),
+              locationInfo(cardLocation, cardCategory),
               const SizedBox(height: 10),
               timeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
@@ -143,10 +143,13 @@ Widget actionButtonRow(
     return BasicButton.warningSecondaryButton('Delete', () async {
       debugPrint('Delete button pressed');
       debugPrint('Card ID: $cardID');
-      debugPrint('Card Title: $cardTitle');
+
+      // initiate deletion of private request
 
       RequestUploadStatus previousRequestUploadStatus =
           requestUploadStatus.value;
+
+      requestUploadStatus.value = RequestUploadStatus.deleting;
 
       await midLoginCheck().then((isLoginValid) async {
         if (isLoginValid) {
@@ -248,7 +251,19 @@ Container cardCategoryBox(int cardCategory) {
   }
 }
 
-Row locationInfo(String cardLocation) {
+Row locationInfo(String cardLocation, int cardCategory) {
+  Widget locationText(String cardLocation, int cardCategory) {
+    if (cardCategory == 0) {
+      // found
+      return Text('Location found: $cardLocation');
+    } else if (cardCategory == 1) {
+      //lost
+      return Text('Location lost: $cardLocation');
+    } else {
+      return const SizedBox();
+    }
+  }
+
   return Row(
     children: [
       const Icon(
@@ -256,7 +271,7 @@ Row locationInfo(String cardLocation) {
         size: 20,
       ),
       const SizedBox(width: 10),
-      Text('Location: $cardLocation'),
+      locationText(cardLocation, cardCategory),
     ],
   );
 }

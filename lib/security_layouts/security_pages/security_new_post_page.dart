@@ -166,7 +166,8 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                 postTimeLastSeen,
                 userName!,
                 loginProfileImageURL,
-                pickedPostImage)
+                pickedPostImage,
+                null)
             .then((isSendSuccessful) {
           if (isSendSuccessful) {
             sendCompletion(previousRequestUploadStatus);
