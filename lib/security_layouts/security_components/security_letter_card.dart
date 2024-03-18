@@ -173,7 +173,7 @@ Widget securityCardActionRow(
       children: [
         // BasicButton.warningSecondaryButton('Delete', () async {
         // show confirmation popover
-        ConfirmatoryButton(
+        SecurityConfirmatoryButton(
           buttonText: 'Delete',
           buttonType: ButtonType.warningSecondary,
           parentContext: context,
@@ -210,7 +210,7 @@ Widget securityCardActionRow(
         // }),
         const SizedBox(width: 10),
         // BasicButton.secondaryButton('Publicize', () async {
-        ConfirmatoryButton(
+        SecurityConfirmatoryButton(
             buttonText: 'Publicize',
             buttonType: ButtonType.secondary,
             parentContext: context,
@@ -297,7 +297,7 @@ Widget securityCardActionRow(
 
     return
         // BasicButton.warningSecondaryButton('Delete', () async {
-        ConfirmatoryButton(
+        SecurityConfirmatoryButton(
       buttonText: 'Delete',
       buttonType: ButtonType.warningSecondary,
       parentContext: context,
