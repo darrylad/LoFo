@@ -78,6 +78,7 @@ class _GetYourPostsState extends State<GetYourPosts> {
                   itemBuilder: (context, index) {
                     return YourPostsDetails(
                       // docID: docIDs[index],
+
                       docID: docIDs[index]['id'],
                       data: docIDs[index]['data'],
                     );
@@ -117,7 +118,11 @@ class YourPostsDetails extends StatelessWidget {
   final String docID;
   final Map<String, dynamic> data;
 
-  const YourPostsDetails({super.key, required this.docID, required this.data});
+  const YourPostsDetails({
+    super.key,
+    required this.docID,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -131,17 +136,18 @@ class YourPostsDetails extends StatelessWidget {
     //           snapshot.data!.data() as Map<String, dynamic>;
 
     return LetterCard(
-        cardType: 1,
-        cardTitle: data['postTitle'],
-        cardID: data['postID'],
-        cardDescription: data['postDescription'],
-        cardLocation: data['postLocation'],
-        cardTimeLastSeen: data['postTimeLastSeen'],
-        cardName: data['postName'],
-        cardImageURL: data['postImageURL'],
-        userImageURL: data['userImageURL'],
-        cardPostedAt: data['postPostedAt'],
-        cardCategory: data['postCategory']);
+      cardType: 1,
+      cardTitle: data['postTitle'],
+      cardID: data['postID'],
+      cardDescription: data['postDescription'],
+      cardLocation: data['postLocation'],
+      cardTimeLastSeen: data['postTimeLastSeen'],
+      cardName: data['postName'],
+      cardImageURL: data['postImageURL'],
+      userImageURL: data['userImageURL'],
+      cardPostedAt: data['postPostedAt'],
+      cardCategory: data['postCategory'],
+    );
 
     // return StreamBuilder(
     //   stream: privateRequests.doc(docID).snapshots(),
@@ -267,22 +273,27 @@ class _GetHomePostsState extends State<GetHomePosts> {
 class GetHomePostsDetails extends StatelessWidget {
   final String docID;
   final Map<String, dynamic> data;
-  const GetHomePostsDetails(
-      {super.key, required this.docID, required this.data});
+
+  const GetHomePostsDetails({
+    super.key,
+    required this.docID,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
     return LetterCard(
-        cardType: 0,
-        cardTitle: data['postTitle'],
-        cardID: data['postID'],
-        cardDescription: data['postDescription'],
-        cardLocation: data['postLocation'],
-        cardTimeLastSeen: data['postTimeLastSeen'],
-        cardName: data['postName'],
-        cardImageURL: data['postImageURL'],
-        userImageURL: data['userImageURL'],
-        cardPostedAt: data['postPostedAt'],
-        cardCategory: data['postCategory']);
+      cardType: 0,
+      cardTitle: data['postTitle'],
+      cardID: data['postID'],
+      cardDescription: data['postDescription'],
+      cardLocation: data['postLocation'],
+      cardTimeLastSeen: data['postTimeLastSeen'],
+      cardName: data['postName'],
+      cardImageURL: data['postImageURL'],
+      userImageURL: data['userImageURL'],
+      cardPostedAt: data['postPostedAt'],
+      cardCategory: data['postCategory'],
+    );
   }
 }

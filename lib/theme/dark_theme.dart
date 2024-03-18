@@ -16,14 +16,14 @@ ThemeData darkThemeData = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.blue,
     brightness: Brightness.dark,
-    tertiary: const Color.fromARGB(255, 11, 14, 16),
+    tertiary: darkThemeScaffoldBackgroundColor,
   ),
 
   // scaffoldBackgroundColor:
   //     ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark)
   //         .secondaryContainer,
 
-  scaffoldBackgroundColor: darkThemeScaffoldBackgroundColor,
+  scaffoldBackgroundColor: const Color.fromARGB(255, 11, 14, 16),
 
   // textTheme: GoogleFonts.manropeTextTheme(),
 

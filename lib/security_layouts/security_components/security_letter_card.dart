@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lofo/backend/CRUD/deleter.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
@@ -141,7 +140,8 @@ Column securityCardLayout(
                   cardLocation,
                   cardTimeMisplaced,
                   cardName,
-                  posterImageURL),
+                  posterImageURL,
+                  context),
               const SizedBox(height: 5),
             ],
           ),
@@ -152,120 +152,142 @@ Column securityCardLayout(
 }
 
 Widget securityCardActionRow(
-  int cardType,
-  String cardID,
-  String? cardImageURL,
-  int cardCategory,
-  String cardPostedAt,
-  String cardPosterID,
-  String cardTitle,
-  String cardDescription,
-  String cardLocation,
-  String? cardTimeLastSeen,
-  String userName,
-  String loginProfileImageURL,
-) {
+    int cardType,
+    String cardID,
+    String? cardImageURL,
+    int cardCategory,
+    String cardPostedAt,
+    String cardPosterID,
+    String cardTitle,
+    String cardDescription,
+    String cardLocation,
+    String? cardTimeLastSeen,
+    String userName,
+    String loginProfileImageURL,
+    BuildContext context) {
   Row type1ActionRow() {
     // security card is in inbox page
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        BasicButton.warningSecondaryButton('Delete', () async {
-          // initiate deletion of private request
+        // BasicButton.warningSecondaryButton('Delete', () async {
+        // show confirmation popover
+        ConfirmatoryButton(
+          buttonText: 'Delete',
+          buttonType: ButtonType.warningSecondary,
+          parentContext: context,
+          actionOnPressed: () async {
+            // dismiss pop over
+            Navigator.pop(context);
+            // initiate deletion of private request
 
-          SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
-              securityRequestUploadStatus.value;
+            SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
+                securityRequestUploadStatus.value;
 
-          securityRequestUploadStatus.value =
-              SecurityRequestUploadStatus.deleting;
+            securityRequestUploadStatus.value =
+                SecurityRequestUploadStatus.deleting;
 
-          await midLoginCheck().then((isLoginValid) async {
-            if (isLoginValid) {
-              // delete private request
+            await midLoginCheck().then((isLoginValid) async {
+              if (isLoginValid) {
+                // delete private request
 
-              await deleteRequest(cardID, cardImageURL).then((isDeleted) {
-                if (isDeleted) {
-                  securityDeleteSuccess(previousSecurityRequestUploadStatus);
-                } else {
-                  securityDeleteFailure(previousSecurityRequestUploadStatus);
-                }
-              });
-            } else {
-              previousSecurityRequestUploadStatus =
-                  SecurityRequestUploadStatus.someThingWentWrong;
-              securityDeleteFailure(previousSecurityRequestUploadStatus);
-            }
-          });
-        }),
+                await deleteRequest(cardID, cardImageURL).then((isDeleted) {
+                  if (isDeleted) {
+                    securityDeleteSuccess(previousSecurityRequestUploadStatus);
+                  } else {
+                    securityDeleteFailure(previousSecurityRequestUploadStatus);
+                  }
+                });
+              } else {
+                previousSecurityRequestUploadStatus =
+                    SecurityRequestUploadStatus.someThingWentWrong;
+                securityDeleteFailure(previousSecurityRequestUploadStatus);
+              }
+            });
+          },
+        ),
+        // }),
         const SizedBox(width: 10),
-        BasicButton.secondaryButton('Publicize', () async {
-          // initiate publicizing of private request
+        // BasicButton.secondaryButton('Publicize', () async {
+        ConfirmatoryButton(
+            buttonText: 'Publicize',
+            buttonType: ButtonType.secondary,
+            parentContext: context,
+            actionOnPressed: () async {
+              // close popover
+              Navigator.pop(context);
+              // initiate publicizing of private request
 
-          SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
-              securityRequestUploadStatus.value;
+              SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
+                  securityRequestUploadStatus.value;
 
-          securityRequestUploadStatus.value =
-              SecurityRequestUploadStatus.publicizing;
-
-          void publicizeCompletion(
-              SecurityRequestUploadStatus previousSecurityRequestUploadStatus) {
-            securityRequestUploadStatus.value =
-                SecurityRequestUploadStatus.publicized;
-            Timer(const Duration(seconds: 1), () {
               securityRequestUploadStatus.value =
-                  previousSecurityRequestUploadStatus;
-            });
-          }
+                  SecurityRequestUploadStatus.publicizing;
 
-          void publicizeFailure(
-              SecurityRequestUploadStatus previousSecurityRequestUploadStatus) {
-            securityRequestUploadStatus.value =
-                SecurityRequestUploadStatus.publicizeError;
-            Timer(const Duration(seconds: 1), () {
-              securityRequestUploadStatus.value =
-                  previousSecurityRequestUploadStatus;
-            });
-          }
+              void publicizeCompletion(
+                  SecurityRequestUploadStatus
+                      previousSecurityRequestUploadStatus) {
+                securityRequestUploadStatus.value =
+                    SecurityRequestUploadStatus.publicized;
+                Timer(const Duration(seconds: 1), () {
+                  securityRequestUploadStatus.value =
+                      previousSecurityRequestUploadStatus;
+                });
+              }
 
-          await midLoginCheck().then((isLoginValid) async {
-            if (isLoginValid) {
-              await sendSecurityRequest(
-                      cardCategory,
-                      cardPostedAt,
-                      cardID,
-                      cardPosterID,
-                      cardTitle,
-                      cardDescription,
-                      cardLocation,
-                      cardTimeLastSeen,
-                      userName,
-                      loginProfileImageURL,
-                      null,
-                      cardImageURL)
-                  .then((isSendSuccessful) async {
-                if (isSendSuccessful) {
-                  await deleteRequest(cardID, cardImageURL).then(
-                    (isDeleted) {
-                      if (isDeleted) {
-                        publicizeCompletion(
-                            previousSecurityRequestUploadStatus);
-                      } else {
-                        publicizeFailure(previousSecurityRequestUploadStatus);
-                      }
-                    },
-                  );
+              void publicizeFailure(
+                  SecurityRequestUploadStatus
+                      previousSecurityRequestUploadStatus) {
+                securityRequestUploadStatus.value =
+                    SecurityRequestUploadStatus.publicizeError;
+                Timer(const Duration(seconds: 1), () {
+                  securityRequestUploadStatus.value =
+                      previousSecurityRequestUploadStatus;
+                });
+              }
+
+              await midLoginCheck().then((isLoginValid) async {
+                if (isLoginValid) {
+                  // send request to public
+                  await sendSecurityRequest(
+                          cardCategory,
+                          cardPostedAt,
+                          cardID,
+                          cardPosterID,
+                          cardTitle,
+                          cardDescription,
+                          cardLocation,
+                          cardTimeLastSeen,
+                          userName,
+                          loginProfileImageURL,
+                          null,
+                          cardImageURL)
+                      .then((isSendSuccessful) async {
+                    if (isSendSuccessful) {
+                      // deleter request from private
+                      await deleteRequest(cardID, null).then(
+                        (isDeleted) {
+                          if (isDeleted) {
+                            publicizeCompletion(
+                                previousSecurityRequestUploadStatus);
+                          } else {
+                            publicizeFailure(
+                                previousSecurityRequestUploadStatus);
+                          }
+                        },
+                      );
+                    } else {
+                      publicizeFailure(previousSecurityRequestUploadStatus);
+                    }
+                  });
                 } else {
+                  previousSecurityRequestUploadStatus =
+                      SecurityRequestUploadStatus.someThingWentWrong;
                   publicizeFailure(previousSecurityRequestUploadStatus);
                 }
               });
-            } else {
-              previousSecurityRequestUploadStatus =
-                  SecurityRequestUploadStatus.someThingWentWrong;
-              publicizeFailure(previousSecurityRequestUploadStatus);
-            }
-          });
-        }),
+            }),
       ],
     );
   }
@@ -273,28 +295,41 @@ Widget securityCardActionRow(
   if (cardType == 0) {
     // security card is in home page
 
-    return BasicButton.warningSecondaryButton('Delete', () async {
-      SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
-          securityRequestUploadStatus.value;
+    return
+        // BasicButton.warningSecondaryButton('Delete', () async {
+        ConfirmatoryButton(
+      buttonText: 'Delete',
+      buttonType: ButtonType.warningSecondary,
+      parentContext: context,
+      actionOnPressed: () async {
+        // dismiss pop over
+        Navigator.pop(context);
 
-      securityRequestUploadStatus.value = SecurityRequestUploadStatus.deleting;
+        // initiate deletion of public post
+        SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
+            securityRequestUploadStatus.value;
 
-      await midLoginCheck().then((isLoginValid) async {
-        if (isLoginValid) {
-          await deleteSecurityRequest(cardID, cardImageURL).then((isDeleted) {
-            if (isDeleted) {
-              securityDeleteSuccess(previousSecurityRequestUploadStatus);
-            } else {
-              securityDeleteFailure(previousSecurityRequestUploadStatus);
-            }
-          });
-        } else {
-          previousSecurityRequestUploadStatus =
-              SecurityRequestUploadStatus.someThingWentWrong;
-          securityDeleteFailure(previousSecurityRequestUploadStatus);
-        }
-      });
-    });
+        securityRequestUploadStatus.value =
+            SecurityRequestUploadStatus.deleting;
+
+        await midLoginCheck().then((isLoginValid) async {
+          if (isLoginValid) {
+            await deleteSecurityRequest(cardID, cardImageURL).then((isDeleted) {
+              if (isDeleted) {
+                securityDeleteSuccess(previousSecurityRequestUploadStatus);
+              } else {
+                securityDeleteFailure(previousSecurityRequestUploadStatus);
+              }
+            });
+          } else {
+            previousSecurityRequestUploadStatus =
+                SecurityRequestUploadStatus.someThingWentWrong;
+            securityDeleteFailure(previousSecurityRequestUploadStatus);
+          }
+        });
+      },
+    );
+    // });
   } else if (cardType == 1) {
     // security card is in inbox page
     return type1ActionRow();
@@ -469,7 +504,7 @@ class SecurityPhotoViewerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget leading = IconButton(
       icon: const Icon(Icons.arrow_back),
-      color: securityColorScheme.background,
+      color: securityColorScheme.onBackground,
       onPressed: () {
         Navigator.pop(context);
       },

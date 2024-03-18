@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lofo/animation/logout_intermediate.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
-import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/about_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
@@ -10,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 bool useMyAccountAsSecurityAccount = false;
 
-ValueNotifier<bool> forceLightTheme = ValueNotifier<bool>(true);
+ValueNotifier<bool> forceLightTheme = ValueNotifier<bool>(false);
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -18,8 +17,6 @@ class MorePage extends StatefulWidget {
   @override
   State<MorePage> createState() => _MorePageState();
 }
-
-bool showForceLightThemeSubtitle = false;
 
 class _MorePageState extends State<MorePage> {
   saveForceLightTheme() async {
@@ -33,8 +30,8 @@ class _MorePageState extends State<MorePage> {
     return Scaffold(
         // appBar: appBar('Hi, Darryl', userImageExample),
         body: ListView(children: [
-      const SizedBox(height: 20),
-      appBarChangeButtonRow(),
+      // const SizedBox(height: 20),
+      // appBarChangeButtonRow(),
       const SizedBox(height: 20),
       Hero(
         tag: 'about',
@@ -63,46 +60,42 @@ class _MorePageState extends State<MorePage> {
           ),
         ),
       ),
-      SwitchListTile(
-          value: useMyAccountAsSecurityAccount,
-          title: Text(
-            'Use my account as security account',
-            style: themeData.textTheme.bodyLarge,
-            // style: bodyMedium,
-          ),
-          subtitle: (useMyAccountAsSecurityAccount)
-              ? const Text('Log out to switch')
-              : null,
-          onChanged: (value) {
-            setState(() {
-              useMyAccountAsSecurityAccount = value;
-              (useMyAccountAsSecurityAccount)
-                  ? securityAccountEmail = loginID!
-                  : securityAccountEmail = 'securityoffice@iiti.ac.in';
-            });
-            debugPrint(
-                'useMyAccountAsSecurityAccount: $useMyAccountAsSecurityAccount');
-            debugPrint('securityAccountEmail: $securityAccountEmail');
-          }),
+      // SwitchListTile(
+      //     value: useMyAccountAsSecurityAccount,
+      //     title: Text(
+      //       'Use my account as security account',
+      //       style: themeData.textTheme.bodyLarge,
+      //       // style: bodyMedium,
+      //     ),
+      //     subtitle: (useMyAccountAsSecurityAccount)
+      //         ? const Text('Log out to switch')
+      //         : null,
+      //     onChanged: (value) {
+      //       setState(() {
+      //         useMyAccountAsSecurityAccount = value;
+      //         (useMyAccountAsSecurityAccount)
+      //             ? securityAccountEmail = loginID!
+      //             : securityAccountEmail = 'securityoffice@iiti.ac.in';
+      //       });
+      //       debugPrint(
+      //           'useMyAccountAsSecurityAccount: $useMyAccountAsSecurityAccount');
+      //       debugPrint('securityAccountEmail: $securityAccountEmail');
+      //     }),
       SwitchListTile(
           value: forceLightTheme.value,
           title: Text(
             'Force light theme',
             style: themeData.textTheme.bodyLarge,
           ),
-          subtitle: (showForceLightThemeSubtitle)
-              ? const Text('Restart to fully apply theme')
-              : null,
           onChanged: (value) {
             setState(() {
               forceLightTheme.value = value;
-              showForceLightThemeSubtitle = true;
             });
             saveForceLightTheme();
           }),
       ListTile(
         title: Text(
-          'Logout and delete',
+          'Logout and delete account',
           style: themeData.textTheme.bodyLarge,
         ),
         onTap: () async {

@@ -65,7 +65,7 @@ class _NewPostPageState extends State<NewPostPage> {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 50,
+      imageQuality: 20,
     );
     if (pickedImage != null) {
       setState(() {
@@ -215,9 +215,10 @@ class _NewPostPageState extends State<NewPostPage> {
 
     void updateIsRequestPostable() {
       // isRequestPostable.value = _formKey.currentState?.validate() ?? false;
-      isRequestFilledAdequately.value = titleController.text.isNotEmpty &&
-          descriptionController.text.isNotEmpty &&
-          locationController.text.isNotEmpty;
+      isRequestFilledAdequately.value =
+          titleController.text.trim().isNotEmpty &&
+              descriptionController.text.trim().isNotEmpty &&
+              locationController.text.trim().isNotEmpty;
     }
 
     Widget leading = IconButton(
@@ -298,7 +299,7 @@ class _NewPostPageState extends State<NewPostPage> {
                       'This request will be sent to the security, and they might choose to make it public.',
                       style: TextStyle(
                           fontSize: 15,
-                          color: secondaryTextColor,
+                          color: themeData.colorScheme.onSurfaceVariant,
                           fontFamily: fonts[1],
                           fontVariations: const [FontVariation('wght', 400)]),
                       textAlign: TextAlign.center,
@@ -315,9 +316,18 @@ class _NewPostPageState extends State<NewPostPage> {
                                       ? () async {
                                           if (_formKey.currentState!
                                               .validate()) {
+                                            RequestUploadStatus
+                                                previousRequestUploadStatus =
+                                                requestUploadStatus.value;
+
+                                            requestUploadStatus.value =
+                                                RequestUploadStatus.validating;
+
                                             await verifyAppValidity()
                                                 .then((isValid) {
-                                              debugPrint('isValid: $isValid');
+                                              requestUploadStatus.value =
+                                                  previousRequestUploadStatus;
+
                                               if (isValid) {
                                                 postAction(
                                                     context,

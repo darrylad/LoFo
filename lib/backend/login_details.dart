@@ -287,8 +287,9 @@ class LoginImageButton extends StatelessWidget {
                   shadow: const [
                     BoxShadow(color: Colors.black26, blurRadius: 10)
                   ],
-                  backgroundColor: themeData.colorScheme.background,
-                  barrierColor: Colors.blueGrey[200]!.withOpacity(0.2),
+                  backgroundColor: themeData.colorScheme.tertiary,
+                  barrierColor:
+                      themeData.scaffoldBackgroundColor.withOpacity(0.3),
                   transition: PopoverTransition.other,
                   radius: 13,
                   arrowWidth: 18,
@@ -303,7 +304,10 @@ class LoginImageButton extends StatelessWidget {
                             popOverText(
                                 'Logged In',
                                 //  Colors.green[700],
-                                primaryGreen,
+                                ColorScheme.fromSeed(
+                                        seedColor: Colors.green,
+                                        brightness: themeData.brightness)
+                                    .primary,
                                 20,
                                 700),
                             const SizedBox(height: 10),

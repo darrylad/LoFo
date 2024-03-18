@@ -8,19 +8,21 @@ import 'package:lofo/theme/default_theme.dart';
 import 'package:photo_view/photo_view.dart';
 
 class LetterCard extends StatelessWidget {
-  const LetterCard(
-      {super.key,
-      required this.cardTitle,
-      required this.cardID,
-      required this.cardDescription,
-      required this.cardLocation,
-      required this.cardTimeLastSeen,
-      required this.cardName,
-      required this.cardImageURL,
-      required this.userImageURL,
-      required this.cardPostedAt,
-      required this.cardCategory,
-      required this.cardType});
+  const LetterCard({
+    super.key,
+    required this.cardTitle,
+    required this.cardID,
+    required this.cardDescription,
+    required this.cardLocation,
+    required this.cardTimeLastSeen,
+    required this.cardName,
+    required this.cardImageURL,
+    required this.userImageURL,
+    required this.cardPostedAt,
+    required this.cardCategory,
+    required this.cardType,
+    // required this.parentContext
+  });
 
   final int cardType; // 0 for home, 1 for your posts
   final int cardCategory; // 0 for found, 1 for lost
@@ -34,42 +36,45 @@ class LetterCard extends StatelessWidget {
   // final String cardImage = 'assets/images/photo-1643804926339-e94f0a655185.png';
   final String? cardImageURL;
   final String userImageURL;
+  // final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context) {
     return cardLayout(
-        cardType,
-        cardCategory,
-        cardID,
-        cardTitle,
-        cardPostedAt,
-        cardDescription,
-        cardLocation,
-        cardTimeLastSeen,
-        cardName,
-        cardImageURL,
-        userImageURL,
-        context);
+      cardType,
+      cardCategory,
+      cardID,
+      cardTitle,
+      cardPostedAt,
+      cardDescription,
+      cardLocation,
+      cardTimeLastSeen,
+      cardName,
+      cardImageURL,
+      userImageURL,
+      context,
+    );
   }
 }
 
 Column cardLayout(
-    int cardType,
-    int cardCategory,
-    String cardID,
-    String cardTitle,
-    String cardPostedAt,
-    String cardDescription,
-    String cardLocation,
-    String? cardTimeMisplaced,
-    String cardName,
-    String? cardImageURL,
-    String posterImageURL,
-    BuildContext context) {
+  int cardType,
+  int cardCategory,
+  String cardID,
+  String cardTitle,
+  String cardPostedAt,
+  String cardDescription,
+  String cardLocation,
+  String? cardTimeMisplaced,
+  String cardName,
+  String? cardImageURL,
+  String posterImageURL,
+  BuildContext context,
+) {
   themeData = Theme.of(context);
   return Column(
     children: [
-      const SizedBox(height: 20),
+      const SizedBox(height: 15),
       posterInfoRow(cardCategory, posterImageURL, cardName, cardPostedAt),
       const SizedBox(height: 10),
       Container(
@@ -115,13 +120,14 @@ Column cardLayout(
                   )
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 15),
               locationInfo(cardLocation, cardCategory),
               const SizedBox(height: 10),
               timeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
-              actionButtonRow(cardID, cardTitle, cardType, cardImageURL),
-              const SizedBox(height: 5),
+              actionButtonRow(
+                  cardID, cardTitle, cardType, cardImageURL, context),
+              // const SizedBox(height: 5),
             ],
           ),
         ),
@@ -130,42 +136,53 @@ Column cardLayout(
   );
 }
 
-Widget actionButtonRow(
-    String cardID, String cardTitle, int cardType, String? cardImageURL) {
+Widget actionButtonRow(String cardID, String cardTitle, int cardType,
+    String? cardImageURL, BuildContext parentContext) {
   if (cardType == 0) {
     // card is displayed in home page
-    return BasicButton.secondaryButton('Ping', () {
-      debugPrint('Claim button pressed');
-      debugPrint('Card ID: $cardID');
-      debugPrint('Card Title: $cardTitle');
-    });
+    // return BasicButton.secondaryButton('Ping', () {
+    //   debugPrint('Claim button pressed');
+    //   debugPrint('Card ID: $cardID');
+    //   debugPrint('Card Title: $cardTitle');
+    // });
+    return const SizedBox();
   } else if (cardType == 1) {
-    return BasicButton.warningSecondaryButton('Delete', () async {
-      debugPrint('Delete button pressed');
-      debugPrint('Card ID: $cardID');
+    return
 
-      // initiate deletion of private request
+        // BasicButton.warningSecondaryButton('Delete', () async {
+        ConfirmatoryButton(
+            buttonType: ButtonType.warningSecondary,
+            buttonText: 'Delete',
+            parentContext: parentContext,
+            // parentContext: parentContext,
+            actionOnPressed: () async {
+// dismiss pop over
+              Navigator.pop(parentContext);
 
-      RequestUploadStatus previousRequestUploadStatus =
-          requestUploadStatus.value;
+              // initiate deletion of private request
 
-      requestUploadStatus.value = RequestUploadStatus.deleting;
+              RequestUploadStatus previousRequestUploadStatus =
+                  requestUploadStatus.value;
 
-      await midLoginCheck().then((isLoginValid) async {
-        if (isLoginValid) {
-          await deleteRequest(cardID, cardImageURL).then((isDeleteSuccessful) {
-            if (isDeleteSuccessful) {
-              deleteSuccess(previousRequestUploadStatus);
-            } else {
-              deleteFailure(previousRequestUploadStatus);
-            }
-          });
-        } else {
-          previousRequestUploadStatus = RequestUploadStatus.someThingWentWrong;
-          deleteFailure(previousRequestUploadStatus);
-        }
-      });
-    });
+              requestUploadStatus.value = RequestUploadStatus.deleting;
+
+              await midLoginCheck().then((isLoginValid) async {
+                if (isLoginValid) {
+                  await deleteRequest(cardID, cardImageURL)
+                      .then((isDeleteSuccessful) {
+                    if (isDeleteSuccessful) {
+                      deleteSuccess(previousRequestUploadStatus);
+                    } else {
+                      deleteFailure(previousRequestUploadStatus);
+                    }
+                  });
+                } else {
+                  previousRequestUploadStatus =
+                      RequestUploadStatus.someThingWentWrong;
+                  deleteFailure(previousRequestUploadStatus);
+                }
+              });
+            });
   } else {
     return const SizedBox();
   }
@@ -298,7 +315,6 @@ GestureDetector letterImage(String? cardImageURL, BuildContext context) {
     Image cardImage = Image.network(cardImageURL);
     return GestureDetector(
       onTap: () {
-        debugPrint('Card image pressed');
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -311,7 +327,7 @@ GestureDetector letterImage(String? cardImageURL, BuildContext context) {
         width: 140,
         height: 140,
         decoration: BoxDecoration(
-          color: secondaryButtonBackGroundColor,
+          color: themeData.colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             image: cardImage.image,

@@ -13,7 +13,8 @@ enum SecurityRequestUploadStatus {
   deleteError,
   publicizing,
   publicized,
-  publicizeError
+  publicizeError,
+  validating
 }
 
 // String requestUploadStatus = 'Normal';
@@ -65,6 +66,9 @@ PreferredSize securityAppBar(String title, Widget? actionImage,
               break;
             case SecurityRequestUploadStatus.publicizeError:
               currentSecurityAppBar = publicizeErrowSecurityAppBar();
+              break;
+            case SecurityRequestUploadStatus.validating:
+              currentSecurityAppBar = validatingSecurityAppBar();
               break;
             default:
               currentSecurityAppBar =
@@ -227,6 +231,20 @@ AppBar publicizeErrowSecurityAppBar() {
           color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
     ),
     backgroundColor: securityThemeData.colorScheme.onError,
+  );
+}
+
+AppBar validatingSecurityAppBar() {
+  return AppBar(
+    backgroundColor: securityColorScheme.background,
+    key: const ValueKey(11),
+    centerTitle: true,
+    title: const PulsingText(
+      text: 'Validating',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    // backgroundColor: lightThemeData.colorScheme.error,
   );
 }
 

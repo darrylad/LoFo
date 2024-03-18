@@ -217,9 +217,10 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
 
     void updateIsRequestPostable() {
       // isRequestPostable.value = _formKey.currentState?.validate() ?? false;
-      isRequestFilledAdequately.value = titleController.text.isNotEmpty &&
-          descriptionController.text.isNotEmpty &&
-          locationController.text.isNotEmpty;
+      isRequestFilledAdequately.value =
+          titleController.text.trim().isNotEmpty &&
+              descriptionController.text.trim().isNotEmpty &&
+              locationController.text.trim().isNotEmpty;
     }
 
     Widget leading = IconButton(
@@ -318,9 +319,21 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                                       ? () async {
                                           if (_formKey.currentState!
                                               .validate()) {
+                                            SecurityRequestUploadStatus
+                                                previousSecurityRequestUploadStatus =
+                                                securityRequestUploadStatus
+                                                    .value;
+
+                                            securityRequestUploadStatus.value =
+                                                SecurityRequestUploadStatus
+                                                    .validating;
+
                                             await verifyAppValidity()
                                                 .then((isValid) {
-                                              debugPrint('isValid: $isValid');
+                                              securityRequestUploadStatus
+                                                      .value =
+                                                  previousSecurityRequestUploadStatus;
+
                                               if (isValid) {
                                                 postAction(
                                                     context,

@@ -11,6 +11,7 @@ enum RequestUploadStatus {
   deleting,
   deleted,
   deleteError,
+  validating
 }
 
 ValueNotifier<RequestUploadStatus> requestUploadStatus =
@@ -63,6 +64,10 @@ PreferredSize appBar(String title, Widget? actionImage, {Widget? leading}) {
               break;
             case RequestUploadStatus.deleteError:
               currentAppBar = deleteErrorAppBar();
+              break;
+            case RequestUploadStatus.validating:
+              currentAppBar = validatingAppBar();
+              break;
             default:
               currentAppBar =
                   normalAppBar(title, actionImage, leading: leading);
@@ -205,6 +210,18 @@ AppBar someThingWentWrongAppBar() {
     centerTitle: true,
     title: const PulsingText(
       text: 'Something went wrong',
+      style: TextStyle(fontVariations: [FontVariation('wght', 600)]),
+    ),
+    // backgroundColor: lightThemeData.colorScheme.error,
+  );
+}
+
+AppBar validatingAppBar() {
+  return AppBar(
+    key: const ValueKey(7),
+    centerTitle: true,
+    title: const PulsingText(
+      text: 'Validating',
       style: TextStyle(fontVariations: [FontVariation('wght', 600)]),
     ),
     // backgroundColor: lightThemeData.colorScheme.error,

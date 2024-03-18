@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lofo/backend/login_details.dart';
-import 'package:lofo/components/basic_text_box.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
@@ -104,15 +103,15 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Text('Welcome!', style: themeData.textTheme.titleMedium),
             const SizedBox(height: 200),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50.0),
-              child: BasicTextBox(
-                  hintText: 'this field is depricated',
-                  maxLength: 30,
-                  maxLines: 1,
-                  // labelText: 'Login ID',
-                  textController: loginText),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            //   child: BasicTextBox(
+            //       hintText: 'this field is depricated',
+            //       maxLength: 30,
+            //       maxLines: 1,
+            //       // labelText: 'Login ID',
+            //       textController: loginText),
+            // ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -227,15 +226,25 @@ class _AppNotValidPageState extends State<AppNotValidPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('This version of the app is not valid.'),
-          ],
-        ),
+    return Scaffold(
+        body: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.info_rounded,
+              size: 100, color: themeData.colorScheme.secondary),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: Text('Please update the app',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: themeData.colorScheme.secondary,
+                  fontSize: 20,
+                )),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }

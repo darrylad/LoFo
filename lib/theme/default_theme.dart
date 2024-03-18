@@ -74,12 +74,8 @@ ColorScheme lightColorScheme = lightThemeData.colorScheme;
 // TextStyle? titleSmall = themeData.textTheme.titleSmall;
 // TextStyle? titleMedium = themeData.textTheme.titleMedium;
 
-Color primaryGreen = ColorScheme.fromSeed(
-        seedColor: Colors.green, brightness: themeData.brightness)
-    .primary;
-
-Color secondaryButtonBackGroundColor =
-    themeData.colorScheme.primary.withOpacity(0.2);
+// Color secondaryButtonBackGroundColor =
+//     themeData.colorScheme.primary.withOpacity(0.2);
 
 Color secondaryButtonBackgroundSolidColor =
     themeData.colorScheme.primaryContainer;
@@ -87,6 +83,3 @@ Color secondaryButtonBackgroundSolidColor =
 Color warningPrimaryColor = themeData.colorScheme.error;
 
 Color backgroundAnimationColor = const Color.fromRGBO(0, 57, 95, 0.627);
-
-Color secondaryTextColor = Colors.blueGrey[400]!;
-Color primaryTextColor = Colors.blueGrey[700]!;

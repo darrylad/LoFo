@@ -1,5 +1,3 @@
-// import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/CRUD/fetcher.dart';
 import 'package:lofo/components/new_post_floating_action_button.dart';
