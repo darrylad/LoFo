@@ -425,7 +425,7 @@ class _NewPostPageState extends State<NewPostPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            backgroundColor: secondaryButtonBackgroundSolidColor,
+            backgroundColor: themeData.colorScheme.primaryContainer,
             shadowColor: Colors.transparent,
             elevation: 0),
         child: AnimatedContainer(
@@ -436,7 +436,7 @@ class _NewPostPageState extends State<NewPostPage> {
           decoration: BoxDecoration(
               color: pickedPostImage != null
                   ? Colors.transparent
-                  : secondaryButtonBackgroundSolidColor,
+                  : themeData.colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(8),
               image: (pickedPostImage != null)
                   ? DecorationImage(

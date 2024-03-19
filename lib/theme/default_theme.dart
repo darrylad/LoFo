@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lofo/main.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 List<String> fonts = ['Manrope', 'Rubik'];
@@ -77,9 +76,7 @@ ColorScheme lightColorScheme = lightThemeData.colorScheme;
 // Color secondaryButtonBackGroundColor =
 //     themeData.colorScheme.primary.withOpacity(0.2);
 
-Color secondaryButtonBackgroundSolidColor =
-    themeData.colorScheme.primaryContainer;
-
-Color warningPrimaryColor = themeData.colorScheme.error;
+// Color secondaryButtonBackgroundSolidColor =
+//     themeData.colorScheme.primaryContainer;
 
 Color backgroundAnimationColor = const Color.fromRGBO(0, 57, 95, 0.627);

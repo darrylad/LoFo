@@ -5,7 +5,6 @@ import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
-import 'package:lofo/theme/default_theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -177,14 +176,15 @@ class _LoginFailedPageState extends State<LoginFailedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightColorScheme.errorContainer,
+      backgroundColor: themeData.colorScheme.errorContainer,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'Invalid Login',
-            style: TextStyle(color: warningPrimaryColor, fontSize: 40),
+            style: TextStyle(
+                color: themeData.colorScheme.onErrorContainer, fontSize: 40),
           ),
           const SizedBox(height: 200),
           Padding(
@@ -200,7 +200,9 @@ class _LoginFailedPageState extends State<LoginFailedPage> {
           Opacity(
               opacity: 0.1,
               child: Text('$_remainingTime',
-                  style: TextStyle(color: warningPrimaryColor))),
+                  style: TextStyle(
+                      color: themeData.colorScheme.onErrorContainer,
+                      fontSize: 20))),
         ],
       ),
     );
