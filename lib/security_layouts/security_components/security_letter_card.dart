@@ -247,6 +247,15 @@ Widget securityCardActionRow(
                 });
               }
 
+              DateTime cardPostedAtDatetime = DateTime.now();
+              // String yearLastTwoDigits =
+              //     cardPostedAtDatetime.year.toString().substring(2);
+              // String cardID =
+              //     '${loginID?.substring(0, loginID!.length - 10)}${cardPostedAtDatetime.day}.${cardPostedAtDatetime.month}.$yearLastTwoDigits.${cardPostedAtDatetime.hour}:${cardPostedAtDatetime.minute}:${cardPostedAtDatetime.second}';
+
+              String cardPostedAt =
+                  '${cardPostedAtDatetime.year}-${cardPostedAtDatetime.month.toString().padLeft(2, '0')}-${cardPostedAtDatetime.day.toString().padLeft(2, '0')} ${cardPostedAtDatetime.hour.toString().padLeft(2, '0')}:${cardPostedAtDatetime.minute.toString().padLeft(2, '0')}:${cardPostedAtDatetime.second.toString().padLeft(2, '0')}.${cardPostedAtDatetime.millisecond.toString().padLeft(3, '0')}';
+
               await midLoginCheck().then((isLoginValid) async {
                 if (isLoginValid) {
                   // send request to public

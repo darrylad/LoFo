@@ -245,7 +245,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     uploadImageButton(),
                     const SizedBox(height: 20),
                     basicSecurityDropDownFormField(),
@@ -450,7 +450,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.add_a_photo,
+                      Icons.add_photo_alternate_rounded,
                       color: securityColorScheme.primary,
                       size: 100,
                     ),

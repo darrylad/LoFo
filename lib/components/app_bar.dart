@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lofo/main.dart';
 import 'package:lofo/theme/default_theme.dart';
 
 enum RequestUploadStatus {
@@ -147,13 +146,13 @@ AppBar deletingAppBar() {
   return AppBar(
     key: const ValueKey(2),
     centerTitle: true,
-    title: const Text(
+    title: Text(
       'Deleting',
       style: TextStyle(
-          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+          color: ColorScheme.fromSeed(seedColor: Colors.amber).onPrimary,
+          fontVariations: const [FontVariation('wght', 600)]),
     ),
-    backgroundColor:
-        ColorScheme.fromSeed(seedColor: Colors.amber[900]!).primary,
+    backgroundColor: ColorScheme.fromSeed(seedColor: Colors.amber).primary,
   );
 }
 
@@ -161,12 +160,13 @@ AppBar deleteErrorAppBar() {
   return AppBar(
     key: const ValueKey(3),
     centerTitle: true,
-    title: const Text(
+    title: Text(
       'Could not delete',
       style: TextStyle(
-          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+          color: lightThemeData.colorScheme.onError,
+          fontVariations: const [FontVariation('wght', 600)]),
     ),
-    backgroundColor: themeData.colorScheme.error,
+    backgroundColor: lightThemeData.colorScheme.error,
   );
 }
 
@@ -200,7 +200,7 @@ AppBar uploadErrorAppBar() {
       style: TextStyle(
           color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
     ),
-    backgroundColor: themeData.colorScheme.error,
+    backgroundColor: lightThemeData.colorScheme.error,
   );
 }
 

@@ -242,7 +242,7 @@ class _NewPostPageState extends State<NewPostPage> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     uploadImageButton(),
                     const SizedBox(height: 20),
                     basicDropDownFormField(),
@@ -449,7 +449,7 @@ class _NewPostPageState extends State<NewPostPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.add_a_photo,
+                      Icons.add_photo_alternate_rounded,
                       size: 100,
                     ),
                     SizedBox(height: 20),

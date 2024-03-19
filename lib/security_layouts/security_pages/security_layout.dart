@@ -29,7 +29,8 @@ class _SecurityLayoutState extends State<SecurityLayout> {
         break;
       case 1:
         securityPage = const SecurityHomePage();
-        currentAppBar = securityAppBar('Pubic Posts', const LoginImageButton());
+        currentAppBar =
+            securityAppBar('Public Posts', const LoginImageButton());
         break;
       case 2:
         securityPage = const SecurityInboxPage();

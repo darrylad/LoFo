@@ -152,7 +152,7 @@ AppBar publicizingSecurityAppBar() {
     key: const ValueKey(5),
     centerTitle: true,
     title: const Text(
-      'Publicizing copy',
+      'Publicizing',
       style: TextStyle(
           color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
     ),
@@ -213,7 +213,7 @@ AppBar publicizedSecurityAppBar() {
     key: const ValueKey(9),
     centerTitle: true,
     title: const Text(
-      'Publicized copy',
+      'Publicized',
       style: TextStyle(
           color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
     ),

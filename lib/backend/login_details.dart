@@ -43,7 +43,7 @@ Future<void> saveLoginDetails() async {
 
 Future<void> getLoginDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  forceLightTheme.value = prefs.getBool('forceLightTheme') ?? true;
+  forceLightTheme.value = prefs.getBool('forceLightTheme') ?? false;
   isUserLoggedIn = prefs.getBool('isUserLoggedIn') ?? false;
   loginID = prefs.getString('savedLoginID') ?? '';
   userName = prefs.getString('savedUserName') ?? '';

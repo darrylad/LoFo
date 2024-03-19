@@ -241,7 +241,7 @@ class ConfirmatoryButton extends StatelessWidget {
                         shadow: const [
                           BoxShadow(color: Colors.black26, blurRadius: 10)
                         ],
-                        backgroundColor: themeData.colorScheme.surface,
+                        backgroundColor: themeData.colorScheme.tertiary,
                         // barrierColor: Colors.blueGrey[200]!.withOpacity(0.3),
                         barrierColor:
                             themeData.scaffoldBackgroundColor.withOpacity(0.3),

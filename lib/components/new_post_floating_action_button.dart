@@ -95,9 +95,9 @@ class _NewPostFloatingActionButtonState
                                   return const NewPostPage();
                                 },
                                 transitionDuration:
-                                    const Duration(milliseconds: 550),
+                                    const Duration(milliseconds: 750),
                                 reverseTransitionDuration:
-                                    const Duration(milliseconds: 600),
+                                    const Duration(milliseconds: 800),
                                 transitionsBuilder: (context, animation,
                                     secondaryAnimation, child) {
                                   final curvedAnimation = CurvedAnimation(
@@ -118,7 +118,7 @@ class _NewPostFloatingActionButtonState
                                                   15 * curvedAnimation.value),
                                           child: Container(
                                             color: backgroundAnimationColor
-                                                .withOpacity(0.5 *
+                                                .withOpacity(0.7 *
                                                     curvedAnimation.value),
                                           ),
                                         );

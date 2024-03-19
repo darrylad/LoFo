@@ -119,7 +119,7 @@ class _SecurityNewPostFloatingActionButtonState
                                                   15 * curvedAnimation.value),
                                           child: Container(
                                             color: backgroundAnimationColor
-                                                .withOpacity(0.5 *
+                                                .withOpacity(0.7 *
                                                     curvedAnimation.value),
                                           ),
                                         );
