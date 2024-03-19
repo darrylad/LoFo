@@ -68,15 +68,24 @@ class _GetSecurityInboxState extends State<GetSecurityInbox> {
 
             if (docIDs.isEmpty) {
               return Center(
-                  child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Text('Nothing to show here.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: themeData.colorScheme.secondary,
-                      fontSize: 20,
-                    )),
-              ));
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.info_rounded,
+                        size: 100, color: themeData.colorScheme.secondary),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: Text('Nothing to show here.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: themeData.colorScheme.secondary,
+                            fontSize: 20,
+                          )),
+                    ),
+                  ],
+                ),
+              );
             } else {
               return ListView.builder(
                   itemCount: docIDs.length,
