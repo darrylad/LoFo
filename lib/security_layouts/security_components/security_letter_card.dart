@@ -8,6 +8,7 @@ import 'package:lofo/security_layouts/security_backend/security_CRUD/security_tr
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SecurityLetterCard extends StatelessWidget {
   const SecurityLetterCard(
@@ -171,6 +172,21 @@ Widget securityCardActionRow(
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        BasicButton.secondaryButton('Contact', () async {
+          final Uri params =
+              Uri(scheme: 'mailto', path: cardPosterID, query: '');
+
+          try {
+            if (await canLaunchUrl(params)) {
+              await launchUrl(params);
+            } else {
+              throw 'Could not launch $params';
+            }
+          } catch (e) {
+            debugPrint('Error: $e');
+          }
+        }),
+        const SizedBox(width: 10),
         // BasicButton.warningSecondaryButton('Delete', () async {
         // show confirmation popover
         SecurityConfirmatoryButton(

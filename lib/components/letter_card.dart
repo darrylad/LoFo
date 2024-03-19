@@ -6,6 +6,7 @@ import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/theme/default_theme.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LetterCard extends StatelessWidget {
   const LetterCard({
@@ -21,6 +22,7 @@ class LetterCard extends StatelessWidget {
     required this.cardPostedAt,
     required this.cardCategory,
     required this.cardType,
+    required this.cardPosterID,
     // required this.parentContext
   });
 
@@ -36,41 +38,42 @@ class LetterCard extends StatelessWidget {
   // final String cardImage = 'assets/images/photo-1643804926339-e94f0a655185.png';
   final String? cardImageURL;
   final String userImageURL;
+  final String cardPosterID;
   // final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context) {
     return cardLayout(
-      cardType,
-      cardCategory,
-      cardID,
-      cardTitle,
-      cardPostedAt,
-      cardDescription,
-      cardLocation,
-      cardTimeLastSeen,
-      cardName,
-      cardImageURL,
-      userImageURL,
-      context,
-    );
+        cardType,
+        cardCategory,
+        cardID,
+        cardTitle,
+        cardPostedAt,
+        cardDescription,
+        cardLocation,
+        cardTimeLastSeen,
+        cardName,
+        cardImageURL,
+        userImageURL,
+        context,
+        cardPosterID);
   }
 }
 
 Column cardLayout(
-  int cardType,
-  int cardCategory,
-  String cardID,
-  String cardTitle,
-  String cardPostedAt,
-  String cardDescription,
-  String cardLocation,
-  String? cardTimeMisplaced,
-  String cardName,
-  String? cardImageURL,
-  String posterImageURL,
-  BuildContext context,
-) {
+    int cardType,
+    int cardCategory,
+    String cardID,
+    String cardTitle,
+    String cardPostedAt,
+    String cardDescription,
+    String cardLocation,
+    String? cardTimeMisplaced,
+    String cardName,
+    String? cardImageURL,
+    String posterImageURL,
+    BuildContext context,
+    String cardPosterID) {
   themeData = Theme.of(context);
   return Column(
     children: [
@@ -125,8 +128,8 @@ Column cardLayout(
               const SizedBox(height: 10),
               timeInfo(cardTimeMisplaced),
               const SizedBox(height: 12),
-              actionButtonRow(
-                  cardID, cardTitle, cardType, cardImageURL, context),
+              actionButtonRow(cardID, cardTitle, cardType, cardImageURL,
+                  context, cardPosterID),
               // const SizedBox(height: 5),
             ],
           ),
@@ -137,15 +140,30 @@ Column cardLayout(
 }
 
 Widget actionButtonRow(String cardID, String cardTitle, int cardType,
-    String? cardImageURL, BuildContext parentContext) {
+    String? cardImageURL, BuildContext parentContext, String cardPosterID) {
   if (cardType == 0) {
     // card is displayed in home page
+
     // return BasicButton.secondaryButton('Ping', () {
     //   debugPrint('Claim button pressed');
     //   debugPrint('Card ID: $cardID');
     //   debugPrint('Card Title: $cardTitle');
     // });
-    return const SizedBox();
+
+    return BasicButton.secondaryButton('Contact', () async {
+      final Uri params = Uri(scheme: 'mailto', path: cardPosterID, query: '');
+
+      try {
+        if (await canLaunchUrl(params)) {
+          await launchUrl(params);
+        } else {
+          throw 'Could not launch $params';
+        }
+      } catch (e) {
+        debugPrint('Error: $e');
+      }
+    });
+    // return const SizedBox();
   } else if (cardType == 1) {
     return
 

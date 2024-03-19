@@ -147,6 +147,7 @@ class YourPostsDetails extends StatelessWidget {
       userImageURL: data['userImageURL'],
       cardPostedAt: data['postPostedAt'],
       cardCategory: data['postCategory'],
+      cardPosterID: data['postPosterID'],
     );
 
     // return StreamBuilder(
@@ -294,6 +295,7 @@ class GetHomePostsDetails extends StatelessWidget {
       userImageURL: data['userImageURL'],
       cardPostedAt: data['postPostedAt'],
       cardCategory: data['postCategory'],
+      cardPosterID: data['postPosterID'],
     );
   }
 }
