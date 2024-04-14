@@ -30,12 +30,10 @@ The security side can see the public posts in the Home page, and the private pos
 <img width="250" alt="Menu" src="https://github.com/darrylad/LoFo/assets/132708308/3560dd58-e60a-48fa-96c2-54034a73c648"> <img width="250" alt="Security Home" src="https://github.com/darrylad/LoFo/assets/132708308/e9e27bbe-3def-469a-80c5-f939f2bd46eb"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/13bc4deb-abde-457b-a9a1-e472b42ae75f">
 <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/53f56dbf-cb0f-429a-b875-254059a995cd"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/b9a19107-4ec6-4c11-bab5-673fab204538"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/b972a927-56fa-4d7d-88b5-94295e8324e3"> 
 
+#### Login Animations:
 
-
-
-
-
-
+https://github.com/darrylad/LoFo/assets/132708308/1174968b-7a77-4593-b2a2-0a8adbf4d0e1
+https://github.com/darrylad/LoFo/assets/132708308/43bcf90b-c16d-45d6-8b91-a89e6ef4d2c6
 
 ## Getting Started
 
