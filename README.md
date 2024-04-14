@@ -17,15 +17,22 @@ The app bar also adapts to show the current status, like Validating, Sending, Se
 <img width="250" alt="Sending app bar" src="https://github.com/darrylad/LoFo/assets/132708308/dec6774a-5752-4c30-b30f-36e1b5fa80fe"> <img width="250" alt="Sent app bar" src="https://github.com/darrylad/LoFo/assets/132708308/15a9741f-9566-4fb3-b10d-a1d94cf59769"> <img width="250" alt="Your posts page" src="https://github.com/darrylad/LoFo/assets/132708308/8b97a214-36d8-47de-a7f5-c73046e9fef0"> 
 
 Confirmatory buttons show popups to minimize accedental actions
+
 <img width="250" alt="Sending app bar" src="https://github.com/darrylad/LoFo/assets/132708308/36d96a95-9247-469f-82fc-9b0fbe3c5a6b">
 
+#### Animations:
 
-
-
-
-
+https://github.com/darrylad/LoFo/assets/132708308/26f117d0-3bc4-4052-905d-a9ec101dc8f6
 
 ### Security side screenshots:
+The security side can see the public posts in the Home page, and the private posts in the Inbox.
+
+<img width="250" alt="Menu" src="https://github.com/darrylad/LoFo/assets/132708308/3560dd58-e60a-48fa-96c2-54034a73c648"> <img width="250" alt="Security Home" src="https://github.com/darrylad/LoFo/assets/132708308/e9e27bbe-3def-469a-80c5-f939f2bd46eb"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/13bc4deb-abde-457b-a9a1-e472b42ae75f">
+<img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/53f56dbf-cb0f-429a-b875-254059a995cd"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/b9a19107-4ec6-4c11-bab5-673fab204538"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/b972a927-56fa-4d7d-88b5-94295e8324e3"> 
+
+
+
+
 
 
 
