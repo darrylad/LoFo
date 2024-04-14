@@ -33,6 +33,7 @@ The security side can see the public posts in the Home page, and the private pos
 #### Login Animations:
 
 https://github.com/darrylad/LoFo/assets/132708308/1174968b-7a77-4593-b2a2-0a8adbf4d0e1
+
 https://github.com/darrylad/LoFo/assets/132708308/43bcf90b-c16d-45d6-8b91-a89e6ef4d2c6
 
 ## Getting Started
