@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Welcome!', style: themeData.textTheme.titleMedium),
-            const SizedBox(height: 200),
+            const SizedBox(height: 100),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
             //   child: BasicTextBox(
@@ -113,10 +113,20 @@ class _LoginPageState extends State<LoginPage> {
             // ),
             const SizedBox(height: 20),
             Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                  'To continue, we need to verify that you belong to Indian Institute of Technology Indore. On the next screen, choose your institute\'s ID. \n \n Your accout will be unaffected, and no data will be stored on your account.',
+                  style: TextStyle(
+                      color: themeData.colorScheme.secondary, fontSize: 16),
+                  textAlign: TextAlign.center),
+            ),
+            const SizedBox(height: 20),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Hero(
                 tag: 'loginButton',
-                child: BasicButton.primaryButton('Login with Google', () {
+                child: BasicButton.primaryButton('Verify identity with Google',
+                    () {
                   // loginID = 'ex220003002@iiti.ac.in';
                   // loginID = 'meow';
 
