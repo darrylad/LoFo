@@ -37,7 +37,7 @@ The security side can see the public posts in the Home page, and the private pos
 
 ### Login Page: 
 
-<img width="250" alt="Login Page" src="https://github.com/darrylad/LoFo/assets/132708308/131a5ee8-eb83-484e-bca5-2b4b4e4213c4">
+<img width="250" alt="Login Page" src="https://github.com/darrylad/LoFo/assets/132708308/131a5ee8-eb83-484e-bca5-2b4b4e4213c4"> <img width="250" alt="Login Page" src="https://github.com/darrylad/LoFo/assets/132708308/3a161baa-2006-4e29-9414-170593f4a938">
 
 #### Login Animations:
 
