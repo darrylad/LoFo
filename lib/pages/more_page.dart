@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:lofo/animation/logout_intermediate.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
+import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/about_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 bool useMyAccountAsSecurityAccount = false;
 
 ValueNotifier<bool> forceLightTheme = ValueNotifier<bool>(false);
+
+String appURL = 'null';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -22,6 +26,19 @@ class _MorePageState extends State<MorePage> {
   saveForceLightTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('forceLightTheme', forceLightTheme.value);
+  }
+
+  final Uri _url = Uri.parse(appURL);
+
+  Future<void> _launchUrl() async {
+    try {
+      // if (!await launchUrl(_url)) {
+      //   throw Exception('Could not launch $_url');
+      // }
+      await launchUrl(_url);
+    } on Exception catch (e) {
+      debugPrint('Could not launch $_url: $e');
+    }
   }
 
   @override
@@ -60,27 +77,29 @@ class _MorePageState extends State<MorePage> {
           ),
         ),
       ),
-      // SwitchListTile(
-      //     value: useMyAccountAsSecurityAccount,
-      //     title: Text(
-      //       'Use my account as security account',
-      //       style: themeData.textTheme.bodyLarge,
-      //       // style: bodyMedium,
-      //     ),
-      //     subtitle: (useMyAccountAsSecurityAccount)
-      //         ? const Text('Log out to switch')
-      //         : null,
-      //     onChanged: (value) {
-      //       setState(() {
-      //         useMyAccountAsSecurityAccount = value;
-      //         (useMyAccountAsSecurityAccount)
-      //             ? securityAccountEmail = loginID!
-      //             : securityAccountEmail = 'securityoffice@iiti.ac.in';
-      //       });
-      //       debugPrint(
-      //           'useMyAccountAsSecurityAccount: $useMyAccountAsSecurityAccount');
-      //       debugPrint('securityAccountEmail: $securityAccountEmail');
-      //     }),
+      (loginID == 'me220003022@iiti.ac.in')
+          ? SwitchListTile(
+              value: useMyAccountAsSecurityAccount,
+              title: Text(
+                'Use my account as security account',
+                style: themeData.textTheme.bodyLarge,
+                // style: bodyMedium,
+              ),
+              subtitle: (useMyAccountAsSecurityAccount)
+                  ? const Text('Log out to switch')
+                  : null,
+              onChanged: (value) {
+                setState(() {
+                  useMyAccountAsSecurityAccount = value;
+                  (useMyAccountAsSecurityAccount)
+                      ? securityAccountEmail = loginID!
+                      : securityAccountEmail = 'securityoffice@iiti.ac.in';
+                });
+                debugPrint(
+                    'useMyAccountAsSecurityAccount: $useMyAccountAsSecurityAccount');
+                debugPrint('securityAccountEmail: $securityAccountEmail');
+              })
+          : const SizedBox(),
       SwitchListTile(
           value: forceLightTheme.value,
           title: Text(
@@ -93,6 +112,18 @@ class _MorePageState extends State<MorePage> {
             });
             saveForceLightTheme();
           }),
+      (appURL != 'null')
+          ? ListTile(
+              title: Text(
+                'View source code',
+                style: themeData.textTheme.bodyLarge,
+              ),
+              trailing: const Icon(Icons.open_in_new_rounded),
+              onTap: () {
+                _launchUrl();
+              },
+            )
+          : const SizedBox(),
       ListTile(
         title: Text(
           'Logout and delete account',
