@@ -6,6 +6,9 @@ import 'package:lofo/components/button.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 
+String? loginInformatoryText;
+String? loginButtonText;
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -57,7 +60,11 @@ class _LoginPageState extends State<LoginPage> {
     // double screenHeight = MediaQuery.of(context).size.height;
     // double topPaddingHeight = MediaQuery.of(context).padding.top;
 
-    return loginPageContent(context);
+    String informatoryText = loginInformatoryText ??
+        'To continue, we need to verify that you belong to Indian Institute of Technology Indore. On the next screen, choose your institute\'s ID. \n \n Your account will be unaffected, and no data will be stored on your account.';
+    String buttonText = loginButtonText ?? 'Verify identity with Google';
+
+    return loginPageContent(context, informatoryText, buttonText);
 
     // return Stack(children: [
     //   const Layout(),
@@ -93,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
     // ]);
   }
 
-  Scaffold loginPageContent(BuildContext context) {
+  Scaffold loginPageContent(
+      BuildContext context, String informatoryText, String buttonText) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -115,7 +123,8 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                  'To continue, we need to verify that you belong to Indian Institute of Technology Indore. On the next screen, choose your institute\'s ID. \n \n Your accout will be unaffected, and no data will be stored on your account.',
+                  // 'To continue, we need to verify that you belong to Indian Institute of Technology Indore. On the next screen, choose your institute\'s ID. \n \n Your account will be unaffected, and no data will be stored on your account.',
+                  informatoryText,
                   style: TextStyle(
                       color: themeData.colorScheme.secondary, fontSize: 16),
                   textAlign: TextAlign.center),
@@ -125,8 +134,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Hero(
                 tag: 'loginButton',
-                child: BasicButton.primaryButton('Verify identity with Google',
-                    () {
+                child: BasicButton.primaryButton(buttonText, () {
                   // loginID = 'ex220003002@iiti.ac.in';
                   // loginID = 'meow';
 
@@ -216,47 +224,5 @@ class _LoginFailedPageState extends State<LoginFailedPage> {
         ],
       ),
     );
-  }
-}
-
-class AppNotValidPage extends StatefulWidget {
-  const AppNotValidPage({super.key});
-
-  @override
-  State<AppNotValidPage> createState() => _AppNotValidPageState();
-}
-
-class _AppNotValidPageState extends State<AppNotValidPage> {
-  @override
-  void initState() {
-    super.initState();
-    performLogout();
-    Future.delayed(const Duration(seconds: 5), () {
-      SystemNavigator.pop();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.info_rounded,
-              size: 100, color: themeData.colorScheme.secondary),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Text('Please update the app',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: themeData.colorScheme.secondary,
-                  fontSize: 20,
-                )),
-          ),
-        ],
-      ),
-    ));
   }
 }

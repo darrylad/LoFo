@@ -96,9 +96,9 @@ class _SecurityNewPostFloatingActionButtonState
                                   return const SecurityNewPostPage();
                                 },
                                 transitionDuration:
-                                    const Duration(milliseconds: 550),
+                                    const Duration(milliseconds: 750),
                                 reverseTransitionDuration:
-                                    const Duration(milliseconds: 600),
+                                    const Duration(milliseconds: 800),
                                 transitionsBuilder: (context, animation,
                                     secondaryAnimation, child) {
                                   final curvedAnimation = CurvedAnimation(
