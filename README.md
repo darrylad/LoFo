@@ -22,7 +22,7 @@ Created inside of Google Developers Students Club, Indian Institute of Technolog
 
 ##### Uploading:
 
-The app bar also adapts to show the current status, like Validating, Sending, Sent, Could not send, Deleting, Deleted, Could not delete, Publicizing, Publicized, Could not publicize, Something went wrong.
+The app bar gently adapts to show the current status, like Validating, Sending, Sent, Could not send, Deleting, Deleted, Could not delete, Publicizing, Publicized, Could not publicize, Something went wrong.
 
 <img width="250" alt="Sending app bar" src="https://github.com/darrylad/LoFo/assets/132708308/dec6774a-5752-4c30-b30f-36e1b5fa80fe"> <img width="250" alt="Sent app bar" src="https://github.com/darrylad/LoFo/assets/132708308/15a9741f-9566-4fb3-b10d-a1d94cf59769"> <img width="250" alt="Your posts page" src="https://github.com/darrylad/LoFo/assets/132708308/8b97a214-36d8-47de-a7f5-c73046e9fef0"> 
 
@@ -32,7 +32,7 @@ Confirmatory buttons show popups to minimize accedental actions
 
 #### Animations:
 
-https://github.com/user-attachments/assets/e4371cb7-41cd-4926-9837-4d5bc7aec08f
+https://github.com/user-attachments/assets/21670f20-572b-4ff1-b693-2df4d8c1be25
 
 https://github.com/darrylad/LoFo/assets/132708308/26f117d0-3bc4-4052-905d-a9ec101dc8f6
 
