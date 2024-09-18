@@ -33,6 +33,7 @@ Confirmatory buttons show popups to minimize accedental actions
 #### Animations:
 
 https://github.com/user-attachments/assets/e4371cb7-41cd-4926-9837-4d5bc7aec08f
+
 https://github.com/darrylad/LoFo/assets/132708308/26f117d0-3bc4-4052-905d-a9ec101dc8f6
 
 ### Security side screenshots:
