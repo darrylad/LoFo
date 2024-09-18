@@ -2,6 +2,8 @@
 
 An app that helps report lost and found items to the security.
 
+*NOTE: To login, IIT Indore's insitute account is required.
+
 To download, go to [releases](https://github.com/darrylad/LoFo/releases). For Android, tap the .apk file in Assets.
 
 Or, for Android, [download v0.4.4-build.36 here](https://github.com/darrylad/LoFo/releases/download/v0.4.4-build.36/app-arm64-v8a-release.apk).
