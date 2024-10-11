@@ -139,13 +139,13 @@ class _LoginPageState extends State<LoginPage> {
                   // loginID = 'meow';
 
                   // Close keyboard
-                  FocusScope.of(context).unfocus();
+                  // FocusScope.of(context).unfocus();
 
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    // loginID = loginText.text;
-                    debugPrint('Login ID: $loginID');
-                    performLogin(context, this);
-                  });
+                  // Future.delayed(const Duration(milliseconds: 500), () {
+                  // loginID = loginText.text;
+                  debugPrint('Login ID: $loginID');
+                  performLogin(context, this);
+                  // });
                 }),
               ),
             ),

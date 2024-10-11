@@ -7,11 +7,10 @@ import 'package:lofo/main.dart';
 
 signUpWithGoogle(BuildContext context, State state) async {
   try {
+    showLoadingScreen(state.context);
     GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     if (!state.mounted) return;
-
-    showLoadingScreen(state.context);
 
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 

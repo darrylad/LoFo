@@ -299,7 +299,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'This request will be sent to the security, and they might choose to make it public.',
+                      'This request will be sent to all users',
                       style: TextStyle(
                           fontSize: 15,
                           color: secondaryTextColor,
