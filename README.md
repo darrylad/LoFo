@@ -2,25 +2,27 @@
 
 An app that helps report lost and found items to the security.
 
+#### * NOTE: IIT Indore's insitute account is required for authentication.
+
 To download, go to [releases](https://github.com/darrylad/LoFo/releases). For Android, tap the .apk file in Assets.
 
-Or, for Android, [download v0.4.4 here](https://github.com/darrylad/LoFo/releases/download/v0.4.4/app-arm64-v8a-release.apk).
+Or, for Android, [download v0.4.4-build.36 here](https://github.com/darrylad/LoFo/releases/download/v0.4.4-build.36/app-arm64-v8a-release.apk).
 
 Created inside of Google Developers Students Club, Indian Institute of Technology, Indore.
 
 ### User side screenshots:
 
-#### Home:
+##### Home:
 
 <img width="250" alt="Home" src="https://github.com/darrylad/LoFo/assets/132708308/53238ada-27bb-422b-bc52-5871d5e53c7e"> <img width="250" alt="Menu" src="https://github.com/darrylad/LoFo/assets/132708308/8a6d2ed1-5855-4787-9395-f085b702d9f0"> <img width="250" alt="Emppty Your Posts" src="https://github.com/darrylad/LoFo/assets/132708308/34a6d27e-8023-4eed-b216-2a1c1f568b2a"> 
 
-#### New post:
+##### New post:
 
 <img width="250" alt="New post" src="https://github.com/darrylad/LoFo/assets/132708308/0a3405f2-fd1e-4d73-a332-b71bbb8d0e05"> <img width="250" alt="Filled New post" src="https://github.com/darrylad/LoFo/assets/132708308/25cbb729-756f-4b39-93ef-f3c8990f2b54"> 
 
-#### Uploading:
+##### Uploading:
 
-The app bar also adapts to show the current status, like Validating, Sending, Sent, Could not send, Deleting, Deleted, Could not delete, Publicizing, Publicized, Could not publicize, Something went wrong.
+The app bar gently adapts to show the current status, like Validating, Sending, Sent, Could not send, Deleting, Deleted, Could not delete, Publicizing, Publicized, Could not publicize, Something went wrong.
 
 <img width="250" alt="Sending app bar" src="https://github.com/darrylad/LoFo/assets/132708308/dec6774a-5752-4c30-b30f-36e1b5fa80fe"> <img width="250" alt="Sent app bar" src="https://github.com/darrylad/LoFo/assets/132708308/15a9741f-9566-4fb3-b10d-a1d94cf59769"> <img width="250" alt="Your posts page" src="https://github.com/darrylad/LoFo/assets/132708308/8b97a214-36d8-47de-a7f5-c73046e9fef0"> 
 
@@ -29,6 +31,8 @@ Confirmatory buttons show popups to minimize accedental actions
 <img width="250" alt="Sending app bar" src="https://github.com/darrylad/LoFo/assets/132708308/36d96a95-9247-469f-82fc-9b0fbe3c5a6b">
 
 #### Animations:
+
+https://github.com/user-attachments/assets/21670f20-572b-4ff1-b693-2df4d8c1be25
 
 https://github.com/darrylad/LoFo/assets/132708308/26f117d0-3bc4-4052-905d-a9ec101dc8f6
 
@@ -39,7 +43,7 @@ The security side can see the public posts in the Home page, and the private pos
 <img width="250" alt="Menu" src="https://github.com/darrylad/LoFo/assets/132708308/3560dd58-e60a-48fa-96c2-54034a73c648"> <img width="250" alt="Security Home" src="https://github.com/darrylad/LoFo/assets/132708308/e9e27bbe-3def-469a-80c5-f939f2bd46eb"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/13bc4deb-abde-457b-a9a1-e472b42ae75f">
 <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/53f56dbf-cb0f-429a-b875-254059a995cd"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/b9a19107-4ec6-4c11-bab5-673fab204538"> <img width="250" alt="Security Inbox" src="https://github.com/darrylad/LoFo/assets/132708308/b972a927-56fa-4d7d-88b5-94295e8324e3"> 
 
-### Login Page: 
+#### Login Page: 
 
 <img width="250" alt="Login Page" src="https://github.com/darrylad/LoFo/assets/132708308/131a5ee8-eb83-484e-bca5-2b4b4e4213c4"> <img width="250" alt="Login Page" src="https://github.com/darrylad/LoFo/assets/132708308/3a161baa-2006-4e29-9414-170593f4a938">
 
