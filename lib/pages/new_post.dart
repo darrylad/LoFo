@@ -7,6 +7,7 @@ import 'package:lofo/backend/CRUD/transmitter.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
+import 'package:lofo/components/navigation.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/services/verify_app_validity.dart';
 import 'package:lofo/theme/default_theme.dart';
@@ -258,7 +259,7 @@ class _NewPostPageState extends State<NewPostPage> {
                     const SizedBox(height: 20),
                     BasicTextFormField(
                       maxLength: 250,
-                      maxLines: null,
+                      maxLines: 15,
                       isRequiredField: true,
                       labelText: 'Description',
                       textController: descriptionController,
@@ -350,6 +351,9 @@ class _NewPostPageState extends State<NewPostPage> {
                                             });
                                           }
                                           if (!mounted) return;
+                                          setState(() {
+                                            selectedPageIndex = 2;
+                                          });
                                           Navigator.pop(this.context);
                                         }
                                       : null));

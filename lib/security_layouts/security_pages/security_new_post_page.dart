@@ -261,7 +261,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                     const SizedBox(height: 20),
                     BasicTextFormField(
                       maxLength: 250,
-                      maxLines: null,
+                      maxLines: 40,
                       isRequiredField: true,
                       labelText: 'Notes, and where to collect',
                       textController: descriptionController,
