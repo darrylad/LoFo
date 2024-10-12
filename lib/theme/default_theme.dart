@@ -80,3 +80,4 @@ ColorScheme lightColorScheme = lightThemeData.colorScheme;
 //     themeData.colorScheme.primaryContainer;
 
 Color backgroundAnimationColor = const Color.fromRGBO(0, 57, 95, 0.627);
+Color backgroundFABColor = const Color.fromARGB(255, 234, 246, 255);

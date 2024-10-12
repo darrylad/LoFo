@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/CRUD/fetcher.dart';
-import 'package:lofo/components/new_post_floating_action_button.dart';
+import 'package:lofo/components/npost_fab.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,7 +33,13 @@ class _HomePageState extends State<HomePage> {
       //       );
       //     }),
       body: const GetHomePosts(),
-      floatingActionButton: NewPostFloatingActionButton(fabKey: _fabKey),
+
+      floatingActionButton: NPostFAB(
+        fabKey: _fabKey,
+      ),
+
+      // floatingActionButton:
+      //     DepricatedNewPostFloatingActionButton(fabKey: _fabKey),
     );
   }
 }

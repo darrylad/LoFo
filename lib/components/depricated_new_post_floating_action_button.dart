@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/pulsing_child.dart';
-import 'package:lofo/pages/new_post.dart';
+import 'package:lofo/pages/i_lost_post_page.dart';
 import 'package:lofo/theme/default_theme.dart';
 
-class NewPostFloatingActionButton extends StatefulWidget {
+class DepricatedNewPostFloatingActionButton extends StatefulWidget {
   // Define a GlobalKey
   final GlobalKey fabKey;
 
@@ -14,20 +14,20 @@ class NewPostFloatingActionButton extends StatefulWidget {
   //   super.key,
   // });
 
-  const NewPostFloatingActionButton({required this.fabKey, Key? key})
+  const DepricatedNewPostFloatingActionButton({required this.fabKey, Key? key})
       : super(key: key);
 
   @override
-  State<NewPostFloatingActionButton> createState() =>
-      _NewPostFloatingActionButtonState();
+  State<DepricatedNewPostFloatingActionButton> createState() =>
+      _DepricatedNewPostFloatingActionButtonState();
 }
 
 bool isNewPostAddable =
     requestUploadStatus.value == RequestUploadStatus.normal ||
         requestUploadStatus.value == RequestUploadStatus.uploaded;
 
-class _NewPostFloatingActionButtonState
-    extends State<NewPostFloatingActionButton> {
+class _DepricatedNewPostFloatingActionButtonState
+    extends State<DepricatedNewPostFloatingActionButton> {
   bool _isPressed = false;
   final ValueNotifier<Color> colorNotifier =
       ValueNotifier<Color>(lightColorScheme.primary);
@@ -92,7 +92,7 @@ class _NewPostFloatingActionButtonState
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) {
-                                  return const NewPostPage();
+                                  return const ILostPostPage();
                                 },
                                 transitionDuration:
                                     const Duration(milliseconds: 750),

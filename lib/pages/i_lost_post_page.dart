@@ -24,14 +24,14 @@ class CustomNavigatorObserver extends NavigatorObserver {
   }
 }
 
-class NewPostPage extends StatefulWidget {
-  const NewPostPage({super.key});
+class ILostPostPage extends StatefulWidget {
+  const ILostPostPage({super.key});
 
   @override
-  State<NewPostPage> createState() => _NewPostPageState();
+  State<ILostPostPage> createState() => _ILostPostPageState();
 }
 
-class _NewPostPageState extends State<NewPostPage> {
+class _ILostPostPageState extends State<ILostPostPage> {
   File? pickedPostImage;
   int postCategory = 1;
   TextEditingController titleController = TextEditingController();

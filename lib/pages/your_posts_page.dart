@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/CRUD/fetcher.dart';
-import 'package:lofo/components/new_post_floating_action_button.dart';
+import 'package:lofo/components/depricated_new_post_floating_action_button.dart';
 // import 'package:lofo/components/app_bar.dart';
 
 class YourPostsPage extends StatefulWidget {
@@ -19,7 +19,8 @@ class _YourPostsPageState extends State<YourPostsPage> {
       body: const Center(
         child: GetYourPosts(),
       ),
-      floatingActionButton: NewPostFloatingActionButton(fabKey: _fabKey),
+      floatingActionButton:
+          DepricatedNewPostFloatingActionButton(fabKey: _fabKey),
     );
   }
 }

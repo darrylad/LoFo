@@ -56,6 +56,7 @@ ThemeData darkThemeData = ThemeData(
 );
 
 // ColorScheme darkColorScheme = darkThemeData.colorScheme;
+Color backgroundFABColorDark = const Color.fromARGB(255, 4, 21, 41);
 
 // TextStyle? bodyMedium = darkThemeData.textTheme.bodyMedium;
 // TextStyle? titleLarge = darkThemeData.textTheme.titleLarge;

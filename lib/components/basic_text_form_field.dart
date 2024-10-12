@@ -1,5 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lofo/main.dart';
+
+class LineLimitFormatter extends TextInputFormatter {
+  final int maxLines;
+
+  LineLimitFormatter(this.maxLines);
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    int newLines = '\n'.allMatches(newValue.text).length + 1;
+    if (newLines > maxLines) {
+      return oldValue;
+    }
+    return newValue;
+  }
+}
 
 class BasicTextFormField extends StatefulWidget {
   final int maxLength;
@@ -54,10 +71,14 @@ class _BasicTextFormFieldState extends State<BasicTextFormField> {
       readOnly: widget.readOnly ?? false,
       maxLength: widget.maxLength,
       maxLines: widget.maxLines,
+      minLines: 1,
       style: const TextStyle(
         fontSize: 18,
         fontVariations: [FontVariation('wght', 400)],
       ),
+      inputFormatters: [
+        LineLimitFormatter(widget.maxLines ?? 1),
+      ],
       decoration: InputDecoration(
         // enabledBorder: UnderlineInputBorder(
         //     borderSide: BorderSide.none,
