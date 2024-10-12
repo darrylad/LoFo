@@ -1,5 +1,8 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lofo/components/button.dart';
+import 'package:lofo/pages/i_found_post_page.dart';
+import 'package:lofo/pages/i_lost_post_page.dart';
 import 'package:lofo/theme/dark_theme.dart';
 import 'package:lofo/theme/default_theme.dart';
 import 'dart:ui';
@@ -64,7 +67,9 @@ class _NPostFABState extends State<NPostFAB> {
   void _openFABOverlay(BuildContext context) {
     Navigator.of(context).push(
       TransparentRoute(
-        builder: (context) => const FABOverlay(),
+        builder: (context) => FABOverlay(
+          fabKey: widget.fabKey,
+        ),
       ),
     );
   }
@@ -162,7 +167,8 @@ class _NPostFABState extends State<NPostFAB> {
 }
 
 class FABOverlay extends StatefulWidget {
-  const FABOverlay({super.key});
+  final GlobalKey fabKey;
+  const FABOverlay({super.key, required this.fabKey});
 
   @override
   State<FABOverlay> createState() => _FABOverlayState();
@@ -183,7 +189,7 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
@@ -239,7 +245,7 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
     });
   }
 
-  Widget quickLinks(
+  Widget quickLink(
       String label, Animation<Offset> offsetAnimation, Function() onPressed) {
     return AnimatedBuilder(
       animation: _curvedAnimation,
@@ -265,6 +271,65 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
     );
   }
 
+  void goToLostOrFoundPage(Widget page) {
+    final RenderBox? renderBox =
+        widget.fabKey.currentContext!.findRenderObject() as RenderBox?;
+    final Offset? position =
+        renderBox?.localToGlobal(renderBox.size.center(Offset.zero));
+
+    // Calculate the distance to the farthest corner
+    final distance =
+        position != null ? sqrt(pow(position.dx, 2) + pow(position.dy, 2)) : 0;
+
+    // navigate
+    Future.delayed(const Duration(milliseconds: 200), () {
+      Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return page;
+            },
+            transitionDuration: const Duration(milliseconds: 750),
+            reverseTransitionDuration: const Duration(milliseconds: 1000),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              final curvedAnimation = CurvedAnimation(
+                parent: animation,
+                curve: const Cubic(0.79, 0.01, 0.29, 1.09),
+              );
+
+              return Stack(children: [
+                // Overlay a semi-transparent black layer that fades in as the animation progresses
+                AnimatedBuilder(
+                  animation: curvedAnimation,
+                  builder: (context, child) {
+                    return BackdropFilter(
+                      filter: ImageFilter.blur(
+                          sigmaX: 15 * curvedAnimation.value,
+                          sigmaY: 15 * curvedAnimation.value),
+                      child: Container(
+                        color: backgroundAnimationColor
+                            .withOpacity(0.7 * curvedAnimation.value),
+                      ),
+                    );
+                  },
+                ),
+                AnimatedBuilder(
+                    animation: curvedAnimation,
+                    builder: (context, child) {
+                      return ClipPath(
+                        clipper: CircleClipper(curvedAnimation.value.toDouble(),
+                            position!, distance.toDouble()),
+                        child: child,
+                      );
+                    },
+                    child: child),
+              ]);
+            },
+          ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -288,8 +353,25 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
               );
             },
           ),
-          quickLinks('I Found ... ', _offsetAnimationFound, () {}),
-          quickLinks('I Lost ... ', _offsetAnimationLost, () {}),
+
+          quickLink('I Found ... ', _offsetAnimationFound, () {
+            _animationController.reverse();
+            Future.delayed(const Duration(milliseconds: 100), () {
+              Navigator.pop(context);
+            });
+
+            goToLostOrFoundPage(const IFoundPostPage());
+          }),
+
+          quickLink('I Lost ... ', _offsetAnimationLost, () {
+            _animationController.reverse();
+            Future.delayed(const Duration(milliseconds: 100), () {
+              Navigator.pop(context);
+            });
+
+            goToLostOrFoundPage(const ILostPostPage());
+          }),
+
           Positioned(
             bottom: 74,
             right: 16,
@@ -307,6 +389,15 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
                       ? lightColorScheme.primary
                       : const Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(_isPressed ? 50 : 15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color.fromARGB(255, 28, 39, 53)
+                          .withOpacity(_isPressed ? 0.3 : 0.2),
+                      spreadRadius: _isPressed ? 2 : 4,
+                      blurRadius: _isPressed ? 10 : 20,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
                 ),
                 padding: const EdgeInsets.all(16),
                 child: (isNewPostAddable)

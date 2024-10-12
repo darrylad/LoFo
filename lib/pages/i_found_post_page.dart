@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/backend/CRUD/transmitter.dart';
+import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
@@ -12,41 +12,24 @@ import 'package:lofo/main.dart';
 import 'package:lofo/services/verify_app_validity.dart';
 import 'package:lofo/theme/default_theme.dart';
 
-class CustomNavigatorObserver extends NavigatorObserver {
-  final Function onPop;
-
-  CustomNavigatorObserver({required this.onPop});
+class IFoundPostPage extends StatefulWidget {
+  const IFoundPostPage({super.key});
 
   @override
-  void didPop(Route route, Route? previousRoute) {
-    onPop();
-    super.didPop(route, previousRoute);
-  }
+  State<IFoundPostPage> createState() => _IFoundPostPageState();
 }
 
-class ILostPostPage extends StatefulWidget {
-  const ILostPostPage({super.key});
-
-  @override
-  State<ILostPostPage> createState() => _ILostPostPageState();
-}
-
-class _ILostPostPageState extends State<ILostPostPage> {
+class _IFoundPostPageState extends State<IFoundPostPage> {
   File? pickedPostImage;
-  int postCategory = 1;
+  int postCategory = 0;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController leftBehindAtController = TextEditingController();
+  TextEditingController handedOverToController = TextEditingController();
   DateTime? timeMisplaced;
 
   int sentTimer = 3;
-  // @override
-
-  // void initState() {
-  //   nullifyNewPostPatameters();
-  //   super.initState();
-  // }
 
   final _formKey = GlobalKey<FormState>();
   final isRequestPostable = ValueNotifier<bool>(false);
@@ -58,6 +41,7 @@ class _ILostPostPageState extends State<ILostPostPage> {
     descriptionController.dispose();
     locationController.dispose();
     leftBehindAtController.dispose();
+    handedOverToController.dispose();
     pickedPostImage = null;
     super.dispose();
   }
@@ -77,15 +61,12 @@ class _ILostPostPageState extends State<ILostPostPage> {
 
   void nullifyNewPostPatameters() {
     setState(() {
-      debugPrint(titleController.text);
-      debugPrint(descriptionController.text);
-      debugPrint(locationController.text);
-      debugPrint(leftBehindAtController.text);
       pickedPostImage = null;
       titleController.clear();
       descriptionController.clear();
       locationController.clear();
       leftBehindAtController.clear();
+      handedOverToController.clear();
     });
   }
 
@@ -96,6 +77,7 @@ class _ILostPostPageState extends State<ILostPostPage> {
     String postDescription,
     String postLocation,
     String? postTimeLastSeen,
+    String handedOverTo,
     String userImageURL,
     File? pickedPostImage,
   ) async {
@@ -116,31 +98,9 @@ class _ILostPostPageState extends State<ILostPostPage> {
     debugPrint('cardPostedAt: $cardPostedAt');
     debugPrint('cardID: $cardID');
 
-    // await sendRequest(
-    //         postCategory,
-    //         cardPostedAt,
-    //         cardID,
-    //         loginID!,
-    //         titleController.text,
-    //         descriptionController.text,
-    //         locationController.text,
-    //         leftBehindAtController.text,
-    //         userName!,
-    //         loginProfileImageURL)
-    //     .then((sendStatus) {
-    //   if (sendStatus == 0) {
-    //     sendCompletion(previousRequestUploadStatus);
-    //   } else if (sendStatus == 2) {
-    //     previousRequestUploadStatus = RequestUploadStatus.someThingWentWrong;
-    //     sendFailure(previousRequestUploadStatus);
-    //   } else {
-    //     sendFailure(previousRequestUploadStatus);
-    //   }
-    // });
-
     await midLoginCheck().then((isLoginValid) async {
       if (isLoginValid) {
-        await sendRequest(
+        await sendFoundRequest(
                 postCategory,
                 cardPostedAt,
                 cardID,
@@ -149,6 +109,7 @@ class _ILostPostPageState extends State<ILostPostPage> {
                 postDescription,
                 postLocation,
                 postTimeLastSeen,
+                handedOverTo,
                 userName!,
                 loginProfileImageURL,
                 pickedPostImage)
@@ -164,18 +125,6 @@ class _ILostPostPageState extends State<ILostPostPage> {
         sendFailure(previousRequestUploadStatus);
       }
     });
-
-    // if (!mounted) return;
-    // nullifyNewPostPatameters();
-    // setState(() {});
-    // if (isSendSuccessful) {
-    //   sendCompletion();
-    // } else {
-    //   sendFailure();
-    // }
-    // Timer(Duration(seconds: sentTimer), () {
-    //   sendFailure();
-    // });
   }
 
   void sendCompletion(RequestUploadStatus previousRequestUploadStatus) {
@@ -195,31 +144,14 @@ class _ILostPostPageState extends State<ILostPostPage> {
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
-    // bool isRequestPostable = false;
-    // if (_formKey.currentState!.validate()) {
-    //   setState(() {
-    //     isRequestPostable = true;
-    //   });
-    // }
-
-    // bool isRequestPostable = false;
-    // bool isRequestPostable() {
-    //   if (_formKey.currentState != null) {
-    //     if (_formKey.currentState!.validate()) {
-    //       return true;
-    //     }
-    //     return false;
-    //   } else {
-    //     return false;
-    //   }
-    // }
 
     void updateIsRequestPostable() {
       // isRequestPostable.value = _formKey.currentState?.validate() ?? false;
       isRequestFilledAdequately.value =
           titleController.text.trim().isNotEmpty &&
               descriptionController.text.trim().isNotEmpty &&
-              locationController.text.trim().isNotEmpty;
+              locationController.text.trim().isNotEmpty &&
+              handedOverToController.text.trim().isNotEmpty;
     }
 
     Widget leading = IconButton(
@@ -270,7 +202,7 @@ class _ILostPostPageState extends State<ILostPostPage> {
                       maxLength: 30,
                       maxLines: 1,
                       isRequiredField: false,
-                      labelText: 'Location lost',
+                      labelText: 'Location found',
                       textController: locationController,
                       onChanged: updateIsRequestPostable,
                     ),
@@ -280,22 +212,37 @@ class _ILostPostPageState extends State<ILostPostPage> {
                       maxLines: 1,
                       // readOnly: true,
                       isRequiredField: false,
-                      labelText: 'Time last seen',
+                      labelText: 'Time found',
                       textController: leftBehindAtController,
                       onChanged: updateIsRequestPostable,
-                      // onTap: () {
-                      //   showTimePicker(
-                      //     context: context,
-                      //     initialTime: TimeOfDay.now(),
-                      //   ).then((time) {
-                      //     if (time != null) {
-                      //       leftBehindAtController.text =
-                      //           '${time.hour}:${time.minute}';
-                      //     }
-                      //   });
-                      // },
                     ),
+
                     const SizedBox(height: 20),
+
+                    Text(
+                      'Please hand over this item to a nearby security agent, and mention their location below.',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: themeData.colorScheme.onSurfaceVariant,
+                          fontFamily: fonts[1],
+                          fontVariations: const [FontVariation('wght', 400)]),
+                      textAlign: TextAlign.center,
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    BasicTextFormField(
+                      maxLength: 20,
+                      maxLines: 1,
+                      // readOnly: true,
+                      isRequiredField: true,
+                      labelText: 'Handed over at',
+                      textController: handedOverToController,
+                      onChanged: updateIsRequestPostable,
+                    ),
+
+                    const SizedBox(height: 20),
+
                     Text(
                       'This request will be sent to the security, and they might choose to make it public.',
                       style: TextStyle(
@@ -305,7 +252,9 @@ class _ILostPostPageState extends State<ILostPostPage> {
                           fontVariations: const [FontVariation('wght', 400)]),
                       textAlign: TextAlign.center,
                     ),
+
                     const SizedBox(height: 20),
+
                     ValueListenableBuilder<bool>(
                         valueListenable: isRequestFilledAdequately,
                         builder: (context, isRequestFilledAdequately, child) {
@@ -340,6 +289,8 @@ class _ILostPostPageState extends State<ILostPostPage> {
                                                         .trim(),
                                                     leftBehindAtController.text
                                                         .trim(),
+                                                    handedOverToController.text
+                                                        .trim(),
                                                     loginProfileImageURL,
                                                     pickedPostImage);
                                               } else {
@@ -364,53 +315,6 @@ class _ILostPostPageState extends State<ILostPostPage> {
               ),
             ),
           )),
-    );
-  }
-
-  DropdownButtonFormField<int> basicDropDownFormField() {
-    Text basicDropDownFormText(String text) {
-      return Text(
-        text,
-        style: TextStyle(
-          fontSize: 18,
-          fontFamily: fonts[1],
-          fontVariations: const [FontVariation('wght', 400)],
-        ),
-      );
-    }
-
-    return DropdownButtonFormField(
-      value: postCategory,
-      items: [
-        DropdownMenuItem(
-          value: 1,
-          child: basicDropDownFormText('I have lost ...'),
-        ),
-        DropdownMenuItem(
-          value: 0,
-          child: basicDropDownFormText('I have found ...'),
-        ),
-      ],
-      elevation: 6,
-      onChanged: (value) {
-        postCategory = value!;
-        debugPrint('post category : $postCategory');
-      },
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        enabledBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.transparent,
-            ),
-            borderRadius: BorderRadius.circular(8)),
-        focusedBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.transparent,
-            ),
-            borderRadius: BorderRadius.circular(8)),
-        fillColor: themeData.colorScheme.tertiary,
-        filled: true,
-      ),
     );
   }
 
@@ -470,4 +374,51 @@ class _ILostPostPageState extends State<ILostPostPage> {
                 ),
         ));
   }
+
+  // DropdownButtonFormField<int> basicDropDownFormField() {
+  //   Text basicDropDownFormText(String text) {
+  //     return Text(
+  //       text,
+  //       style: TextStyle(
+  //         fontSize: 18,
+  //         fontFamily: fonts[1],
+  //         fontVariations: const [FontVariation('wght', 400)],
+  //       ),
+  //     );
+  //   }
+
+  //   return DropdownButtonFormField(
+  //     value: postCategory,
+  //     items: [
+  //       DropdownMenuItem(
+  //         value: 1,
+  //         child: basicDropDownFormText('I have lost ...'),
+  //       ),
+  //       DropdownMenuItem(
+  //         value: 0,
+  //         child: basicDropDownFormText('I have found ...'),
+  //       ),
+  //     ],
+  //     elevation: 6,
+  //     onChanged: (value) {
+  //       postCategory = value!;
+  //       debugPrint('post category : $postCategory');
+  //     },
+  //     decoration: InputDecoration(
+  //       border: InputBorder.none,
+  //       enabledBorder: UnderlineInputBorder(
+  //           borderSide: const BorderSide(
+  //             color: Colors.transparent,
+  //           ),
+  //           borderRadius: BorderRadius.circular(8)),
+  //       focusedBorder: UnderlineInputBorder(
+  //           borderSide: const BorderSide(
+  //             color: Colors.transparent,
+  //           ),
+  //           borderRadius: BorderRadius.circular(8)),
+  //       fillColor: themeData.colorScheme.tertiary,
+  //       filled: true,
+  //     ),
+  //   );
+  // }
 }

@@ -23,6 +23,7 @@ class LetterCard extends StatelessWidget {
     required this.cardCategory,
     required this.cardType,
     required this.cardPosterID,
+    this.cardHandedOverTo,
     // required this.parentContext
   });
 
@@ -34,6 +35,7 @@ class LetterCard extends StatelessWidget {
   final String cardDescription;
   final String cardLocation;
   final String? cardTimeLastSeen;
+  final String? cardHandedOverTo;
   final String cardName;
   // final String cardImage = 'assets/images/photo-1643804926339-e94f0a655185.png';
   final String? cardImageURL;
@@ -52,6 +54,7 @@ class LetterCard extends StatelessWidget {
         cardDescription,
         cardLocation,
         cardTimeLastSeen,
+        cardHandedOverTo,
         cardName,
         cardImageURL,
         userImageURL,
@@ -69,6 +72,7 @@ Column cardLayout(
     String cardDescription,
     String cardLocation,
     String? cardTimeMisplaced,
+    String? cardHandedOverTo,
     String cardName,
     String? cardImageURL,
     String posterImageURL,
@@ -127,7 +131,7 @@ Column cardLayout(
               locationInfo(cardLocation, cardCategory),
               const SizedBox(height: 10),
               timeInfo(cardTimeMisplaced),
-              const SizedBox(height: 12),
+              handedOverToInfoRow(cardHandedOverTo),
               actionButtonRow(cardID, cardTitle, cardType, cardImageURL,
                   context, cardPosterID),
               // const SizedBox(height: 5),
@@ -315,12 +319,47 @@ Row timeInfo(String? cardLeftBehindAt) {
   if (cardLeftBehindAt != null && cardLeftBehindAt.isNotEmpty) {
     return Row(
       children: [
-        const Icon(
-          Icons.access_time_rounded,
-          size: 20,
+        Column(
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.access_time_rounded,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                Text('Time last seen: $cardLeftBehindAt'),
+              ],
+            ),
+            const SizedBox(height: 12),
+          ],
         ),
-        const SizedBox(width: 10),
-        Text('Time last seen: $cardLeftBehindAt'),
+      ],
+    );
+  } else {
+    return const Row();
+  }
+}
+
+Row handedOverToInfoRow(String? cardHandedOverTo) {
+  if (cardHandedOverTo != null && cardHandedOverTo.isNotEmpty) {
+    return Row(
+      children: [
+        Column(
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.security_outlined,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                Text('Handed over at: $cardHandedOverTo'),
+              ],
+            ),
+            const SizedBox(height: 12),
+          ],
+        ),
       ],
     );
   } else {
