@@ -218,7 +218,7 @@ Row posterInfoRow(int cardCategory, String posterImageURL, String cardName,
   DateTime cardPostedAtDatetime = DateTime.parse(cardPostedAt);
   String yearLastTwoDigits = cardPostedAtDatetime.year.toString().substring(2);
   String formattedDate =
-      '${cardPostedAtDatetime.day}/${cardPostedAtDatetime.month}/$yearLastTwoDigits at ${cardPostedAtDatetime.hour}:${cardPostedAtDatetime.minute}';
+      '${cardPostedAtDatetime.day}/${cardPostedAtDatetime.month}/$yearLastTwoDigits at ${cardPostedAtDatetime.hour}:${cardPostedAtDatetime.minute.toString().padLeft(2, '0')}';
   return Row(
     children: [
       const SizedBox(width: 15),
