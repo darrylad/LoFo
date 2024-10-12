@@ -79,6 +79,9 @@ Column cardLayout(
     BuildContext context,
     String cardPosterID) {
   themeData = Theme.of(context);
+  if (cardName == 'Chief Security Officer IIT Indore') {
+    cardName = 'CSO';
+  }
   return Column(
     children: [
       const SizedBox(height: 15),
@@ -231,23 +234,30 @@ Row posterInfoRow(int cardCategory, String posterImageURL, String cardName,
         ),
       ),
       const SizedBox(width: 10),
-      Text(
-        cardName,
-        style: TextStyle(
-            fontFamily: fonts[0],
-            fontVariations: const [FontVariation('wght', 600)],
-            fontSize: 15),
+      Expanded(
+        child: Text(
+          cardName,
+          style: TextStyle(
+              fontFamily: fonts[0],
+              fontVariations: const [FontVariation('wght', 600)],
+              fontSize: 15),
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       const SizedBox(width: 5),
       cardCategoryBox(cardCategory),
-      const Spacer(),
-      Text(
-        formattedDate.toString(),
-        style: TextStyle(
-            fontFamily: fonts[1],
-            color: Colors.blueGrey[300],
-            fontVariations: const [FontVariation('wght', 400)],
-            fontSize: 14),
+      // const Spacer(),
+      const SizedBox(width: 10),
+      Align(
+        alignment: Alignment.centerRight,
+        child: Text(
+          formattedDate.toString(),
+          style: TextStyle(
+              fontFamily: fonts[1],
+              color: Colors.blueGrey[300],
+              fontVariations: const [FontVariation('wght', 400)],
+              fontSize: 14),
+        ),
       ),
       const SizedBox(width: 15),
     ],
