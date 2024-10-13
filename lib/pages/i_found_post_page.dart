@@ -9,6 +9,7 @@ import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/pages/camera_page.dart';
 import 'package:lofo/services/verify_app_validity.dart';
 import 'package:lofo/theme/default_theme.dart';
 
@@ -167,7 +168,7 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
         nullifyNewPostPatameters();
       },
       child: Scaffold(
-          appBar: appBar('New Request', null, leading: leading),
+          appBar: appBar('New found request', null, leading: leading),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             child: SingleChildScrollView(
@@ -176,7 +177,7 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    uploadImageButton(),
+                    imageRow(),
                     const SizedBox(height: 20),
                     // basicDropDownFormField(),
                     // const SizedBox(height: 20),
@@ -318,6 +319,25 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
     );
   }
 
+  Widget imageRow() {
+    return (pickedPostImage == null)
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(child: uploadImageButton()),
+              const SizedBox(width: 20),
+              Expanded(child: cameraButton())
+            ],
+          )
+        : Container(
+            height: 350,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                    image: FileImage(pickedPostImage!), fit: BoxFit.cover)),
+          );
+  }
+
   ElevatedButton uploadImageButton() {
     return ElevatedButton(
         onPressed: () {
@@ -339,12 +359,12 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 700),
           curve: const Cubic(0.63, 0, 0, 1),
-          height: pickedPostImage != null ? 400 : 250,
-          width: double.infinity,
+          height: 250,
+          // width: double.infinity,
           decoration: BoxDecoration(
               color: pickedPostImage != null
                   ? Colors.transparent
-                  : themeData.colorScheme.primaryContainer,
+                  : themeData.colorScheme.primary,
               borderRadius: BorderRadius.circular(8),
               image: (pickedPostImage != null)
                   ? DecorationImage(
@@ -352,22 +372,104 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                   : null),
           child: (pickedPostImage != null)
               ? null
-              : const Column(
+              : Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.add_photo_alternate_rounded,
+                      color: themeData.colorScheme.onPrimary,
                       size: 100,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Upload Image',
+                        Text('Choose Image',
                             style: TextStyle(
                                 fontSize: 20,
-                                fontVariations: [FontVariation('wght', 400)])),
+                                color: themeData.colorScheme.onPrimary,
+                                fontVariations: const [
+                                  FontVariation('wght', 400)
+                                ])),
+                      ],
+                    ),
+                  ],
+                ),
+        ));
+  }
+
+  ElevatedButton cameraButton() {
+    return ElevatedButton(
+        onPressed: () async {
+          try {
+            final capturedImage = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PreCamLoadPage()));
+            print("Image: ###########");
+            print(capturedImage);
+            if (capturedImage != null && capturedImage is File) {
+              setState(() {
+                pickedPostImage = capturedImage;
+              });
+            }
+          } catch (e) {
+            if (mounted) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CameraErrorPage(message: 'An error occured. \n $e')));
+            }
+            debugPrint('Error: $e');
+          }
+          setState(() {});
+        },
+        style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            backgroundColor: themeData.colorScheme.primaryContainer,
+            shadowColor: Colors.transparent,
+            elevation: 0),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 700),
+          curve: const Cubic(0.63, 0, 0, 1),
+          height: 250,
+          // width: double.infinity,
+          decoration: BoxDecoration(
+              color: pickedPostImage != null
+                  ? Colors.transparent
+                  : themeData.colorScheme.primary,
+              borderRadius: BorderRadius.circular(8),
+              image: (pickedPostImage != null)
+                  ? DecorationImage(
+                      image: FileImage(pickedPostImage!), fit: BoxFit.cover)
+                  : null),
+          child: (pickedPostImage != null)
+              ? null
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.photo_camera,
+                      color: themeData.colorScheme.onPrimary,
+                      size: 100,
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Take Photo',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: themeData.colorScheme.onPrimary,
+                                fontVariations: const [
+                                  FontVariation('wght', 400)
+                                ])),
                       ],
                     ),
                   ],

@@ -312,9 +312,9 @@ class LoginImageButton extends StatelessWidget {
                                 700),
                             const SizedBox(height: 10),
                             popOverText('Name: $userName',
-                                colorScheme.onBackground, 16, 600),
+                                colorScheme.onSurface, 16, 600),
                             popOverText('Email: $loginID',
-                                colorScheme.onBackground, 16, 600),
+                                colorScheme.onSurface, 16, 600),
                           ],
                         ));
                   });

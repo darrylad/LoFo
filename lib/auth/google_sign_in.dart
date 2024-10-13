@@ -79,7 +79,7 @@ void showLoadingScreen(BuildContext context) {
       builder: ((context) {
         return Center(
             child: CircularProgressIndicator(
-          color: themeData.colorScheme.onBackground,
+          color: themeData.colorScheme.onSurface,
         ));
       }));
 }

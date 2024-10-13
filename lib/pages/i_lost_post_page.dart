@@ -235,7 +235,7 @@ class _ILostPostPageState extends State<ILostPostPage> {
         nullifyNewPostPatameters();
       },
       child: Scaffold(
-          appBar: appBar('New Request', null, leading: leading),
+          appBar: appBar('New lost request', null, leading: leading),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             child: SingleChildScrollView(
@@ -440,7 +440,7 @@ class _ILostPostPageState extends State<ILostPostPage> {
           decoration: BoxDecoration(
               color: pickedPostImage != null
                   ? Colors.transparent
-                  : themeData.colorScheme.primaryContainer,
+                  : themeData.colorScheme.primary,
               borderRadius: BorderRadius.circular(8),
               image: (pickedPostImage != null)
                   ? DecorationImage(
@@ -448,22 +448,26 @@ class _ILostPostPageState extends State<ILostPostPage> {
                   : null),
           child: (pickedPostImage != null)
               ? null
-              : const Column(
+              : Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.add_photo_alternate_rounded,
+                      color: themeData.colorScheme.onPrimary,
                       size: 100,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Upload Image',
                             style: TextStyle(
                                 fontSize: 20,
-                                fontVariations: [FontVariation('wght', 400)])),
+                                color: themeData.colorScheme.onPrimary,
+                                fontVariations: const [
+                                  FontVariation('wght', 400)
+                                ])),
                       ],
                     ),
                   ],
