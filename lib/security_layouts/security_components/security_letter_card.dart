@@ -148,6 +148,7 @@ Column securityCardLayout(
                   cardDescription,
                   cardLocation,
                   cardTimeMisplaced,
+                  cardHandedOverTo,
                   cardName,
                   posterImageURL,
                   context),
@@ -171,6 +172,7 @@ Widget securityCardActionRow(
     String cardDescription,
     String cardLocation,
     String? cardTimeLastSeen,
+    String? cardHandedOverTo,
     String userName,
     String loginProfileImageURL,
     BuildContext context) {
@@ -283,7 +285,7 @@ Widget securityCardActionRow(
               await midLoginCheck().then((isLoginValid) async {
                 if (isLoginValid) {
                   // send request to public
-                  await sendSecurityRequest(
+                  await sendSecurityPublicizeRequest(
                           cardCategory,
                           cardPostedAt,
                           cardID,
@@ -292,6 +294,7 @@ Widget securityCardActionRow(
                           cardDescription,
                           cardLocation,
                           cardTimeLastSeen,
+                          cardHandedOverTo,
                           userName,
                           loginProfileImageURL,
                           null,
@@ -485,12 +488,21 @@ Row securityCardTimeInfo(String? cardLeftBehindAt) {
   if (cardLeftBehindAt != null && cardLeftBehindAt.isNotEmpty) {
     return Row(
       children: [
-        const Icon(
-          Icons.access_time_rounded,
-          size: 20,
+        Column(
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.access_time_rounded,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                Text('Time Last seen: $cardLeftBehindAt'),
+              ],
+            ),
+            const SizedBox(height: 12),
+          ],
         ),
-        const SizedBox(width: 10),
-        Text('Time Last seen: $cardLeftBehindAt'),
       ],
     );
   } else {

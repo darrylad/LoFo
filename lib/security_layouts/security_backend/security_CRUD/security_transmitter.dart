@@ -83,3 +83,59 @@ Future<bool> midLoginCheck() async {
     return false;
   }
 }
+
+Future<bool> sendSecurityPublicizeRequest(
+  int postCategory,
+  String postPostedAt,
+  String postID,
+  String postPosterID,
+  String postTitle,
+  String postDescription,
+  String postLocation,
+  String? postTimeLastSeen,
+  String? postHandedOverTo,
+  String postName,
+  String userImageURL,
+  File? postImage,
+  String? postImageURL,
+  // Image? postImage,
+  // Image userImage,
+) async {
+  if (await verifyAppValidity()) {
+    try {
+      if (postImage != null) {
+        final storageRef =
+            FirebaseStorage.instance.ref().child('postImages/$postID');
+
+        await storageRef.putFile(postImage);
+
+        postImageURL = await storageRef.getDownloadURL();
+      }
+
+      await FirebaseFirestore.instance
+          .collection('publicRequests')
+          .doc(postID)
+          .set({
+        'postName': postName,
+        'postID': postID,
+        'postTitle': postTitle,
+        'postDescription': postDescription,
+        'postLocation': postLocation,
+        'postTimeLastSeen': postTimeLastSeen,
+        'postHandedOverTo': postHandedOverTo,
+        'postCategory': postCategory,
+        'postPostedAt': postPostedAt,
+        'postPosterID': postPosterID,
+        // 'image': postImage,
+        'postImageURL': postImageURL,
+        'userImageURL': userImageURL,
+      });
+      return true;
+    } catch (e) {
+      debugPrint('$e');
+      return false;
+    }
+  } else {
+    return false;
+  }
+}
