@@ -395,13 +395,15 @@ Row securityCardPosterInfoRow(int cardCategory, String posterImageURL,
         ),
       ),
       const SizedBox(width: 10),
-      Text(
-        cardName,
-        style: TextStyle(
-            fontFamily: fonts[0],
-            fontVariations: const [FontVariation('wght', 600)],
-            fontSize: 15),
-        overflow: TextOverflow.ellipsis,
+      Expanded(
+        child: Text(
+          cardName,
+          style: TextStyle(
+              fontFamily: fonts[0],
+              fontVariations: const [FontVariation('wght', 600)],
+              fontSize: 15),
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       const SizedBox(width: 5),
       securityCardCategoryBox(cardCategory),

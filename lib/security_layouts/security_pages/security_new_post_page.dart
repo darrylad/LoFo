@@ -6,6 +6,7 @@ import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/pages/camera_page.dart';
 import 'package:lofo/security_layouts/security_backend/security_CRUD/security_transmitter.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
@@ -246,7 +247,8 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    uploadImageButton(),
+                    // uploadImageButton(),
+                    imageRow(),
                     const SizedBox(height: 20),
                     basicSecurityDropDownFormField(),
                     const SizedBox(height: 20),
@@ -370,6 +372,35 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
     );
   }
 
+  Widget imageRow() {
+    return (pickedPostImage == null)
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(child: uploadImageButton()),
+              const SizedBox(width: 20),
+              Expanded(child: cameraButton())
+            ],
+          )
+        : Column(
+            children: [
+              Container(
+                height: 350,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                        image: FileImage(pickedPostImage!), fit: BoxFit.cover)),
+              ),
+              const SizedBox(height: 20),
+              BasicButton.warningPrimaryButton("Remove image", () {
+                setState(() {
+                  pickedPostImage = null;
+                });
+              }),
+            ],
+          );
+  }
+
   DropdownButtonFormField<int> basicSecurityDropDownFormField() {
     Text basicDropDownFormText(String text) {
       return Text(
@@ -455,18 +486,84 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                       size: 100,
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Upload Image',
-                            style: TextStyle(
-                                color: securityColorScheme.primary,
-                                fontSize: 20,
-                                fontVariations: const [
-                                  FontVariation('wght', 400)
-                                ])),
-                      ],
+                    Text('Upload Image',
+                        style: TextStyle(
+                            color: securityColorScheme.primary,
+                            fontSize: 20,
+                            fontVariations: const [
+                              FontVariation('wght', 400)
+                            ])),
+                  ],
+                ),
+        ));
+  }
+
+  ElevatedButton cameraButton() {
+    return ElevatedButton(
+        onPressed: () async {
+          try {
+            final capturedImage = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PreCamLoadPage()));
+            if (capturedImage != null && capturedImage is File) {
+              setState(() {
+                pickedPostImage = capturedImage;
+              });
+            }
+          } catch (e) {
+            if (mounted) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CameraErrorPage(message: 'An error occured. \n $e')));
+            }
+            debugPrint('Error: $e');
+          }
+          setState(() {});
+        },
+        style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            backgroundColor: secondaryButtonBackgroundSolidColor,
+            shadowColor: Colors.transparent,
+            elevation: 0),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 700),
+          curve: const Cubic(0.63, 0, 0, 1),
+          height: 250,
+          // width: double.infinity,
+          decoration: BoxDecoration(
+              color: pickedPostImage != null
+                  ? Colors.transparent
+                  : secondaryButtonBackgroundSolidColor,
+              borderRadius: BorderRadius.circular(8),
+              image: (pickedPostImage != null)
+                  ? DecorationImage(
+                      image: FileImage(pickedPostImage!), fit: BoxFit.cover)
+                  : null),
+          child: (pickedPostImage != null)
+              ? null
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.photo_camera,
+                      color: securityColorScheme.primary,
+                      size: 100,
                     ),
+                    const SizedBox(height: 20),
+                    Text('Take Photo',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: securityColorScheme.primary,
+                            fontVariations: const [
+                              FontVariation('wght', 400)
+                            ])),
                   ],
                 ),
         ));

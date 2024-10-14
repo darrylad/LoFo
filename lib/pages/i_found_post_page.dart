@@ -328,12 +328,22 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
               Expanded(child: cameraButton())
             ],
           )
-        : Container(
-            height: 350,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                    image: FileImage(pickedPostImage!), fit: BoxFit.cover)),
+        : Column(
+            children: [
+              Container(
+                height: 350,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                        image: FileImage(pickedPostImage!), fit: BoxFit.cover)),
+              ),
+              const SizedBox(height: 20),
+              BasicButton.warningPrimaryButton("Remove image", () {
+                setState(() {
+                  pickedPostImage = null;
+                });
+              }),
+            ],
           );
   }
 
@@ -381,18 +391,13 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                       size: 100,
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Choose Image',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: themeData.colorScheme.onPrimary,
-                                fontVariations: const [
-                                  FontVariation('wght', 400)
-                                ])),
-                      ],
-                    ),
+                    Text('Choose Image',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: themeData.colorScheme.onPrimary,
+                            fontVariations: const [
+                              FontVariation('wght', 400)
+                            ])),
                   ],
                 ),
         ));
@@ -457,18 +462,13 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                       size: 100,
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Take Photo',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: themeData.colorScheme.onPrimary,
-                                fontVariations: const [
-                                  FontVariation('wght', 400)
-                                ])),
-                      ],
-                    ),
+                    Text('Take Photo',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: themeData.colorScheme.onPrimary,
+                            fontVariations: const [
+                              FontVariation('wght', 400)
+                            ])),
                   ],
                 ),
         ));
