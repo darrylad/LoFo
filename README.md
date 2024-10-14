@@ -6,7 +6,7 @@ An app that helps report lost and found items to the security.
 
 To download, go to [releases](https://github.com/darrylad/LoFo/releases). For Android, tap the .apk file in Assets.
 
-Or, for Android, [download v0.5.0-build.38 here](https://github.com/darrylad/LoFo/releases/download/v0.5.0-build.39/app-arm64-v8a-release.apk).
+Or, for Android, [download v0.5.0-build.39 here](https://github.com/darrylad/LoFo/releases/download/v0.5.0-build.39/app-arm64-v8a-release.apk).
 
 Created inside of Google Developers Students Club, Indian Institute of Technology, Indore.
 
