@@ -24,7 +24,8 @@ class SecurityLetterCard extends StatelessWidget {
       required this.cardID,
       required this.cardType,
       required this.cardCategory,
-      required this.cardPosterID});
+      required this.cardPosterID,
+      this.cardHandedOverTo});
 
   final int cardType; // 0 for Public, 1 for Inbox
   final int cardCategory; // 0 for found, 1 for lost
@@ -34,6 +35,7 @@ class SecurityLetterCard extends StatelessWidget {
   final String cardDescription;
   final String cardLocation;
   final String? cardTimeLastSeen;
+  final String? cardHandedOverTo;
   final String cardName;
   // final String cardImage = 'assets/images/photo-1643804926339-e94f0a655185.png';
   final String? cardImageURL;
@@ -52,6 +54,7 @@ class SecurityLetterCard extends StatelessWidget {
         cardDescription,
         cardLocation,
         cardTimeLastSeen,
+        cardHandedOverTo,
         cardName,
         cardImageURL,
         userImageURL,
@@ -69,12 +72,16 @@ Column securityCardLayout(
     String cardDescription,
     String cardLocation,
     String? cardTimeMisplaced,
+    String? cardHandedOverTo,
     String cardName,
     String? cardImageURL,
     String posterImageURL,
     BuildContext context,
     String cardPosterID) {
   themeData = Theme.of(context);
+  if (cardName == 'Chief Security Officer IIT Indore') {
+    cardName = 'CSO';
+  }
   return Column(
     children: [
       const SizedBox(height: 20),
@@ -128,7 +135,8 @@ Column securityCardLayout(
               securityCardLocationInfo(cardLocation, cardCategory),
               const SizedBox(height: 10),
               securityCardTimeInfo(cardTimeMisplaced),
-              const SizedBox(height: 12),
+              // const SizedBox(height: 12),
+              securityHandedOverToInfoRow(cardHandedOverTo),
               securityCardActionRow(
                   cardType,
                   cardID,
@@ -368,7 +376,7 @@ Row securityCardPosterInfoRow(int cardCategory, String posterImageURL,
   DateTime cardPostedAtDatetime = DateTime.parse(cardPostedAt);
   String yearLastTwoDigits = cardPostedAtDatetime.year.toString().substring(2);
   String formattedDate =
-      '${cardPostedAtDatetime.day}/${cardPostedAtDatetime.month}/$yearLastTwoDigits at ${cardPostedAtDatetime.hour}:${cardPostedAtDatetime.minute}';
+      '${cardPostedAtDatetime.day}/${cardPostedAtDatetime.month}/$yearLastTwoDigits at ${cardPostedAtDatetime.hour}:${cardPostedAtDatetime.minute.toString().padLeft(2, '0')}';
   return Row(
     children: [
       const SizedBox(width: 15),
@@ -390,17 +398,22 @@ Row securityCardPosterInfoRow(int cardCategory, String posterImageURL,
             fontFamily: fonts[0],
             fontVariations: const [FontVariation('wght', 600)],
             fontSize: 15),
+        overflow: TextOverflow.ellipsis,
       ),
       const SizedBox(width: 5),
       securityCardCategoryBox(cardCategory),
-      const Spacer(),
-      Text(
-        formattedDate.toString(),
-        style: TextStyle(
-            fontFamily: fonts[1],
-            color: Colors.blueGrey[300],
-            fontVariations: const [FontVariation('wght', 400)],
-            fontSize: 14),
+      // const Spacer(),
+      const SizedBox(width: 10),
+      Align(
+        alignment: Alignment.centerRight,
+        child: Text(
+          formattedDate.toString(),
+          style: TextStyle(
+              fontFamily: fonts[1],
+              color: Colors.blueGrey[300],
+              fontVariations: const [FontVariation('wght', 400)],
+              fontSize: 14),
+        ),
       ),
       const SizedBox(width: 15),
     ],
@@ -478,6 +491,32 @@ Row securityCardTimeInfo(String? cardLeftBehindAt) {
         ),
         const SizedBox(width: 10),
         Text('Time Last seen: $cardLeftBehindAt'),
+      ],
+    );
+  } else {
+    return const Row();
+  }
+}
+
+Row securityHandedOverToInfoRow(String? cardHandedOverTo) {
+  if (cardHandedOverTo != null && cardHandedOverTo.isNotEmpty) {
+    return Row(
+      children: [
+        Column(
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.security_outlined,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                Text('Handed over to: $cardHandedOverTo'),
+              ],
+            ),
+            const SizedBox(height: 12),
+          ],
+        ),
       ],
     );
   } else {

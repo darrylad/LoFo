@@ -40,7 +40,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   firebase_auth: ^4.17.8
   google_sign_in: ^6.2.1
-  firebase_core: ^2.27.0
+  firebase_core: ^2.32.0
   google_sign_in_ios: ^5.7.4
   popover: ^0.3.0
   photo_view: ^0.14.0
