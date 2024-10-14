@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:lofo/services/verify_app_validity.dart';
 
 Future<bool> sendSecurityRequest(
   int postCategory,
@@ -23,36 +24,40 @@ Future<bool> sendSecurityRequest(
   // Image? postImage,
   // Image userImage,
 ) async {
-  try {
-    if (postImage != null) {
-      final storageRef =
-          FirebaseStorage.instance.ref().child('postImages/$postID');
+  if (await verifyAppValidity()) {
+    try {
+      if (postImage != null) {
+        final storageRef =
+            FirebaseStorage.instance.ref().child('postImages/$postID');
 
-      await storageRef.putFile(postImage);
+        await storageRef.putFile(postImage);
 
-      postImageURL = await storageRef.getDownloadURL();
+        postImageURL = await storageRef.getDownloadURL();
+      }
+
+      await FirebaseFirestore.instance
+          .collection('publicRequests')
+          .doc(postID)
+          .set({
+        'postName': postName,
+        'postID': postID,
+        'postTitle': postTitle,
+        'postDescription': postDescription,
+        'postLocation': postLocation,
+        'postTimeLastSeen': postTimeLastSeen,
+        'postCategory': postCategory,
+        'postPostedAt': postPostedAt,
+        'postPosterID': postPosterID,
+        // 'image': postImage,
+        'postImageURL': postImageURL,
+        'userImageURL': userImageURL,
+      });
+      return true;
+    } catch (e) {
+      debugPrint('$e');
+      return false;
     }
-
-    await FirebaseFirestore.instance
-        .collection('publicRequests')
-        .doc(postID)
-        .set({
-      'postName': postName,
-      'postID': postID,
-      'postTitle': postTitle,
-      'postDescription': postDescription,
-      'postLocation': postLocation,
-      'postTimeLastSeen': postTimeLastSeen,
-      'postCategory': postCategory,
-      'postPostedAt': postPostedAt,
-      'postPosterID': postPosterID,
-      // 'image': postImage,
-      'postImageURL': postImageURL,
-      'userImageURL': userImageURL,
-    });
-    return true;
-  } catch (e) {
-    debugPrint('$e');
+  } else {
     return false;
   }
 }

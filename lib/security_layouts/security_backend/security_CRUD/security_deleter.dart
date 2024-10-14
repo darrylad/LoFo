@@ -4,28 +4,37 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
+import 'package:lofo/services/verify_app_validity.dart';
 
 Future<bool> deleteSecurityRequest(String postID, String? postImageURL) async {
   SecurityRequestUploadStatus previousSecurityRequestUploadStatus =
       securityRequestUploadStatus.value;
   securityRequestUploadStatus.value = SecurityRequestUploadStatus.deleting;
-  try {
-    var db = FirebaseFirestore.instance;
-    await db.collection('publicRequests').doc(postID).delete();
 
-    if (postImageURL != null && postImageURL.isNotEmpty) {
-      final storageRef =
-          FirebaseStorage.instance.ref().child('postImages/$postID');
+  if (await verifyAppValidity()) {
+    try {
+      var db = FirebaseFirestore.instance;
+      await db.collection('publicRequests').doc(postID).delete();
 
-      await storageRef.delete();
+      if (postImageURL != null && postImageURL.isNotEmpty) {
+        final storageRef =
+            FirebaseStorage.instance.ref().child('postImages/$postID');
+
+        await storageRef.delete();
+      }
+
+      securityDeleteSuccess(previousSecurityRequestUploadStatus);
+
+      return true;
+    } catch (e) {
+      debugPrint(e.toString());
+      securityDeleteFailure(previousSecurityRequestUploadStatus);
+      return false;
     }
-
-    securityDeleteSuccess(previousSecurityRequestUploadStatus);
-
-    return true;
-  } catch (e) {
-    debugPrint(e.toString());
+  } else {
     securityDeleteFailure(previousSecurityRequestUploadStatus);
+    securityRequestUploadStatus.value =
+        SecurityRequestUploadStatus.someThingWentWrong;
     return false;
   }
 }

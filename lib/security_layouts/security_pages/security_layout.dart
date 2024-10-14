@@ -68,13 +68,13 @@ class _SecurityLayoutState extends State<SecurityLayout> {
           label: 'More',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.all_inbox_rounded),
           // icon: Icon(Icons.amp_stories_rounded),
           label: 'Inbox',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
         ),
       ],
       currentIndex: selectedSecurityPageIndex,

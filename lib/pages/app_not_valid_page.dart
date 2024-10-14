@@ -133,3 +133,45 @@ class SomeThingWentWrongPage extends StatelessWidget {
     ));
   }
 }
+
+class DisabledPage extends StatefulWidget {
+  const DisabledPage({super.key});
+
+  @override
+  State<DisabledPage> createState() => _DisabledPageState();
+}
+
+class _DisabledPageState extends State<DisabledPage> {
+  @override
+  void initState() {
+    super.initState();
+    performLogout();
+    // Future.delayed(const Duration(seconds: 5), () {
+    //   SystemNavigator.pop();
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.do_not_disturb_alt_outlined,
+              size: 150, color: themeData.colorScheme.secondary),
+          const SizedBox(height: 40),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: Text('Maintainence in progress. Please come back later.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: themeData.colorScheme.secondary,
+                  fontSize: 20,
+                )),
+          ),
+        ],
+      ),
+    ));
+  }
+}

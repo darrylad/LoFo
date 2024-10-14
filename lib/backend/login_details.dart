@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo/animation/login_intermediate.dart';
 import 'package:lofo/auth/google_sign_in.dart';
@@ -183,6 +186,25 @@ bool checkIfSecurityAccount() {
   }
 }
 
+Future<bool> checkIfOneOfSecurityAccounts() async {
+  try {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+
+    await remoteConfig.fetchAndActivate();
+    String secAccountsJson = remoteConfig.getString("security_accounts");
+    Map<String, dynamic> jsonMap = jsonDecode(secAccountsJson);
+    List<String> secAccounts = List<String>.from(jsonMap['emails']);
+
+    if (secAccounts.contains(loginID)) {
+      return true;
+    }
+  } catch (e) {
+    debugPrint('$e');
+    return false;
+  }
+  return false;
+}
+
 Future<void> navigateToAppropriatePostVerificationPage(
     BuildContext context, State state) async {
   if (isUserLoggedIn) {
@@ -193,7 +215,8 @@ Future<void> navigateToAppropriatePostVerificationPage(
     if (loginID!.endsWith('@iiti.ac.in')) {
       // check if log in account is security's account
 
-      if (checkIfSecurityAccount()) {
+      // if (checkIfSecurityAccount()) {
+      if (await checkIfOneOfSecurityAccounts()) {
         loggedInAsSecurity = true;
         layoutWidget = const SecurityLayout();
         currentAppBar = securityAppBar('Home', securityImageExample);

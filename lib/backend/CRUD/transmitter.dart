@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:lofo/components/app_bar.dart';
+import 'package:lofo/services/verify_app_validity.dart';
 
 Future<bool> sendRequest(
   int postCategory,
@@ -22,37 +24,42 @@ Future<bool> sendRequest(
   // Image? postImage,
   // Image userImage,
 ) async {
-  try {
-    String postImageURL = '';
-    if (postImage != null) {
-      final storageRef =
-          FirebaseStorage.instance.ref().child('postImages/$postID');
+  if (await verifyAppValidity()) {
+    try {
+      String postImageURL = '';
+      if (postImage != null) {
+        final storageRef =
+            FirebaseStorage.instance.ref().child('postImages/$postID');
 
-      await storageRef.putFile(postImage);
+        await storageRef.putFile(postImage);
 
-      postImageURL = await storageRef.getDownloadURL();
+        postImageURL = await storageRef.getDownloadURL();
+      }
+
+      await FirebaseFirestore.instance
+          .collection('privateRequests')
+          .doc(postID)
+          .set({
+        'postName': postName,
+        'postID': postID,
+        'postTitle': postTitle,
+        'postDescription': postDescription,
+        'postLocation': postLocation,
+        'postTimeLastSeen': postTimeLastSeen,
+        'postCategory': postCategory,
+        'postPostedAt': postPostedAt,
+        'postPosterID': postPosterID,
+        // 'image': postImage,
+        'postImageURL': postImageURL,
+        'userImageURL': userImageURL,
+      });
+      return true;
+    } catch (e) {
+      debugPrint('$e');
+      return false;
     }
-
-    await FirebaseFirestore.instance
-        .collection('privateRequests')
-        .doc(postID)
-        .set({
-      'postName': postName,
-      'postID': postID,
-      'postTitle': postTitle,
-      'postDescription': postDescription,
-      'postLocation': postLocation,
-      'postTimeLastSeen': postTimeLastSeen,
-      'postCategory': postCategory,
-      'postPostedAt': postPostedAt,
-      'postPosterID': postPosterID,
-      // 'image': postImage,
-      'postImageURL': postImageURL,
-      'userImageURL': userImageURL,
-    });
-    return true;
-  } catch (e) {
-    debugPrint('$e');
+  } else {
+    requestUploadStatus.value = RequestUploadStatus.someThingWentWrong;
     return false;
   }
 }
@@ -73,38 +80,43 @@ Future<bool> sendFoundRequest(
   // Image? postImage,
   // Image userImage,
 ) async {
-  try {
-    String postImageURL = '';
-    if (postImage != null) {
-      final storageRef =
-          FirebaseStorage.instance.ref().child('postImages/$postID');
+  if (await verifyAppValidity()) {
+    try {
+      String postImageURL = '';
+      if (postImage != null) {
+        final storageRef =
+            FirebaseStorage.instance.ref().child('postImages/$postID');
 
-      await storageRef.putFile(postImage);
+        await storageRef.putFile(postImage);
 
-      postImageURL = await storageRef.getDownloadURL();
+        postImageURL = await storageRef.getDownloadURL();
+      }
+
+      await FirebaseFirestore.instance
+          .collection('privateRequests')
+          .doc(postID)
+          .set({
+        'postName': postName,
+        'postID': postID,
+        'postTitle': postTitle,
+        'postDescription': postDescription,
+        'postLocation': postLocation,
+        'postTimeLastSeen': postTimeLastSeen,
+        'postHandedOverTo': postHandedOverTo,
+        'postCategory': postCategory,
+        'postPostedAt': postPostedAt,
+        'postPosterID': postPosterID,
+        // 'image': postImage,
+        'postImageURL': postImageURL,
+        'userImageURL': userImageURL,
+      });
+      return true;
+    } catch (e) {
+      debugPrint('$e');
+      return false;
     }
-
-    await FirebaseFirestore.instance
-        .collection('privateRequests')
-        .doc(postID)
-        .set({
-      'postName': postName,
-      'postID': postID,
-      'postTitle': postTitle,
-      'postDescription': postDescription,
-      'postLocation': postLocation,
-      'postTimeLastSeen': postTimeLastSeen,
-      'postHandedOverTo': postHandedOverTo,
-      'postCategory': postCategory,
-      'postPostedAt': postPostedAt,
-      'postPosterID': postPosterID,
-      // 'image': postImage,
-      'postImageURL': postImageURL,
-      'userImageURL': userImageURL,
-    });
-    return true;
-  } catch (e) {
-    debugPrint('$e');
+  } else {
+    requestUploadStatus.value = RequestUploadStatus.someThingWentWrong;
     return false;
   }
 }

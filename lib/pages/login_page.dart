@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Welcome!', style: themeData.textTheme.titleMedium),
-            const SizedBox(height: 100),
+            const SizedBox(height: 50),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
             //   child: BasicTextBox(
@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
             //       // labelText: 'Login ID',
             //       textController: loginText),
             // ),
-            const SizedBox(height: 20),
+            // const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: themeData.colorScheme.secondary, fontSize: 16),
                   textAlign: TextAlign.center),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 60),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Hero(
