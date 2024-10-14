@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/login_details.dart';
+import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -88,18 +89,45 @@ class SomeThingWentWrongPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const SizedBox(height: 50),
           Icon(Icons.signal_wifi_connected_no_internet_4_rounded,
               size: 150, color: themeData.colorScheme.secondary),
           const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Text('Unable to verify the app. Please check your network.',
+            child: Text(
+                'Unable to verify the app. Please check your network and retry.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: themeData.colorScheme.secondary,
                   fontSize: 20,
                 )),
           ),
+          const SizedBox(height: 50),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const LoginVerification()));
+            },
+            child: Container(
+              width: 200,
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: themeData.colorScheme.tertiary,
+              ),
+              child: Center(
+                child: Text('Retry',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: themeData.colorScheme.secondary,
+                      fontSize: 20,
+                    )),
+              ),
+            ),
+          )
         ],
       ),
     ));

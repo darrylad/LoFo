@@ -429,6 +429,26 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
   }
 }
 
+class CircleClipper extends CustomClipper<Path> {
+  final double radius;
+  final Offset position;
+  final double distance;
+
+  CircleClipper(this.radius, this.position, this.distance);
+
+  @override
+  Path getClip(Size size) {
+    return Path()
+      ..addOval(Rect.fromCircle(center: position, radius: radius * distance));
+  }
+
+  @override
+  bool shouldReclip(CircleClipper oldClipper) {
+    return radius != oldClipper.radius || position != oldClipper.position;
+  }
+}
+
+
 // class NPostFABold extends StatefulWidget {
 //   // Define a GlobalKey
 //   final GlobalKey fabKey;
@@ -606,26 +626,6 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
 //     );
 //   }
 // }
-
-class CircleClipper extends CustomClipper<Path> {
-  final double radius;
-  final Offset position;
-  final double distance;
-
-  CircleClipper(this.radius, this.position, this.distance);
-
-  @override
-  Path getClip(Size size) {
-    return Path()
-      ..addOval(Rect.fromCircle(center: position, radius: radius * distance));
-  }
-
-  @override
-  bool shouldReclip(CircleClipper oldClipper) {
-    return radius != oldClipper.radius || position != oldClipper.position;
-  }
-}
-
 
 
 // class NewPostFloatingActionButton extends StatelessWidget {
