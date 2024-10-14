@@ -280,6 +280,8 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                                                   previousRequestUploadStatus;
 
                                               if (isValid) {
+                                                selectedPageIndexNotifier
+                                                    .value = 2;
                                                 postAction(
                                                     context,
                                                     postCategory,
@@ -303,9 +305,6 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                                             });
                                           }
                                           if (!mounted) return;
-                                          setState(() {
-                                            selectedPageIndex = 2;
-                                          });
                                           Navigator.pop(this.context);
                                         }
                                       : null));

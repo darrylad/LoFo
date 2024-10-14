@@ -23,7 +23,8 @@ class _LoginIntermediatePageState extends State<LoginIntermediatePage>
   @override
   void initState() {
     super.initState();
-    selectedPageIndex = 1;
+    // selectedPageIndex = 1;
+    selectedPageIndexNotifier.value = 1;
     selectedSecurityPageIndex = 1;
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 1200),

@@ -29,7 +29,9 @@ String loginProfileImageURL = '';
 String? userName = 'Darryl';
 
 bool checkLoginDetails() {
-  if (loginID!.endsWith('@iiti.ac.in')) {
+  if (loginID!.endsWith('@iiti.ac.in') ||
+      loginID! == "darrylcad@gmail.com" ||
+      specialAccounts.contains(loginID)) {
     return true;
   } else {
     return false;
@@ -212,7 +214,8 @@ Future<void> navigateToAppropriatePostVerificationPage(
 
     if (!state.mounted) return;
 
-    if (loginID!.endsWith('@iiti.ac.in')) {
+    // if (loginID!.endsWith('@iiti.ac.in')) {
+    if (checkLoginDetails()) {
       // check if log in account is security's account
 
       // if (checkIfSecurityAccount()) {

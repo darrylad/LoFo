@@ -95,8 +95,7 @@ class _GetYourPostsState extends State<GetYourPosts> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.add_circle_rounded,
-              size: 100, color: themeData.colorScheme.secondary),
+          Icon(Icons.inbox, size: 100, color: themeData.colorScheme.secondary),
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),

@@ -12,7 +12,7 @@ class AboutPage extends StatefulWidget {
 
 class _AboutPageState extends State<AboutPage> {
   String aboutTextDesc =
-      'Welcome to the Lofo app, a dedicated platform designed to simplify the lost and found process on campus. Our app provides students with a convenient way to report lost items, including descriptions and photos, which are then routed to campus security for assistance. \n \n \nDeveloped by: Darryl David \n \n \n';
+      'Welcome to the Lofo app, a dedicated platform designed to simplify the lost and found process on campus. My app provides students with a convenient way to report lost items, including descriptions and photos, which are then routed to campus security for assistance. \n \n \nDeveloped by Darryl David \n \n \n';
 
   getAboutText() async {
     try {

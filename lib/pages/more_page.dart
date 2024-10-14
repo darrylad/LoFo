@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lofo/animation/logout_intermediate.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
+import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/about_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
@@ -76,29 +77,7 @@ class _MorePageState extends State<MorePage> {
           ),
         ),
       ),
-      // (loginID == 'me220003022@iiti.ac.in')
-      //     ? SwitchListTile(
-      //         value: useMyAccountAsSecurityAccount,
-      //         title: Text(
-      //           'Use my account as security account',
-      //           style: themeData.textTheme.bodyLarge,
-      //           // style: bodyMedium,
-      //         ),
-      //         subtitle: (useMyAccountAsSecurityAccount)
-      //             ? const Text('Log out to switch')
-      //             : null,
-      //         onChanged: (value) {
-      //           setState(() {
-      //             useMyAccountAsSecurityAccount = value;
-      //             (useMyAccountAsSecurityAccount)
-      //                 ? securityAccountEmail = loginID!
-      //                 : securityAccountEmail = 'securityoffice@iiti.ac.in';
-      //           });
-      //           debugPrint(
-      //               'useMyAccountAsSecurityAccount: $useMyAccountAsSecurityAccount');
-      //           debugPrint('securityAccountEmail: $securityAccountEmail');
-      //         })
-      //     : const SizedBox(),
+      // (devSwitch) ? devSwitchWid() : const SizedBox(),
       SwitchListTile(
           value: forceLightTheme.value,
           title: Text(
@@ -123,6 +102,14 @@ class _MorePageState extends State<MorePage> {
               },
             )
           : const SizedBox(),
+      SwitchListTile(
+          value: false,
+          title: Text(
+            'Notifications',
+            style: themeData.textTheme.bodyLarge,
+          ),
+          subtitle: const Text('In development'),
+          onChanged: null),
       ListTile(
         title: Text(
           'Logout and delete account',
@@ -142,6 +129,30 @@ class _MorePageState extends State<MorePage> {
       ),
       const SizedBox(height: 200),
     ]));
+  }
+
+  SwitchListTile devSwitchWid() {
+    return SwitchListTile(
+        value: useMyAccountAsSecurityAccount,
+        title: Text(
+          'Use my account as security account',
+          style: themeData.textTheme.bodyLarge,
+          // style: bodyMedium,
+        ),
+        subtitle: (useMyAccountAsSecurityAccount)
+            ? const Text('Log out to switch')
+            : null,
+        onChanged: (value) {
+          setState(() {
+            useMyAccountAsSecurityAccount = value;
+            (useMyAccountAsSecurityAccount)
+                ? securityAccountEmail = loginID!
+                : securityAccountEmail = 'securityoffice@iiti.ac.in';
+          });
+          debugPrint(
+              'useMyAccountAsSecurityAccount: $useMyAccountAsSecurityAccount');
+          debugPrint('securityAccountEmail: $securityAccountEmail');
+        });
   }
 
   SingleChildScrollView appBarChangeButtonRow() {

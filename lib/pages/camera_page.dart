@@ -200,7 +200,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                     width: 300,
                     height: 300,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(
                         image: FileImage(image!),
                         fit: BoxFit.cover,
@@ -214,17 +214,17 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
             actions: <Widget>[
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Expanded(
-                    child: BasicButton.primaryButton("Proceed", () {
-                  Navigator.pop(context);
-                  Navigator.pop(context, image);
+                    child: BasicButton.secondaryButton("Retake", () {
+                  Navigator.of(context).pop();
+                  controller!.resumePreview();
                 })),
 
                 const SizedBox(width: 18),
 
                 Expanded(
-                    child: BasicButton.secondaryButton("Retake", () {
-                  Navigator.of(context).pop();
-                  controller!.resumePreview();
+                    child: BasicButton.primaryButton("Proceed", () {
+                  Navigator.pop(context);
+                  Navigator.pop(context, image);
                 })),
 
                 // Expanded(

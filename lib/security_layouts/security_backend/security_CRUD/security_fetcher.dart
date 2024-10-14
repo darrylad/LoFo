@@ -201,7 +201,7 @@ class _GetSecurityHomePostsState extends State<GetSecurityHomePosts> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.add_circle_rounded,
+                    Icon(Icons.inbox_rounded,
                         size: 100, color: themeData.colorScheme.secondary),
                     const SizedBox(height: 20),
                     Padding(
