@@ -364,7 +364,7 @@ Row handedOverToInfoRow(String? cardHandedOverTo) {
                   size: 20,
                 ),
                 const SizedBox(width: 10),
-                Text('Handed over at: $cardHandedOverTo'),
+                Text('Handed over to: $cardHandedOverTo'),
               ],
             ),
             const SizedBox(height: 12),

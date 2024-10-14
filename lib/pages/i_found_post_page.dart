@@ -221,7 +221,7 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                     const SizedBox(height: 20),
 
                     Text(
-                      'Please hand over this item to a nearby security agent, and mention their location below.',
+                      'Please hand over this item to a nearby security agent, and mention their name and location below.',
                       style: TextStyle(
                           fontSize: 15,
                           color: themeData.colorScheme.onSurfaceVariant,
@@ -237,7 +237,7 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                       maxLines: 1,
                       // readOnly: true,
                       isRequiredField: true,
-                      labelText: 'Handed over at',
+                      labelText: 'Handed over to',
                       textController: handedOverToController,
                       onChanged: updateIsRequestPostable,
                     ),
@@ -407,8 +407,6 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const PreCamLoadPage()));
-            print("Image: ###########");
-            print(capturedImage);
             if (capturedImage != null && capturedImage is File) {
               setState(() {
                 pickedPostImage = capturedImage;
