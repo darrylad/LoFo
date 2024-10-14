@@ -235,6 +235,7 @@ AppBar normalAppBar(String title, Widget? actionImage, {Widget? leading}) {
     title: Text(
       title,
       style: const TextStyle(fontVariations: [FontVariation('wght', 600)]),
+      overflow: TextOverflow.ellipsis,
     ),
     leading: leading,
     actions: [

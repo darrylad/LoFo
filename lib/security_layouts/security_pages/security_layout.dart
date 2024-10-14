@@ -27,12 +27,12 @@ class _SecurityLayoutState extends State<SecurityLayout> {
         currentAppBar =
             securityAppBar('Hi, Security', const LoginImageButton());
         break;
-      case 1:
+      case 2:
         securityPage = const SecurityHomePage();
         currentAppBar =
             securityAppBar('Public Posts', const LoginImageButton());
         break;
-      case 2:
+      case 1:
         securityPage = const SecurityInboxPage();
         currentAppBar = securityAppBar('Inbox', const LoginImageButton());
         break;
@@ -59,7 +59,7 @@ class _SecurityLayoutState extends State<SecurityLayout> {
 
   BottomNavigationBar securityBottomNavigationBar() {
     return BottomNavigationBar(
-      backgroundColor: securityColorScheme.background,
+      backgroundColor: securityColorScheme.surface,
       unselectedItemColor: securityColorScheme.onSurface.withOpacity(0.5),
       selectedItemColor: securityColorScheme.primary,
       items: const <BottomNavigationBarItem>[

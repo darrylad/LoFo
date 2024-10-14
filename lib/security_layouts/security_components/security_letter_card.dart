@@ -529,7 +529,7 @@ class SecurityPhotoViewerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget leading = IconButton(
       icon: const Icon(Icons.arrow_back),
-      color: securityColorScheme.onBackground,
+      color: securityColorScheme.onSurface,
       onPressed: () {
         Navigator.pop(context);
       },

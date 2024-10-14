@@ -196,7 +196,7 @@ AppBar uploadErrorSecurityAppBar() {
 
 AppBar someThingWentWrongSecurityAppBar() {
   return AppBar(
-    backgroundColor: securityColorScheme.background,
+    backgroundColor: securityColorScheme.surface,
     key: const ValueKey(8),
     centerTitle: true,
     title: const PulsingText(
@@ -236,7 +236,7 @@ AppBar publicizeErrowSecurityAppBar() {
 
 AppBar validatingSecurityAppBar() {
   return AppBar(
-    backgroundColor: securityColorScheme.background,
+    backgroundColor: securityColorScheme.surface,
     key: const ValueKey(11),
     centerTitle: true,
     title: const PulsingText(
@@ -251,14 +251,15 @@ AppBar validatingSecurityAppBar() {
 AppBar normalSecurityAppBar(String title, Widget? actionImage,
     {Widget? leading}) {
   return AppBar(
-    backgroundColor: securityColorScheme.background,
+    backgroundColor: securityColorScheme.surface,
     key: ValueKey(title),
     centerTitle: false,
     title: Text(
       title,
       style: TextStyle(
-          color: securityColorScheme.onBackground,
+          color: securityColorScheme.onSurface,
           fontVariations: const [FontVariation('wght', 600)]),
+      overflow: TextOverflow.ellipsis,
     ),
     leading: leading,
     actions: [

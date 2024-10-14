@@ -14,9 +14,9 @@ ThemeData lightThemeData = ThemeData(
     seedColor: Colors.blue,
     brightness: Brightness.light,
     // surfaceVariant: blueColorScheme.background,
-    tertiary: blueColorScheme.background,
+    tertiary: blueColorScheme.surface,
   ),
-  scaffoldBackgroundColor: blueColorScheme.surfaceVariant,
+  scaffoldBackgroundColor: blueColorScheme.surfaceContainerHighest,
 
   // textTheme: GoogleFonts.manropeTextTheme(),
 

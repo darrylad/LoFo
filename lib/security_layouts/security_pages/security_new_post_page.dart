@@ -225,7 +225,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
 
     Widget leading = IconButton(
       icon: const Icon(Icons.arrow_back),
-      color: securityColorScheme.onBackground,
+      color: securityColorScheme.onSurface,
       onPressed: () {
         nullifyNewPostPatameters();
         Navigator.pop(context);
