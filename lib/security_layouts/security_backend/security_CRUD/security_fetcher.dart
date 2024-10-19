@@ -127,6 +127,7 @@ class GetSecurityInboxDetails extends StatelessWidget {
       cardPostedAt: data['postPostedAt'],
       cardCategory: data['postCategory'],
       cardPosterID: data['postPosterID'],
+      isArchived: data['isArchived'],
     );
   }
 }
@@ -257,6 +258,7 @@ class GetSecurityHomePostsDetails extends StatelessWidget {
       cardPostedAt: data['postPostedAt'],
       cardCategory: data['postCategory'],
       cardPosterID: data['postPosterID'],
+      isArchived: data['isArchived'],
     );
   }
 }

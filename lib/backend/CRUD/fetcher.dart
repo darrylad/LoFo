@@ -148,6 +148,7 @@ class YourPostsDetails extends StatelessWidget {
       cardPostedAt: data['postPostedAt'],
       cardCategory: data['postCategory'],
       cardPosterID: data['postPosterID'],
+      isArchived: data['isArchived'],
     );
 
     // return StreamBuilder(
@@ -309,6 +310,7 @@ class GetHomePostsDetails extends StatelessWidget {
       cardPostedAt: data['postPostedAt'],
       cardCategory: data['postCategory'],
       cardPosterID: data['postPosterID'],
+      isArchived: data['isArchived'],
     );
   }
 }

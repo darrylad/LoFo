@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/CRUD/deleter.dart';
 import 'package:lofo/backend/CRUD/transmitter.dart';
+import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/main.dart';
@@ -24,6 +25,7 @@ class LetterCard extends StatelessWidget {
     required this.cardType,
     required this.cardPosterID,
     this.cardHandedOverTo,
+    this.isArchived,
     // required this.parentContext
   });
 
@@ -41,6 +43,7 @@ class LetterCard extends StatelessWidget {
   final String? cardImageURL;
   final String userImageURL;
   final String cardPosterID;
+  final bool? isArchived;
   // final BuildContext parentContext;
 
   @override
@@ -59,7 +62,8 @@ class LetterCard extends StatelessWidget {
         cardImageURL,
         userImageURL,
         context,
-        cardPosterID);
+        cardPosterID,
+        isArchived);
   }
 }
 
@@ -77,7 +81,8 @@ Column cardLayout(
     String? cardImageURL,
     String posterImageURL,
     BuildContext context,
-    String cardPosterID) {
+    String cardPosterID,
+    bool? cardArchived) {
   themeData = Theme.of(context);
   if (cardName == 'Chief Security Officer IIT Indore') {
     cardName = 'CSO';
@@ -85,7 +90,10 @@ Column cardLayout(
   return Column(
     children: [
       const SizedBox(height: 15),
-      posterInfoRow(cardCategory, posterImageURL, cardName, cardPostedAt),
+      Opacity(
+          opacity: cardArchived ?? false ? 0.5 : 1,
+          child: posterInfoRow(
+              cardCategory, posterImageURL, cardName, cardPostedAt)),
       const SizedBox(height: 10),
       Container(
         color: themeData.colorScheme.tertiary,
@@ -95,48 +103,63 @@ Column cardLayout(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              archivedRow(cardArchived ?? false),
+
               const SizedBox(height: 10),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  letterImage(cardImageURL, context),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          cardTitle,
-                          maxLines: null,
-                          style: TextStyle(
-                              fontFamily: fonts[1],
-                              fontVariations: const [
-                                FontVariation('wght', 440)
-                              ],
-                              fontSize: 20),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          cardDescription,
-                          maxLines: null,
-                          softWrap: true,
-                          style: const TextStyle(
-                              fontVariations: [FontVariation('wght', 400)]),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+              Opacity(
+                opacity: cardArchived ?? false ? 0.3 : 1,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    letterImage(cardImageURL, context),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            cardTitle,
+                            maxLines: null,
+                            style: TextStyle(
+                                fontFamily: fonts[1],
+                                fontVariations: const [
+                                  FontVariation('wght', 440)
+                                ],
+                                fontSize: 20),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            cardDescription,
+                            maxLines: null,
+                            softWrap: true,
+                            style: const TextStyle(
+                                fontVariations: [FontVariation('wght', 400)]),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
               const SizedBox(height: 15),
-              locationInfo(cardLocation, cardCategory),
+
+              Opacity(
+                  opacity: cardArchived ?? false ? 0.3 : 1,
+                  child: locationInfo(cardLocation, cardCategory)),
               const SizedBox(height: 10),
-              timeInfo(cardTimeMisplaced),
-              handedOverToInfoRow(cardHandedOverTo),
+
+              Opacity(
+                  opacity: cardArchived ?? false ? 0.3 : 1,
+                  child: timeInfo(cardTimeMisplaced)),
+
+              Opacity(
+                  opacity: cardArchived ?? false ? 0.3 : 1,
+                  child: handedOverToInfoRow(cardHandedOverTo)),
+
               actionButtonRow(cardID, cardTitle, cardType, cardImageURL,
-                  context, cardPosterID),
+                  context, cardPosterID, cardArchived ?? false),
+
               // const SizedBox(height: 5),
             ],
           ),
@@ -146,8 +169,43 @@ Column cardLayout(
   );
 }
 
-Widget actionButtonRow(String cardID, String cardTitle, int cardType,
-    String? cardImageURL, BuildContext parentContext, String cardPosterID) {
+Widget archivedRow(bool isArchived) {
+  return (isArchived)
+      ? Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.archive_outlined,
+              color: ColorScheme.fromSeed(
+                      brightness: themeData.brightness,
+                      seedColor: Colors.orange)
+                  .primary,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              'Archived',
+              style: TextStyle(
+                  fontFamily: fonts[0],
+                  fontVariations: const [FontVariation('wght', 600)],
+                  color: ColorScheme.fromSeed(
+                          brightness: themeData.brightness,
+                          seedColor: Colors.orange)
+                      .primary,
+                  fontSize: 15),
+            ),
+          ],
+        )
+      : const SizedBox();
+}
+
+Widget actionButtonRow(
+    String cardID,
+    String cardTitle,
+    int cardType,
+    String? cardImageURL,
+    BuildContext parentContext,
+    String cardPosterID,
+    bool isArchived) {
   if (cardType == 0) {
     // card is displayed in home page
 
@@ -157,60 +215,183 @@ Widget actionButtonRow(String cardID, String cardTitle, int cardType,
     //   debugPrint('Card Title: $cardTitle');
     // });
 
-    return BasicButton.secondaryButton('Contact', () async {
-      final Uri params = Uri(scheme: 'mailto', path: cardPosterID, query: '');
+    return (cardPosterID == loginID)
+        ? archiveButton(isArchived, cardID, false, parentContext)
+        : BasicButton.secondaryButton('Mail', () async {
+            final Uri params =
+                Uri(scheme: 'mailto', path: cardPosterID, query: '');
 
-      try {
-        if (await canLaunchUrl(params)) {
-          await launchUrl(params);
-        } else {
-          throw 'Could not launch $params';
-        }
-      } catch (e) {
-        debugPrint('Error: $e');
-      }
-    });
+            try {
+              if (await canLaunchUrl(params)) {
+                await launchUrl(params);
+              } else {
+                throw 'Could not launch $params';
+              }
+            } catch (e) {
+              debugPrint('Error: $e');
+            }
+          });
     // return const SizedBox();
   } else if (cardType == 1) {
-    return
+    return archiveButton(isArchived, cardID, true, parentContext);
 
-        // BasicButton.warningSecondaryButton('Delete', () async {
-        ConfirmatoryButton(
-            buttonType: ButtonType.warningSecondary,
-            buttonText: 'Delete',
-            parentContext: parentContext,
-            // parentContext: parentContext,
-            actionOnPressed: () async {
-// dismiss pop over
-              Navigator.pop(parentContext);
+    // BasicButton.warningSecondaryButton('Delete', () async {
+//         (isArchived)
+//             ? ConfirmatoryButton(
+//                 buttonText: 'Unarchive',
+//                 buttonType: ButtonType.secondary,
+//                 parentContext: parentContext,
+//                 actionOnPressed: () async {
+//                   Navigator.pop(parentContext);
 
-              // initiate deletion of private request
+//                   // initiate deletion of private request
 
-              RequestUploadStatus previousRequestUploadStatus =
-                  requestUploadStatus.value;
+//                   RequestUploadStatus previousRequestUploadStatus =
+//                       requestUploadStatus.value;
 
-              requestUploadStatus.value = RequestUploadStatus.deleting;
+//                   requestUploadStatus.value = RequestUploadStatus.unArchiving;
 
-              await midLoginCheck().then((isLoginValid) async {
-                if (isLoginValid) {
-                  await deleteRequest(cardID, cardImageURL)
-                      .then((isDeleteSuccessful) {
-                    if (isDeleteSuccessful) {
-                      deleteSuccess(previousRequestUploadStatus);
-                    } else {
-                      deleteFailure(previousRequestUploadStatus);
-                    }
-                  });
-                } else {
-                  previousRequestUploadStatus =
-                      RequestUploadStatus.someThingWentWrong;
-                  deleteFailure(previousRequestUploadStatus);
-                }
-              });
-            });
+//                   await midLoginCheck().then((isLoginValid) async {
+//                     if (isLoginValid) {
+//                       await unArchiveRequest(cardID)
+//                           .then((isUnarchiveSuccessful) {
+//                         if (isUnarchiveSuccessful) {
+//                           unArchiveSuccess(previousRequestUploadStatus);
+//                         } else {
+//                           unArchiveFailure(previousRequestUploadStatus);
+//                         }
+//                       });
+//                     } else {
+//                       previousRequestUploadStatus =
+//                           RequestUploadStatus.someThingWentWrong;
+//                       unArchiveFailure(previousRequestUploadStatus);
+//                     }
+//                   });
+//                 },
+//               )
+//             : ConfirmatoryButton(
+//                 buttonType: ButtonType.warningSecondary,
+//                 buttonText: 'Archive',
+//                 parentContext: parentContext,
+//                 // parentContext: parentContext,
+//                 actionOnPressed: () async {
+// // dismiss pop over
+//                   Navigator.pop(parentContext);
+
+//                   // initiate deletion of private request
+
+//                   RequestUploadStatus previousRequestUploadStatus =
+//                       requestUploadStatus.value;
+
+//                   requestUploadStatus.value = RequestUploadStatus.archiving;
+
+//                   await midLoginCheck().then((isLoginValid) async {
+//                     if (isLoginValid) {
+//                       // await deleteRequest(cardID, cardImageURL)
+//                       //     .then((isDeleteSuccessful) {
+//                       //   if (isDeleteSuccessful) {
+//                       //     deleteSuccess(previousRequestUploadStatus);
+//                       //   } else {
+//                       //     deleteFailure(previousRequestUploadStatus);
+//                       //   }
+//                       // });
+
+//                       await archiveRequest(cardID).then((isArchiveSuccessful) {
+//                         if (isArchiveSuccessful) {
+//                           archiveSuccess(previousRequestUploadStatus);
+//                         } else {
+//                           archiveFailure(previousRequestUploadStatus);
+//                         }
+//                       });
+//                     } else {
+//                       previousRequestUploadStatus =
+//                           RequestUploadStatus.someThingWentWrong;
+//                       archiveFailure(previousRequestUploadStatus);
+//                     }
+//                   });
+//                 });
   } else {
     return const SizedBox();
   }
+}
+
+ConfirmatoryButton archiveButton(
+    bool isArchived, String cardID, bool private, BuildContext parentContext) {
+  return (isArchived)
+      ? ConfirmatoryButton(
+          buttonText: 'Unarchive',
+          buttonType: ButtonType.secondary,
+          parentContext: parentContext,
+          actionOnPressed: () async {
+            Navigator.pop(parentContext);
+
+            // initiate deletion of private request
+
+            RequestUploadStatus previousRequestUploadStatus =
+                requestUploadStatus.value;
+
+            requestUploadStatus.value = RequestUploadStatus.unArchiving;
+
+            await midLoginCheck().then((isLoginValid) async {
+              if (isLoginValid) {
+                await unArchiveRequest(cardID, private)
+                    .then((isUnarchiveSuccessful) {
+                  if (isUnarchiveSuccessful) {
+                    unArchiveSuccess(previousRequestUploadStatus);
+                  } else {
+                    unArchiveFailure(previousRequestUploadStatus);
+                  }
+                });
+              } else {
+                previousRequestUploadStatus =
+                    RequestUploadStatus.someThingWentWrong;
+                unArchiveFailure(previousRequestUploadStatus);
+              }
+            });
+          },
+        )
+      : ConfirmatoryButton(
+          buttonType: ButtonType.warningSecondary,
+          buttonText: 'Archive',
+          parentContext: parentContext,
+          // parentContext: parentContext,
+          actionOnPressed: () async {
+// dismiss pop over
+            Navigator.pop(parentContext);
+
+            // initiate deletion of private request
+
+            RequestUploadStatus previousRequestUploadStatus =
+                requestUploadStatus.value;
+
+            requestUploadStatus.value = RequestUploadStatus.archiving;
+
+            await midLoginCheck().then((isLoginValid) async {
+              if (isLoginValid) {
+                // await deleteRequest(cardID, cardImageURL)
+                //     .then((isDeleteSuccessful) {
+                //   if (isDeleteSuccessful) {
+                //     deleteSuccess(previousRequestUploadStatus);
+                //   } else {
+                //     deleteFailure(previousRequestUploadStatus);
+                //   }
+                // });
+
+                await archiveRequest(cardID, private)
+                    .then((isArchiveSuccessful) {
+                  if (isArchiveSuccessful) {
+                    archiveSuccess(previousRequestUploadStatus);
+                  } else {
+                    archiveFailure(previousRequestUploadStatus);
+                  }
+                });
+              } else {
+                previousRequestUploadStatus =
+                    RequestUploadStatus.someThingWentWrong;
+                archiveFailure(previousRequestUploadStatus);
+              }
+            });
+          });
 }
 
 Row posterInfoRow(int cardCategory, String posterImageURL, String cardName,
@@ -377,7 +558,7 @@ Row handedOverToInfoRow(String? cardHandedOverTo) {
   }
 }
 
-GestureDetector letterImage(String? cardImageURL, BuildContext context) {
+Widget letterImage(String? cardImageURL, BuildContext context) {
   if (cardImageURL != null && cardImageURL.isNotEmpty) {
     Image cardImage = Image.network(cardImageURL);
     return GestureDetector(
@@ -390,25 +571,26 @@ GestureDetector letterImage(String? cardImageURL, BuildContext context) {
                   )),
         );
       },
-      child: Container(
-        width: 140,
-        height: 140,
-        decoration: BoxDecoration(
-          color: themeData.colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-            image: cardImage.image,
-            fit: BoxFit.cover,
+      child: Row(
+        children: [
+          Container(
+            width: 140,
+            height: 140,
+            decoration: BoxDecoration(
+              color: themeData.colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: cardImage.image,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
+          const SizedBox(width: 14),
+        ],
       ),
     );
   } else {
-    return GestureDetector(
-      child: Container(
-        width: 0,
-      ),
-    );
+    return const SizedBox();
   }
 }
 

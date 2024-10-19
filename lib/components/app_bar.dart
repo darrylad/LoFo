@@ -10,7 +10,13 @@ enum RequestUploadStatus {
   deleting,
   deleted,
   deleteError,
-  validating
+  validating,
+  archiving,
+  archived,
+  archiveError,
+  unArchiving,
+  unArchived,
+  unArchiveError,
 }
 
 ValueNotifier<RequestUploadStatus> requestUploadStatus =
@@ -41,31 +47,49 @@ PreferredSize appBar(String title, Widget? actionImage, {Widget? leading}) {
           switch (value) {
             case RequestUploadStatus.normal:
               currentAppBar =
-                  normalAppBar(title, actionImage, leading: leading);
+                  normalAppBar(title, actionImage, leading: leading); // title
               break;
             case RequestUploadStatus.uploading:
-              currentAppBar = uploadingAppBar();
+              currentAppBar = uploadingAppBar(); // 4
               break;
             case RequestUploadStatus.uploaded:
-              currentAppBar = uploadedAppBar();
+              currentAppBar = uploadedAppBar(); // 0
               break;
             case RequestUploadStatus.uploadError:
-              currentAppBar = uploadErrorAppBar();
+              currentAppBar = uploadErrorAppBar(); // 5
               break;
             case RequestUploadStatus.someThingWentWrong:
-              currentAppBar = someThingWentWrongAppBar();
+              currentAppBar = someThingWentWrongAppBar(); // 6
               break;
             case RequestUploadStatus.deleting:
-              currentAppBar = deletingAppBar();
+              currentAppBar = deletingAppBar(); // 2
               break;
             case RequestUploadStatus.deleted:
-              currentAppBar = deletedAppBar();
+              currentAppBar = deletedAppBar(); // 1
               break;
             case RequestUploadStatus.deleteError:
-              currentAppBar = deleteErrorAppBar();
+              currentAppBar = deleteErrorAppBar(); // 3
               break;
             case RequestUploadStatus.validating:
-              currentAppBar = validatingAppBar();
+              currentAppBar = validatingAppBar(); // 7
+              break;
+            case RequestUploadStatus.archiving:
+              currentAppBar = archivingAppBar(); // 8
+              break;
+            case RequestUploadStatus.archived:
+              currentAppBar = archivedAppBar(); // 9
+              break;
+            case RequestUploadStatus.archiveError:
+              currentAppBar = archiveErrorAppBar(); // 10
+              break;
+            case RequestUploadStatus.unArchiving:
+              currentAppBar = unArchivingAppBar(); // 11
+              break;
+            case RequestUploadStatus.unArchived:
+              currentAppBar = unArchivedAppBar(); // 12
+              break;
+            case RequestUploadStatus.unArchiveError:
+              currentAppBar = unArchiveErrorAppBar(); // 13
               break;
             default:
               currentAppBar =
@@ -266,6 +290,90 @@ AppBar normalAppBar(String title, Widget? actionImage, {Widget? leading}) {
           : const SizedBox(),
       const SizedBox(width: 12)
     ],
+  );
+}
+
+AppBar archivingAppBar() {
+  return AppBar(
+    key: const ValueKey(8),
+    centerTitle: true,
+    title: Text(
+      'Archiving',
+      style: TextStyle(
+          color: ColorScheme.fromSeed(seedColor: Colors.amber[900]!).onPrimary,
+          fontVariations: const [FontVariation('wght', 600)]),
+    ),
+    backgroundColor:
+        ColorScheme.fromSeed(seedColor: Colors.amber[900]!).primary,
+  );
+}
+
+AppBar archivedAppBar() {
+  return AppBar(
+    key: const ValueKey(9),
+    centerTitle: true,
+    title: const Text(
+      'Archived',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: ColorScheme.fromSeed(seedColor: Colors.green).primary,
+  );
+}
+
+AppBar archiveErrorAppBar() {
+  return AppBar(
+    key: const ValueKey(10),
+    centerTitle: true,
+    title: Text(
+      'Could not archive',
+      style: TextStyle(
+          color: lightThemeData.colorScheme.onError,
+          fontVariations: const [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: lightThemeData.colorScheme.error,
+  );
+}
+
+AppBar unArchivingAppBar() {
+  return AppBar(
+    key: const ValueKey(11),
+    centerTitle: true,
+    title: Text(
+      'Unarchiving',
+      style: TextStyle(
+          color: ColorScheme.fromSeed(seedColor: Colors.amber[900]!).onPrimary,
+          fontVariations: const [FontVariation('wght', 600)]),
+    ),
+    backgroundColor:
+        ColorScheme.fromSeed(seedColor: Colors.amber[900]!).primary,
+  );
+}
+
+AppBar unArchivedAppBar() {
+  return AppBar(
+    key: const ValueKey(12),
+    centerTitle: true,
+    title: const Text(
+      'Unarchived',
+      style: TextStyle(
+          color: Colors.white, fontVariations: [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: ColorScheme.fromSeed(seedColor: Colors.green).primary,
+  );
+}
+
+AppBar unArchiveErrorAppBar() {
+  return AppBar(
+    key: const ValueKey(13),
+    centerTitle: true,
+    title: Text(
+      'Could not unarchive',
+      style: TextStyle(
+          color: lightThemeData.colorScheme.onError,
+          fontVariations: const [FontVariation('wght', 600)]),
+    ),
+    backgroundColor: lightThemeData.colorScheme.error,
   );
 }
 

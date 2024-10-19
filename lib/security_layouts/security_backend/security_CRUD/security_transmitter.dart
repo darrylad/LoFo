@@ -51,6 +51,7 @@ Future<bool> sendSecurityRequest(
         // 'image': postImage,
         'postImageURL': postImageURL,
         'userImageURL': userImageURL,
+        'isArchived': false,
       });
       return true;
     } catch (e) {
@@ -129,6 +130,7 @@ Future<bool> sendSecurityPublicizeRequest(
         // 'image': postImage,
         'postImageURL': postImageURL,
         'userImageURL': userImageURL,
+        'isArchived': false,
       });
       return true;
     } catch (e) {

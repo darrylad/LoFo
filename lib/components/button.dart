@@ -258,7 +258,7 @@ class ConfirmatoryButton extends StatelessWidget {
                                 (buttonType == ButtonType.warningPrimary ||
                                         buttonType ==
                                             ButtonType.warningSecondary)
-                                    ? Text('This can\'t be undone',
+                                    ? Text('Confirm',
                                         style: TextStyle(
                                             fontFamily: fonts[1],
                                             fontSize: 18,

@@ -26,7 +26,8 @@ class SecurityLetterCard extends StatelessWidget {
       required this.cardType,
       required this.cardCategory,
       required this.cardPosterID,
-      this.cardHandedOverTo});
+      this.cardHandedOverTo,
+      this.isArchived});
 
   final int cardType; // 0 for Public, 1 for Inbox
   final int cardCategory; // 0 for found, 1 for lost
@@ -43,6 +44,7 @@ class SecurityLetterCard extends StatelessWidget {
   // final Image userImage;
   final String userImageURL;
   final String cardPosterID;
+  final bool? isArchived;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,8 @@ class SecurityLetterCard extends StatelessWidget {
         cardImageURL,
         userImageURL,
         context,
-        cardPosterID);
+        cardPosterID,
+        isArchived);
   }
 }
 
@@ -78,7 +81,8 @@ Column securityCardLayout(
     String? cardImageURL,
     String posterImageURL,
     BuildContext context,
-    String cardPosterID) {
+    String cardPosterID,
+    bool? cardArchived) {
   themeData = Theme.of(context);
   if (cardName == 'Chief Security Officer IIT Indore') {
     cardName = 'CSO';
@@ -86,8 +90,11 @@ Column securityCardLayout(
   return Column(
     children: [
       const SizedBox(height: 20),
-      securityCardPosterInfoRow(
-          cardCategory, posterImageURL, cardName, cardPostedAt),
+      Opacity(
+        opacity: cardArchived ?? false ? 0.3 : 1,
+        child: securityCardPosterInfoRow(
+            cardCategory, posterImageURL, cardName, cardPostedAt),
+      ),
       const SizedBox(height: 10),
       Container(
         color: themeData.colorScheme.tertiary,
@@ -97,47 +104,60 @@ Column securityCardLayout(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              securityArchivedRow(cardArchived ?? false),
               const SizedBox(height: 10),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  securityCardLetterImage(cardImageURL, context),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          cardTitle,
-                          maxLines: null,
-                          style: TextStyle(
-                              fontFamily: fonts[1],
-                              fontVariations: const [
-                                FontVariation('wght', 440)
-                              ],
-                              fontSize: 20),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          cardDescription,
-                          maxLines: null,
-                          softWrap: true,
-                          style: const TextStyle(
-                              fontVariations: [FontVariation('wght', 400)]),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+              Opacity(
+                opacity: cardArchived ?? false ? 0.3 : 1,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    securityCardLetterImage(cardImageURL, context),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            cardTitle,
+                            maxLines: null,
+                            style: TextStyle(
+                                fontFamily: fonts[1],
+                                fontVariations: const [
+                                  FontVariation('wght', 440)
+                                ],
+                                fontSize: 20),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            cardDescription,
+                            maxLines: null,
+                            softWrap: true,
+                            style: const TextStyle(
+                                fontVariations: [FontVariation('wght', 400)]),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
               const SizedBox(height: 12),
-              securityCardLocationInfo(cardLocation, cardCategory),
+              Opacity(
+                  opacity: cardArchived ?? false ? 0.3 : 1,
+                  child: securityCardLocationInfo(cardLocation, cardCategory)),
               const SizedBox(height: 10),
-              securityCardTimeInfo(cardTimeMisplaced),
+
+              Opacity(
+                  opacity: cardArchived ?? false ? 0.3 : 1,
+                  child: securityCardTimeInfo(cardTimeMisplaced)),
               // const SizedBox(height: 12),
-              securityHandedOverToInfoRow(cardHandedOverTo),
+
+              Opacity(
+                  opacity: cardArchived ?? false ? 0.3 : 1,
+                  child: securityHandedOverToInfoRow(cardHandedOverTo)),
+
               securityCardActionRow(
                   cardType,
                   cardID,
@@ -377,6 +397,35 @@ Widget securityCardActionRow(
   } else {
     return const SizedBox();
   }
+}
+
+Widget securityArchivedRow(bool isArchived) {
+  return (isArchived)
+      ? Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.archive_outlined,
+              color: ColorScheme.fromSeed(
+                      brightness: themeData.brightness,
+                      seedColor: Colors.orange)
+                  .primary,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              'Archived',
+              style: TextStyle(
+                  fontFamily: fonts[0],
+                  fontVariations: const [FontVariation('wght', 600)],
+                  color: ColorScheme.fromSeed(
+                          brightness: themeData.brightness,
+                          seedColor: Colors.orange)
+                      .primary,
+                  fontSize: 15),
+            ),
+          ],
+        )
+      : const SizedBox();
 }
 
 Row securityCardPosterInfoRow(int cardCategory, String posterImageURL,
