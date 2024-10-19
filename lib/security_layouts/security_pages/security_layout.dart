@@ -6,6 +6,7 @@ import 'package:lofo/security_layouts/security_components/security_app_bar.dart'
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
 import 'package:lofo/security_layouts/security_pages/security_home.dart';
 import 'package:lofo/security_layouts/security_pages/security_inbox_page.dart';
+import 'package:lofo/services/notification_service.dart';
 
 class SecurityLayout extends StatefulWidget {
   const SecurityLayout({super.key});
@@ -18,6 +19,14 @@ int selectedSecurityPageIndex = 1;
 
 class _SecurityLayoutState extends State<SecurityLayout> {
   Widget securityPage = const SecurityHomePage();
+
+  @override
+  void initState() {
+    if (areNotificationsEnabled) {
+      NotificationService().uploadSecurityDeviceToken();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

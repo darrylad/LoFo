@@ -52,6 +52,7 @@ Future<bool> sendRequest(
         // 'image': postImage,
         'postImageURL': postImageURL,
         'userImageURL': userImageURL,
+        'isArchived': false,
       });
       return true;
     } catch (e) {
@@ -109,6 +110,7 @@ Future<bool> sendFoundRequest(
         // 'image': postImage,
         'postImageURL': postImageURL,
         'userImageURL': userImageURL,
+        'isArchived': false
       });
       return true;
     } catch (e) {

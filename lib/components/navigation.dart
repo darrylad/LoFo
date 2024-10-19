@@ -6,6 +6,7 @@ import 'package:lofo/main.dart';
 import 'package:lofo/pages/home.dart';
 import 'package:lofo/pages/more_page.dart';
 import 'package:lofo/pages/your_posts_page.dart';
+import 'package:lofo/services/notification_service.dart';
 
 class Layout extends StatefulWidget {
   const Layout({super.key});
@@ -21,6 +22,17 @@ final ValueNotifier<int> selectedPageIndexNotifier = ValueNotifier<int>(1);
 class _LayoutState extends State<Layout> {
   Widget page = const HomePage();
   String morePageAppBarTitle = (isUserLoggedIn) ? 'Hi, $userName' : '';
+
+  @override
+  void initState() {
+    if (areNotificationsEnabled) {
+      NotificationService().uploadDeviceToken();
+    }
+    super.initState();
+    // selectedPageIndexNotifier.addListener(() {
+    //   print('selectedPageIndexNotifier: ${selectedPageIndexNotifier.value}');
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,8 @@ class _LayoutState extends State<Layout> {
             break;
           case 2:
             page = const YourPostsPage();
-            currentAppBar = appBar('Your Requests', const LoginImageButton());
+            currentAppBar =
+                appBar('Private requests', const LoginImageButton());
             break;
           default:
             page = const HomePage();

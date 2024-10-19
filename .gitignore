@@ -48,3 +48,4 @@ lib/firebase_options.dart
 #validity related
 lib/login_verification.dart
 lib/services/verify_app_validity.dart
+lib/services/notification_terminal.dart

@@ -7,6 +7,7 @@ import 'package:lofo/security_layouts/security_backend/security_CRUD/security_de
 import 'package:lofo/security_layouts/security_backend/security_CRUD/security_transmitter.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
+import 'package:lofo/services/notification_terminal.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -313,6 +314,10 @@ Widget securityCardActionRow(
                           }
                         },
                       );
+
+                      // send notification to security
+                      await NotificationTerminal.sendPublicizeNotifications(
+                          cardPosterID, cardTitle, userName, cardCategory);
                     } else {
                       publicizeFailure(previousSecurityRequestUploadStatus);
                     }

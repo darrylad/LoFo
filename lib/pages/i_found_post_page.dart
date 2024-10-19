@@ -10,6 +10,7 @@ import 'package:lofo/components/button.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/camera_page.dart';
+import 'package:lofo/services/notification_terminal.dart';
 import 'package:lofo/services/verify_app_validity.dart';
 import 'package:lofo/theme/default_theme.dart';
 
@@ -121,6 +122,9 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
             sendFailure(previousRequestUploadStatus);
           }
         });
+
+        await NotificationTerminal.sendNotificationToSecurity(
+            userName!, postTitle, postCategory);
       } else {
         previousRequestUploadStatus = RequestUploadStatus.someThingWentWrong;
         sendFailure(previousRequestUploadStatus);
@@ -362,7 +366,7 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            backgroundColor: themeData.colorScheme.primaryContainer,
+            backgroundColor: themeData.colorScheme.primary,
             shadowColor: Colors.transparent,
             elevation: 0),
         child: AnimatedContainer(
@@ -433,7 +437,7 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            backgroundColor: themeData.colorScheme.primaryContainer,
+            backgroundColor: themeData.colorScheme.primary,
             shadowColor: Colors.transparent,
             elevation: 0),
         child: AnimatedContainer(

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class PulsingChild extends StatefulWidget {
   final Widget child;
-  const PulsingChild({super.key, required this.child});
+  final Duration? duration;
+  const PulsingChild({super.key, required this.child, this.duration});
 
   @override
   State<PulsingChild> createState() => _PulsingChildState();
@@ -17,7 +18,7 @@ class _PulsingChildState extends State<PulsingChild>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 700),
+      duration: Duration(milliseconds: widget.duration?.inMilliseconds ?? 1000),
       vsync: this,
     )..repeat(reverse: true);
 

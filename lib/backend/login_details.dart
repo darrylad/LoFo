@@ -12,6 +12,7 @@ import 'package:lofo/login_verification.dart';
 import 'package:lofo/pages/more_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_pages/security_layout.dart';
+import 'package:lofo/services/notification_service.dart';
 import 'package:lofo/theme/default_theme.dart';
 import 'package:popover/popover.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -224,6 +225,13 @@ Future<void> navigateToAppropriatePostVerificationPage(
         layoutWidget = const SecurityLayout();
         currentAppBar = securityAppBar('Home', securityImageExample);
 
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        enabledNotificationSubscription =
+            prefs.getBool('subscribedToAllSecurity') ?? false;
+        if (enabledNotificationSubscription && areNotificationsEnabled) {
+          await NotificationService().subsribsibeSecurityToTopic();
+        }
+
         Navigator.pushReplacement(
             state.context,
             PageRouteBuilder(
@@ -242,6 +250,13 @@ Future<void> navigateToAppropriatePostVerificationPage(
       // log in account is user's account
 
       {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        enabledNotificationSubscription =
+            prefs.getBool('subscribedToAllUsers') ?? false;
+        if (enabledNotificationSubscription && areNotificationsEnabled) {
+          await NotificationService().subsribsibeUsersToTopic();
+        }
+
         layoutWidget = const Layout();
         currentAppBar = appBar('Home', userImageExample);
         Navigator.pushReplacement(

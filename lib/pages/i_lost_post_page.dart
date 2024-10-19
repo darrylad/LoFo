@@ -9,6 +9,7 @@ import 'package:lofo/components/basic_text_form_field.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/services/notification_terminal.dart';
 import 'package:lofo/services/verify_app_validity.dart';
 import 'package:lofo/theme/default_theme.dart';
 
@@ -159,6 +160,9 @@ class _ILostPostPageState extends State<ILostPostPage> {
             sendFailure(previousRequestUploadStatus);
           }
         });
+
+        await NotificationTerminal.sendNotificationToSecurity(
+            userName!, postTitle, postCategory);
       } else {
         previousRequestUploadStatus = RequestUploadStatus.someThingWentWrong;
         sendFailure(previousRequestUploadStatus);

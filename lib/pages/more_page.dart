@@ -6,6 +6,7 @@ import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/pages/about_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
+import 'package:lofo/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,6 +24,8 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
+  bool isLoading = false;
+
   saveForceLightTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('forceLightTheme', forceLightTheme.value);
@@ -77,7 +80,9 @@ class _MorePageState extends State<MorePage> {
           ),
         ),
       ),
+
       // (devSwitch) ? devSwitchWid() : const SizedBox(),
+
       SwitchListTile(
           value: forceLightTheme.value,
           title: Text(
@@ -102,14 +107,12 @@ class _MorePageState extends State<MorePage> {
               },
             )
           : const SizedBox(),
-      SwitchListTile(
-          value: false,
-          title: Text(
-            'Notifications',
-            style: themeData.textTheme.bodyLarge,
-          ),
-          subtitle: const Text('In development'),
-          onChanged: null),
+
+      // notificationToggle(context),
+      notificationToggleTile(),
+
+      notificationBox(),
+
       ListTile(
         title: Text(
           'Logout and delete account',
@@ -127,8 +130,131 @@ class _MorePageState extends State<MorePage> {
           }));
         },
       ),
+
       const SizedBox(height: 200),
     ]));
+  }
+
+  SwitchListTile notificationToggle(BuildContext context) {
+    return SwitchListTile(
+        value: areNotificationsEnabled && enabledNotificationSubscription,
+        title: Text(
+          'Notifications',
+          style: themeData.textTheme.bodyLarge,
+        ),
+        subtitle: (areNotificationsEnabled && enabledNotificationSubscription)
+            ? const Text(
+                'You are subscribed to notifications. If you\'d like to silence them, please adjust your system settings.')
+            : const Text('In alpha stage'),
+        onChanged: (value) async {
+          if (value) {
+            await NotificationService().requestNotificationPermission();
+            NotificationService().firebaseInit(context);
+            await NotificationService().getFCMDeviceToken();
+
+            if (loggedInAsSecurity) {
+              await NotificationService().uploadSecurityDeviceToken();
+              await NotificationService().subsribsibeSecurityToTopic();
+            } else {
+              await NotificationService().uploadDeviceToken();
+              await NotificationService().subsribsibeUsersToTopic();
+            }
+          } else {
+            await NotificationService().disableNotifications();
+            if (loggedInAsSecurity) {
+              await NotificationService().unsubscribeSecurityFromTopic();
+            } else {
+              await NotificationService().unsubscribeUsersFromTopic();
+            }
+            await NotificationService().checkNotificationPermission();
+          }
+          setState(() {});
+        });
+  }
+
+  Widget notificationBox() {
+    return (areNotificationsEnabled && enabledNotificationSubscription)
+        ? const SizedBox()
+        : Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  // border: Border.all(color: themeData.colorScheme.secondary),
+                  color: themeData.colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.warning_rounded,
+                      size: 40,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Notifications are off. Turn them on to receive updates.  We use push notifications, that do not drain your battery.',
+                        style: themeData.textTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
+                )),
+          );
+  }
+
+  ListTile notificationToggleTile() {
+    return ListTile(
+        title: Text(
+          'Notifications',
+          style: themeData.textTheme.bodyLarge,
+        ),
+        subtitle: (areNotificationsEnabled && enabledNotificationSubscription)
+            ? const Text(
+                'You are subscribed to notifications. If you\'d like to silence them, you can do that in your system settings.')
+            : const Text('In alpha stage'),
+        trailing: SizedBox(
+            width: 50,
+            height: 50,
+            child: (isLoading)
+                ? const Center(child: CircularProgressIndicator())
+                : Switch(
+                    value: areNotificationsEnabled &&
+                        enabledNotificationSubscription,
+                    onChanged: (value) async {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      if (value) {
+                        await NotificationService()
+                            .requestNotificationPermission();
+                        NotificationService().firebaseInit(context);
+                        await NotificationService().getFCMDeviceToken();
+
+                        if (loggedInAsSecurity) {
+                          await NotificationService()
+                              .uploadSecurityDeviceToken();
+                          await NotificationService()
+                              .subsribsibeSecurityToTopic();
+                        } else {
+                          await NotificationService().uploadDeviceToken();
+                          await NotificationService().subsribsibeUsersToTopic();
+                        }
+                      } else {
+                        await NotificationService().disableNotifications();
+                        if (loggedInAsSecurity) {
+                          await NotificationService()
+                              .unsubscribeSecurityFromTopic();
+                        } else {
+                          await NotificationService()
+                              .unsubscribeUsersFromTopic();
+                        }
+                        await NotificationService()
+                            .checkNotificationPermission();
+                      }
+                      setState(() {
+                        isLoading = false;
+                      });
+                    })));
   }
 
   SwitchListTile devSwitchWid() {

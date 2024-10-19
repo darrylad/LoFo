@@ -10,6 +10,7 @@ import 'package:lofo/pages/camera_page.dart';
 import 'package:lofo/security_layouts/security_backend/security_CRUD/security_transmitter.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/security_layouts/security_components/security_theme.dart';
+import 'package:lofo/services/notification_terminal.dart';
 import 'package:lofo/services/verify_app_validity.dart';
 
 class CustomNavigatorObserver extends NavigatorObserver {
@@ -176,6 +177,9 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
             sendFailure(previousRequestUploadStatus);
           }
         });
+
+        await NotificationTerminal.sendNotificationToAllUsers(
+            postTitle, postCategory);
       } else {
         previousRequestUploadStatus =
             SecurityRequestUploadStatus.someThingWentWrong;
