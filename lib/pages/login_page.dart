@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
 
     String informatoryText = loginInformatoryText ??
         'To continue, we need to verify that you belong to Indian Institute of Technology Indore. On the next screen, choose your institute\'s ID. \n \n Your account will be unaffected, and no data will be stored on your account.';
-    String buttonText = loginButtonText ?? 'Verify identity with Google';
+    String buttonText = loginButtonText ?? 'Verify with Google';
 
     return loginPageContent(context, informatoryText, buttonText);
 
@@ -108,8 +108,11 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
+            const SizedBox(height: 70),
+            const Icon(Icons.account_circle_outlined),
+            const SizedBox(height: 10),
             Text("Let's verify you", style: themeData.textTheme.titleMedium),
-            const SizedBox(height: 50),
+            const Expanded(child: SizedBox(height: 50)),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
             //   child: BasicTextBox(
@@ -129,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: themeData.colorScheme.secondary, fontSize: 16),
                   textAlign: TextAlign.center),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Hero(
@@ -149,6 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                 }),
               ),
             ),
+            const SizedBox(height: 66),
           ],
         ),
       ),

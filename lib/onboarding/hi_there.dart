@@ -18,15 +18,18 @@ class HiThere extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 150),
             Text("Hi there!",
                 style: themeData.textTheme.titleMedium
-                    ?.copyWith(color: themeData.colorScheme.onSurface)),
-            const SizedBox(height: 300),
+                    ?.copyWith(color: themeData.colorScheme.primary)),
+            const Expanded(child: SizedBox()),
             Text(
               "Lets take a quick tour",
-              style: themeData.textTheme.bodyLarge,
+              style: themeData.textTheme.bodyLarge?.copyWith(
+                color: themeData.colorScheme.secondary,
+              ),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 40),
             OnBoardingButton(
               buttonText: "Continue",
               onPressed: () {
@@ -47,6 +50,7 @@ class HiThere extends StatelessWidget {
                     ));
               },
             ),
+            const SizedBox(height: 66),
           ],
         ),
       ),

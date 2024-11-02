@@ -26,7 +26,10 @@ class _Page4NotificationsState extends State<Page4Notifications> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const SizedBox(height: 200),
+                    const SizedBox(height: 230),
+                    const Expanded(
+                      child: SizedBox(),
+                    ),
                     Image.asset('assets/onboarding/Page4noti.png'),
                   ],
                 ),
@@ -43,7 +46,7 @@ class _Page4NotificationsState extends State<Page4Notifications> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Text(
-                    "Get notified about new posts",
+                    "Enable notifications to stay updated",
                     style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
@@ -53,18 +56,18 @@ class _Page4NotificationsState extends State<Page4Notifications> {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                // const SizedBox(height: 10),
+                // const Text(
+                //   'Notifications need to first be enabled from the "more" page',
+                //   style: TextStyle(
+                //     color: Colors.white,
+                //     // fontSize: 17,
+                //   ),
+                //   textAlign: TextAlign.center,
+                // ),
                 const Expanded(
                   child: SizedBox(),
                 ),
-                const Text(
-                  'Notifications need to first be enabled from the "more" page',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 40),
                 OnBoardingButton(
                     onPressed: () {
                       hasNotPlayedOnboarding = false;
