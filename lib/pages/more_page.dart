@@ -6,6 +6,7 @@ import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/onboarding/onboarding.dart';
 import 'package:lofo/pages/about_page.dart';
 import 'package:lofo/security_layouts/security_components/security_app_bar.dart';
 import 'package:lofo/services/notification_service.dart';
@@ -84,6 +85,26 @@ class _MorePageState extends State<MorePage> {
       // ),
 
       // (devSwitch) ? devSwitchWid() : const SizedBox(),
+
+      ListTile(
+        title: const Text("Replay onboarding"),
+        onTap: () {
+          Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return const Onboarding();
+                },
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              ));
+        },
+      ),
 
       SwitchListTile(
           value: forceLightTheme.value,

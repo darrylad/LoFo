@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Welcome!', style: themeData.textTheme.titleMedium),
+            Text("Let's verify you", style: themeData.textTheme.titleMedium),
             const SizedBox(height: 50),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 50.0),

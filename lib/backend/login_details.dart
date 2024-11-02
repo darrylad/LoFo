@@ -7,6 +7,8 @@ import 'package:lofo/auth/google_sign_in.dart';
 import 'package:lofo/components/app_bar.dart';
 import 'package:lofo/components/navigation.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/onboarding/hi_there.dart';
+import 'package:lofo/onboarding/onboarding.dart';
 import 'package:lofo/pages/login_page.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/pages/more_page.dart';
@@ -282,6 +284,9 @@ Future<void> navigateToAppropriatePostVerificationPage(
           state.context,
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) {
+              if (hasNotPlayedOnboarding) {
+                return const Onboarding();
+              }
               return const LoginPage();
             },
             transitionsBuilder:
@@ -301,6 +306,9 @@ Future<void> navigateToAppropriatePostVerificationPage(
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
+            if (hasNotPlayedOnboarding) {
+              return const Onboarding();
+            }
             return const LoginPage();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {

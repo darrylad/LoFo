@@ -14,6 +14,10 @@ class ShowerThoughts {
 
     "I eat six badaams daily",
 
+    "Helmet \n- Hannah Baker",
+
+    "It all started with a smile, that damned smile. \n- Hannah Baker",
+
     "Great design is as little design as possible. \n- Dieter Rams",
 
     "To improve is to change; to be perfect is to change often. \n- Winston Churchill",
@@ -32,7 +36,7 @@ class ShowerThoughts {
 
     "Developers, developers, developers, developers. \n- Steve Ballmer",
 
-    "Finding your item is an internet connection away",
+    "Finding your lost item is an internet connection away",
 
     "Cats are the best. 🐈",
 
