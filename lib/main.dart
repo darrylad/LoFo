@@ -27,6 +27,7 @@ Future<void> main() async {
   // getLoginDetails();
 
   await Firebase.initializeApp(
+    name: 'lofoiiti-65589',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 

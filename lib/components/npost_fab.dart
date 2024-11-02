@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lofo/components/button.dart';
@@ -175,6 +176,8 @@ class FABOverlay extends StatefulWidget {
 }
 
 class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
+  final double _bottomOffset = (Platform.isIOS) ? 142 : 74;
+
   late AnimationController _animationController;
   late Animation<double> _curvedAnimation;
   late AnimationController _rotationController;
@@ -251,7 +254,7 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
       animation: _curvedAnimation,
       builder: (context, child) {
         return Positioned(
-          bottom: 74 + offsetAnimation.value.dy,
+          bottom: _bottomOffset + offsetAnimation.value.dy,
           right: 16 - (1 - _sizeAnimation.value) * 16,
           child: Align(
             alignment: Alignment.centerRight,
@@ -373,7 +376,7 @@ class _FABOverlayState extends State<FABOverlay> with TickerProviderStateMixin {
           }),
 
           Positioned(
-            bottom: 74,
+            bottom: _bottomOffset,
             right: 16,
             child: GestureDetector(
               onTap: () {

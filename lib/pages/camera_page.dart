@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/components/pulsing_child.dart';
+import 'package:lofo/components/shower_thoughts.dart';
 import 'package:lofo/main.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -503,8 +504,17 @@ class CameraErrorPage extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              Icon(Icons.error_outline_rounded,
+              Icon(Icons.no_photography,
                   size: 100, color: themeData.colorScheme.secondary),
+              const SizedBox(
+                height: 40,
+              ),
+              Text(ShowerThoughts().getThought(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: themeData.colorScheme.secondary,
+                    fontSize: 20,
+                  )),
               const SizedBox(
                 height: 30,
               ),

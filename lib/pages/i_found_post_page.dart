@@ -189,7 +189,7 @@ class _IFoundPostPageState extends State<IFoundPostPage> {
                       maxLength: 50,
                       maxLines: 1,
                       isRequiredField: true,
-                      labelText: 'Title',
+                      labelText: 'Item',
                       textController: titleController,
                       onChanged: updateIsRequestPostable,
                     ),

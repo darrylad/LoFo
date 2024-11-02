@@ -260,7 +260,7 @@ class _SecurityNewPostPageState extends State<SecurityNewPostPage> {
                       maxLength: 50,
                       maxLines: 1,
                       isRequiredField: true,
-                      labelText: 'Title',
+                      labelText: 'Item',
                       textController: titleController,
                       onChanged: updateIsRequestPostable,
                     ),

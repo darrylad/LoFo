@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:lofo/animation/logout_intermediate.dart';
 import 'package:lofo/backend/login_details.dart';
@@ -53,33 +55,33 @@ class _MorePageState extends State<MorePage> {
       // const SizedBox(height: 20),
       // appBarChangeButtonRow(),
       const SizedBox(height: 20),
-      Hero(
-        tag: 'about',
-        child: Material(
-          type: MaterialType.transparency,
-          child: ListTile(
-            title: Text('About', style: themeData.textTheme.bodyLarge),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        const AboutPage(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(0, 1),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child,
-                      );
-                    },
-                  ));
-            },
-          ),
-        ),
-      ),
+      // Hero(
+      //   tag: 'about',
+      //   child: Material(
+      //     type: MaterialType.transparency,
+      //     child: ListTile(
+      //       title: Text('About', style: themeData.textTheme.bodyLarge),
+      //       onTap: () {
+      //         Navigator.push(
+      //             context,
+      //             PageRouteBuilder(
+      //               pageBuilder: (context, animation, secondaryAnimation) =>
+      //                   const AboutPage(),
+      //               transitionsBuilder:
+      //                   (context, animation, secondaryAnimation, child) {
+      //                 return SlideTransition(
+      //                   position: Tween<Offset>(
+      //                     begin: const Offset(0, 1),
+      //                     end: Offset.zero,
+      //                   ).animate(animation),
+      //                   child: child,
+      //                 );
+      //               },
+      //             ));
+      //       },
+      //     ),
+      //   ),
+      // ),
 
       // (devSwitch) ? devSwitchWid() : const SizedBox(),
 
@@ -95,18 +97,18 @@ class _MorePageState extends State<MorePage> {
             });
             saveForceLightTheme();
           }),
-      (appURL != 'null')
-          ? ListTile(
-              title: Text(
-                'View source code',
-                style: themeData.textTheme.bodyLarge,
-              ),
-              trailing: const Icon(Icons.open_in_new_rounded),
-              onTap: () {
-                _launchUrl();
-              },
-            )
-          : const SizedBox(),
+      // (appURL != 'null')
+      //     ? ListTile(
+      //         title: Text(
+      //           'View source code',
+      //           style: themeData.textTheme.bodyLarge,
+      //         ),
+      //         trailing: const Icon(Icons.open_in_new_rounded),
+      //         onTap: () {
+      //           _launchUrl();
+      //         },
+      //       )
+      //     : const SizedBox(),
 
       // notificationToggle(context),
       notificationToggleTile(),
@@ -131,7 +133,12 @@ class _MorePageState extends State<MorePage> {
         },
       ),
 
-      const SizedBox(height: 200),
+      const SizedBox(height: 10),
+
+      AboutSection(
+        appUrl: appURL,
+        issueUrl: '$appURL/issues',
+      )
     ]));
   }
 
@@ -190,10 +197,10 @@ class _MorePageState extends State<MorePage> {
                       Icons.warning_rounded,
                       size: 40,
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Text(
-                        'Notifications are off. Turn them on to receive updates.  We use push notifications, that do not drain your battery.',
+                        'Notifications are off. Turn them on to receive updates. They won\'t drain your battery.',
                         style: themeData.textTheme.bodyMedium,
                       ),
                     ),
@@ -210,13 +217,16 @@ class _MorePageState extends State<MorePage> {
         ),
         subtitle: (areNotificationsEnabled && enabledNotificationSubscription)
             ? const Text(
-                'You are subscribed to notifications. If you\'d like to silence them, you can do that in your system settings.')
-            : const Text('In alpha stage'),
+                'You are subscribed to notifications. If you\'d like to silence them, adjust your system settings.')
+            : (Platform.isAndroid)
+                ? null
+                : const Text('In alpha stage'),
         trailing: SizedBox(
-            width: 50,
-            height: 50,
             child: (isLoading)
-                ? const Center(child: CircularProgressIndicator())
+                ? const SizedBox(
+                    width: 60,
+                    height: 50,
+                    child: Center(child: CircularProgressIndicator()))
                 : Switch(
                     value: areNotificationsEnabled &&
                         enabledNotificationSubscription,
@@ -224,32 +234,37 @@ class _MorePageState extends State<MorePage> {
                       setState(() {
                         isLoading = true;
                       });
-                      if (value) {
-                        await NotificationService()
-                            .requestNotificationPermission();
-                        NotificationService().firebaseInit(context);
-                        await NotificationService().getFCMDeviceToken();
+                      try {
+                        if (value) {
+                          await NotificationService()
+                              .requestNotificationPermission();
+                          NotificationService().firebaseInit(context);
+                          await NotificationService().getFCMDeviceToken();
 
-                        if (loggedInAsSecurity) {
-                          await NotificationService()
-                              .uploadSecurityDeviceToken();
-                          await NotificationService()
-                              .subsribsibeSecurityToTopic();
+                          if (loggedInAsSecurity) {
+                            await NotificationService()
+                                .uploadSecurityDeviceToken();
+                            await NotificationService()
+                                .subsribsibeSecurityToTopic();
+                          } else {
+                            await NotificationService().uploadDeviceToken();
+                            await NotificationService()
+                                .subsribsibeUsersToTopic();
+                          }
                         } else {
-                          await NotificationService().uploadDeviceToken();
-                          await NotificationService().subsribsibeUsersToTopic();
-                        }
-                      } else {
-                        await NotificationService().disableNotifications();
-                        if (loggedInAsSecurity) {
+                          await NotificationService().disableNotifications();
+                          if (loggedInAsSecurity) {
+                            await NotificationService()
+                                .unsubscribeSecurityFromTopic();
+                          } else {
+                            await NotificationService()
+                                .unsubscribeUsersFromTopic();
+                          }
                           await NotificationService()
-                              .unsubscribeSecurityFromTopic();
-                        } else {
-                          await NotificationService()
-                              .unsubscribeUsersFromTopic();
+                              .checkNotificationPermission();
                         }
-                        await NotificationService()
-                            .checkNotificationPermission();
+                      } catch (e) {
+                        debugPrint('Error: $e');
                       }
                       setState(() {
                         isLoading = false;

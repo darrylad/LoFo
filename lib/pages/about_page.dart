@@ -2,6 +2,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/theme/default_theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -106,6 +107,151 @@ class _AboutPageState extends State<AboutPage> {
           fontSize: 16,
           color: themeData.colorScheme.onSurfaceVariant,
           fontVariations: const [FontVariation('wght', 500)]),
+    );
+  }
+}
+
+class AboutSection extends StatefulWidget {
+  final String? issueUrl;
+  final String? appUrl;
+  const AboutSection({super.key, this.issueUrl, this.appUrl});
+
+  @override
+  State<AboutSection> createState() => _AboutSectionState();
+}
+
+class _AboutSectionState extends State<AboutSection> {
+  Future<void> _launchUrl(String URL) async {
+    final Uri _url = Uri.parse(URL);
+    try {
+      // if (!await launchUrl(_url)) {
+      //   throw Exception('Could not launch $_url');
+      // }
+      await launchUrl(_url);
+    } on Exception catch (e) {
+      debugPrint('Could not launch $_url: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    themeData = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('ABOUT',
+              style: TextStyle(
+                  color: themeData.colorScheme.outline,
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          versionRow(),
+          const SizedBox(height: 10),
+          Text(
+            'Developed by Darryl David',
+            style: TextStyle(
+              color: themeData.colorScheme.onSurface,
+              fontFamily: fonts[0],
+            ),
+          ),
+          (widget.appUrl != null)
+              ? ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+                  title: const Text('Source code'),
+                  onTap: () {
+                    _launchUrl(widget.appUrl!);
+                  },
+                  trailing: const Icon(Icons.open_in_new_rounded),
+                )
+              : const SizedBox(),
+          const SizedBox(height: 15),
+          Text('LoFo',
+              style: TextStyle(
+                  color: themeData.colorScheme.onSurface,
+                  fontFamily: fonts[0],
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          Text(
+            'An intuitive way of reporting lost and found items on campus. \n \nThis app is in beta, which makes it prone to bugs.',
+            style: TextStyle(
+              color: themeData.colorScheme.onSurface,
+              fontFamily: fonts[0],
+            ),
+          ),
+          (widget.issueUrl != null)
+              ? ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+                  title: const Text('File an issue'),
+                  onTap: () {
+                    _launchUrl(widget.issueUrl!);
+                  },
+                  trailing: const Icon(Icons.open_in_new_rounded),
+                )
+              : const SizedBox(),
+          Text(
+            'If you have any great ideas that would improve the app\'s experience, feel free to reach out!',
+            style: TextStyle(
+              color: themeData.colorScheme.onSurface,
+              fontFamily: fonts[0],
+            ),
+          ),
+          const SizedBox(height: 20),
+          gdscGestureRow()
+        ],
+      ),
+    );
+  }
+
+  GestureDetector gdscGestureRow() {
+    return GestureDetector(
+      onTap: () {
+        _launchUrl(
+            'https://gdg.community.dev/gdg-on-campus-indian-institute-of-technology-indore-india/');
+      },
+      child: Row(
+        children: [
+          Image.asset('assets/images/gdsclogo.png', width: 50),
+          const SizedBox(width: 15),
+          Text(
+            'GDSC IIT Indore',
+            style: TextStyle(
+              color: themeData.colorScheme.onSurface,
+              fontWeight: FontWeight.bold,
+              fontFamily: fonts[0],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row versionRow() {
+    return Row(
+      children: [
+        Text('Version 0.6.0',
+            style: TextStyle(
+              fontFamily: fonts[0],
+            )),
+        const SizedBox(width: 10),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          decoration: BoxDecoration(
+            color: themeData.colorScheme.surfaceBright,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: const Center(
+            child: Text(
+              'BETA',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -343,7 +343,7 @@ class LoginImageButton extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             popOverText(
-                                'Logged In',
+                                'Logged-in',
                                 //  Colors.green[700],
                                 ColorScheme.fromSeed(
                                         seedColor: Colors.green,
@@ -352,10 +352,10 @@ class LoginImageButton extends StatelessWidget {
                                 20,
                                 700),
                             const SizedBox(height: 10),
-                            popOverText('Name: $userName',
-                                colorScheme.onSurface, 16, 600),
-                            popOverText('Email: $loginID',
-                                colorScheme.onSurface, 16, 600),
+                            popOverText(
+                                '$userName', colorScheme.onSurface, 16, 600),
+                            popOverText(
+                                '$loginID', colorScheme.onSurface, 16, 600),
                           ],
                         ));
                   });

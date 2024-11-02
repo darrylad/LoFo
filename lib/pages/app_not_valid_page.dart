@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/login_details.dart';
+import 'package:lofo/components/shower_thoughts.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -48,12 +49,23 @@ class _AppNotValidPageState extends State<AppNotValidPage> {
             const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
-              child: Text('Please update the app.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: themeData.colorScheme.secondary,
-                    fontSize: 20,
-                  )),
+              child: Column(
+                children: [
+                  Text(ShowerThoughts().getThought(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: themeData.colorScheme.secondary,
+                        fontSize: 20,
+                      )),
+                  const SizedBox(height: 40),
+                  Text('Please update the app.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: themeData.colorScheme.secondary,
+                        fontSize: 20,
+                      )),
+                ],
+              ),
             ),
             const SizedBox(height: 50),
             Container(
@@ -90,18 +102,28 @@ class SomeThingWentWrongPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 50),
-          Icon(Icons.signal_wifi_connected_no_internet_4_rounded,
+          Icon(Icons.cloud_off,
               size: 150, color: themeData.colorScheme.secondary),
           const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Text(
-                'Unable to verify the app. Please check your network and retry.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: themeData.colorScheme.secondary,
-                  fontSize: 20,
-                )),
+            child: Column(
+              children: [
+                Text(ShowerThoughts().getThought(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: themeData.colorScheme.secondary,
+                      fontSize: 20,
+                    )),
+                const SizedBox(height: 40),
+                Text('Please check your internet and retry.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: themeData.colorScheme.secondary,
+                      fontSize: 20,
+                    )),
+              ],
+            ),
           ),
           const SizedBox(height: 50),
           GestureDetector(
@@ -163,12 +185,23 @@ class _DisabledPageState extends State<DisabledPage> {
           const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Text('Maintainence in progress. Please come back later.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: themeData.colorScheme.secondary,
-                  fontSize: 20,
-                )),
+            child: Column(
+              children: [
+                Text(ShowerThoughts().getThought(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: themeData.colorScheme.secondary,
+                      fontSize: 20,
+                    )),
+                const SizedBox(height: 40),
+                Text('Maintainence in progress. Please come back later.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: themeData.colorScheme.secondary,
+                      fontSize: 20,
+                    )),
+              ],
+            ),
           ),
         ],
       ),
