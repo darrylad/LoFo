@@ -232,7 +232,7 @@ class _AboutSectionState extends State<AboutSection> {
   Row versionRow() {
     return Row(
       children: [
-        Text('Version 0.7.0',
+        Text('Version 0.7.1',
             style: TextStyle(
               fontFamily: fonts[0],
             )),
