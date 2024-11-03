@@ -43,7 +43,7 @@ class HiThere extends StatelessWidget {
               ),
             ))),
             Text(
-              "Lets take a quick tour",
+              "Let's take a quick tour",
               style: themeData.textTheme.bodyLarge?.copyWith(
                 color:
                     ColorScheme.fromSeed(seedColor: Colors.blueAccent).primary,
