@@ -30,7 +30,7 @@ class _Page4NotificationsState extends State<Page4Notifications> {
                     const Expanded(
                       child: SizedBox(),
                     ),
-                    Image.asset('assets/onboarding/Page4noti.png'),
+                    Image.asset('assets/onboarding/Page4noti.jpg'),
                   ],
                 ),
               ),
