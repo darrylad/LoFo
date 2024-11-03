@@ -5,6 +5,7 @@ import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/button.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
+import 'package:lofo/onboarding/hi_there.dart';
 
 String? loginInformatoryText;
 String? loginButtonText;
@@ -112,7 +113,25 @@ class _LoginPageState extends State<LoginPage> {
             const Icon(Icons.account_circle_outlined),
             const SizedBox(height: 10),
             Text("Let's verify you", style: themeData.textTheme.titleMedium),
-            const Expanded(child: SizedBox(height: 50)),
+            Expanded(
+                child: Center(
+                    child: RippleEffect(
+              size: 300,
+              widsize: 200,
+              color: themeData.colorScheme.onPrimary,
+              child: Container(
+                height: 200,
+                width: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: themeData.colorScheme.primaryContainer,
+                  image: const DecorationImage(
+                    image: AssetImage("assets/icons/icon.png"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ))),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
             //   child: BasicTextBox(

@@ -58,6 +58,7 @@ dependencies:
   http: ^1.2.2
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
+  flutter_launcher_icons: ^0.14.1
 
 dev_dependencies:
   flutter_test:
@@ -69,12 +70,14 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: "^0.13.1"
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/IMG_0836.jpeg"
+  # image_path: "assets/icons/IMG_0836.jpeg"
+  image_path: "assets/logo/flullicon.png"
+  adaptive_icon_background: "assets/logo/ic_launcher_background.png"
+  adaptive_icon_foreground: "assets/logo/ic_launcher_foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -89,6 +92,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/icons/
     - assets/onboarding/
   #   - images/a_dot_ham.jpeg
 
