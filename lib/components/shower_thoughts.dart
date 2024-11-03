@@ -12,8 +12,6 @@ class ShowerThoughts {
 
     "Chihuahuas are the cutest dogs.",
 
-    "I eat six badaams daily",
-
     "Helmet \n- Hannah Baker",
 
     "It all started with a smile, that damned smile. \n- Hannah Baker",
