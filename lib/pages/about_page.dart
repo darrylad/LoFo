@@ -145,16 +145,9 @@ class _AboutSectionState extends State<AboutSection> {
               style: TextStyle(
                   color: themeData.colorScheme.outline,
                   fontWeight: FontWeight.bold)),
+          const SizedBox(height: 20),
+          logoRow(),
           const SizedBox(height: 10),
-          versionRow(),
-          const SizedBox(height: 10),
-          Text(
-            'Developed by Darryl David',
-            style: TextStyle(
-              color: themeData.colorScheme.onSurface,
-              fontFamily: fonts[0],
-            ),
-          ),
           (widget.appUrl != null)
               ? ListTile(
                   contentPadding:
@@ -178,6 +171,7 @@ class _AboutSectionState extends State<AboutSection> {
             'An intuitive way of reporting lost and found items on campus. \n \nThis app is in beta, which makes it prone to bugs.',
             style: TextStyle(
               color: themeData.colorScheme.onSurface,
+              fontVariations: const [FontVariation('wght', 600)],
               fontFamily: fonts[0],
             ),
           ),
@@ -196,6 +190,7 @@ class _AboutSectionState extends State<AboutSection> {
             'If you have any great ideas that would improve the app\'s experience, feel free to reach out!',
             style: TextStyle(
               color: themeData.colorScheme.onSurface,
+              fontVariations: const [FontVariation('wght', 600)],
               fontFamily: fonts[0],
             ),
           ),
@@ -203,6 +198,50 @@ class _AboutSectionState extends State<AboutSection> {
           gdscGestureRow()
         ],
       ),
+    );
+  }
+
+  Row logoRow() {
+    return Row(
+      children: [
+        Container(
+          height: 80,
+          width: 80,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: themeData.colorScheme.primaryContainer,
+            boxShadow: [
+              BoxShadow(
+                color: themeData.colorScheme.onSurface.withOpacity(0.2),
+                offset: const Offset(0, 1),
+                blurRadius: 10,
+                spreadRadius: 2,
+              )
+            ],
+            image: const DecorationImage(
+              image: AssetImage("assets/icons/icon.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        const SizedBox(width: 20),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            versionRow(),
+            const SizedBox(height: 10),
+            Text(
+              'Developed by Darryl David',
+              style: TextStyle(
+                color: themeData.colorScheme.onSurface,
+                fontVariations: const [FontVariation('wght', 600)],
+                fontFamily: fonts[0],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -235,6 +274,7 @@ class _AboutSectionState extends State<AboutSection> {
         Text('Version 0.7.1',
             style: TextStyle(
               fontFamily: fonts[0],
+              fontVariations: const [FontVariation('wght', 600)],
             )),
         const SizedBox(width: 10),
         Container(
