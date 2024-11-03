@@ -17,7 +17,7 @@ class _Page3ArchiveState extends State<Page3Archive> {
       backgroundColor: const Color.fromARGB(255, 193, 107, 66),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Stack(children: [
             Center(
               child: Padding(
@@ -44,7 +44,7 @@ class _Page3ArchiveState extends State<Page3Archive> {
                   child: Text(
                     "Archive posts when you're done with them",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                       fontFamily: fonts[0],
                       color: Colors.white,

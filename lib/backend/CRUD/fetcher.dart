@@ -99,13 +99,13 @@ class _GetYourPostsState extends State<GetYourPosts> {
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Text(
-                'Nothing to show here. Tap the floating + button to add a post.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: themeData.colorScheme.secondary,
-                  fontSize: 20,
-                )),
+            child:
+                Text('Your private posts appear here. Tap "+" to add a post.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: themeData.colorScheme.secondary,
+                      fontSize: 20,
+                    )),
           ),
         ],
       ),
@@ -256,7 +256,7 @@ class _GetHomePostsState extends State<GetHomePosts> {
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                      child: Text('Nothing to show here.',
+                      child: Text('Public posts appear here.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: themeData.colorScheme.secondary,

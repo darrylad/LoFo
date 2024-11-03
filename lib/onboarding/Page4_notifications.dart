@@ -18,7 +18,7 @@ class _Page4NotificationsState extends State<Page4Notifications> {
       backgroundColor: const Color.fromARGB(255, 100, 64, 161),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Stack(children: [
             Center(
               child: Padding(
@@ -30,7 +30,7 @@ class _Page4NotificationsState extends State<Page4Notifications> {
                     const Expanded(
                       child: SizedBox(),
                     ),
-                    Image.asset('assets/onboarding/Page4noti.jpg'),
+                    Image.asset('assets/onboarding/Page4noti.png'),
                   ],
                 ),
               ),
@@ -48,7 +48,7 @@ class _Page4NotificationsState extends State<Page4Notifications> {
                   child: Text(
                     "Enable notifications to stay updated",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                       fontFamily: fonts[0],
                       color: Colors.white,

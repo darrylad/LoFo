@@ -12,14 +12,14 @@ class PostsIntro extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 47, 130, 83),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Stack(children: [
             Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 40),
-                  Image.asset('assets/onboarding/posts.png'),
+                  Image.asset('assets/onboarding/Page1post.png'),
                 ],
               ),
             ),
@@ -36,7 +36,7 @@ class PostsIntro extends StatelessWidget {
                   child: Text(
                     'See what people have lost or found',
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                       fontFamily: fonts[0],
                       color: Colors.white,

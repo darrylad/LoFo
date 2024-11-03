@@ -10,7 +10,7 @@ class ShowerThoughts {
 
     "Jack Dawson could have fit on the door with Rose. But you wouldn't have remembered the movie as fondly as you do.",
 
-    "Chiuwaawas are the cutest dogs.",
+    "Chihuahuas are the cutest dogs.",
 
     "I eat six badaams daily",
 
