@@ -32,8 +32,7 @@ Confirmatory buttons show popups to minimize accedental actions
 
 #### Onboarding
 
-<img width="250" alt="Sending app bar" src="https://github.com/user-attachments/assets/8a287027-76cb-46e3-8298-2b9c969bdfc0">  <img width="250" alt="Sending app bar" src="Screenshot 2024-11-03 at 22 53 46" src="https://github.com/user-attachments/assets/80499718-d3dd-4d18-817c-0c68e4fe51b9">  <img width="250" alt="Sending app bar" src="https://github.com/user-attachments/assets/61dcf0d0-7202-426b-ba75-63b8d207464a">  <img width="250" alt="Sending app bar" src="https://github.com/user-attachments/assets/50afec69-2044-4288-a2bd-482ecb0fe3cb">
-
+<img width="250" alt="Hi there" src="https://github.com/user-attachments/assets/8a287027-76cb-46e3-8298-2b9c969bdfc0">  <img width="250" alt="See posts" src="https://github.com/user-attachments/assets/80499718-d3dd-4d18-817c-0c68e4fe51b9">  <img width="250" alt="Create new private posts" src="https://github.com/user-attachments/assets/61dcf0d0-7202-426b-ba75-63b8d207464a">  <img width="250" alt="Archive" src="https://github.com/user-attachments/assets/50afec69-2044-4288-a2bd-482ecb0fe3cb">
 
 #### Animations
 
