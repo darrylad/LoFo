@@ -14,7 +14,7 @@ Created inside of Google Developers Students Club, Indian Institute of Technolog
 
 ##### Home
 
-<img width="250" alt="Home" src="https://github.com/darrylad/LoFo/assets/132708308/53238ada-27bb-422b-bc52-5871d5e53c7e"> <img width="250" alt="Menu" src="https://github.com/darrylad/LoFo/assets/132708308/8a6d2ed1-5855-4787-9395-f085b702d9f0"> <img width="250" alt="Emppty Your Posts" src="https://github.com/darrylad/LoFo/assets/132708308/34a6d27e-8023-4eed-b216-2a1c1f568b2a">
+<img width="250" alt="Home" src="https://github.com/darrylad/LoFo/assets/132708308/53238ada-27bb-422b-bc52-5871d5e53c7e"> <img width="250" alt="Menu" src="https://github.com/user-attachments/assets/42c6621c-d3fb-43bc-bfc7-acbf258f8ef9"> <img width="250" alt="Emppty Your Posts" src="https://github.com/darrylad/LoFo/assets/132708308/34a6d27e-8023-4eed-b216-2a1c1f568b2a">
 
 ##### New post
 
