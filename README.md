@@ -14,7 +14,7 @@ Created inside of Google Developers Students Club, Indian Institute of Technolog
 
 ##### Home
 
-<img width="250" alt="Home" src="https://github.com/darrylad/LoFo/assets/132708308/53238ada-27bb-422b-bc52-5871d5e53c7e"> <img width="250" alt="Menu" src="https://github.com/darrylad/LoFo/assets/132708308/8a6d2ed1-5855-4787-9395-f085b702d9f0"> <img width="250" alt="Emppty Your Posts" src="https://github.com/darrylad/LoFo/assets/132708308/34a6d27e-8023-4eed-b216-2a1c1f568b2a">
+<img width="250" alt="Home" src="https://github.com/darrylad/LoFo/assets/132708308/53238ada-27bb-422b-bc52-5871d5e53c7e"> <img width="250" alt="Menu" src="https://github.com/user-attachments/assets/42c6621c-d3fb-43bc-bfc7-acbf258f8ef9"> <img width="250" alt="Emppty Your Posts" src="https://github.com/darrylad/LoFo/assets/132708308/34a6d27e-8023-4eed-b216-2a1c1f568b2a">
 
 ##### New post
 
@@ -29,6 +29,11 @@ The app bar gently adapts to show the current status, like Validating, Sending, 
 Confirmatory buttons show popups to minimize accedental actions
 
 <img width="250" alt="Sending app bar" src="https://github.com/darrylad/LoFo/assets/132708308/36d96a95-9247-469f-82fc-9b0fbe3c5a6b">
+
+#### Onboarding
+
+<img width="250" alt="Hi there" src="https://github.com/user-attachments/assets/8a287027-76cb-46e3-8298-2b9c969bdfc0">  <img width="250" alt="See posts" src="https://github.com/user-attachments/assets/80499718-d3dd-4d18-817c-0c68e4fe51b9">  <img width="250" alt="Create new private posts" src="https://github.com/user-attachments/assets/61dcf0d0-7202-426b-ba75-63b8d207464a">  <img width="250" alt="Archive" src="https://github.com/user-attachments/assets/50afec69-2044-4288-a2bd-482ecb0fe3cb">  <img width="250" alt="Notifications" src="https://github.com/user-attachments/assets/8c0e270c-81fb-4004-bda1-56e857a3ad3d">  <img width="250" alt="Notifications" src="https://github.com/user-attachments/assets/a4df6ad4-a2ab-45e2-a8f5-3ed552f92dbe">
+
 
 #### Animations
 
