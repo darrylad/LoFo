@@ -130,8 +130,18 @@ class SomeThingWentWrongPage extends StatelessWidget {
             onTap: () {
               Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const LoginVerification()));
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                      return const LoginVerification();
+                    },
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+                    },
+                  ));
             },
             child: Container(
               width: 200,
@@ -180,7 +190,7 @@ class _DisabledPageState extends State<DisabledPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.do_not_disturb_alt_outlined,
+          Icon(Icons.cleaning_services_rounded,
               size: 150, color: themeData.colorScheme.secondary),
           const SizedBox(height: 40),
           Padding(
