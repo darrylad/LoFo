@@ -205,6 +205,15 @@ class NotificationService {
     }
   }
 
+  Future<void> deleteUserDeviceToken() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    try {
+      await firestore.collection('userNotiTokens').doc(loginID).delete();
+    } catch (e) {
+      debugPrint("Error deleting user device token: $e");
+    }
+  }
+
   Future<void> uploadSecurityDeviceToken() async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     try {
@@ -224,6 +233,15 @@ class NotificationService {
       }
     } catch (e) {
       debugPrint("Error uploading device token: $e");
+    }
+  }
+
+  Future<void> deleteSecuityDeviceToken() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    try {
+      await firestore.collection('securityNotiTokens').doc(loginID).delete();
+    } catch (e) {
+      debugPrint("Error deleting security device token: $e");
     }
   }
 
@@ -265,5 +283,13 @@ class NotificationService {
     enabledNotificationSubscription = false;
 
     debugPrint("#### Unsubscribed from allSecurity topic");
+  }
+
+  Future<void> completelyDisableNotifications() async {
+    await unsubscribeUsersFromTopic();
+    await unsubscribeSecurityFromTopic();
+    await deleteUserDeviceToken();
+    await deleteSecuityDeviceToken();
+    await disableNotifications();
   }
 }

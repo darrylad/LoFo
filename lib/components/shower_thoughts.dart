@@ -40,7 +40,7 @@ class ShowerThoughts {
 
     "Are you lighnting? Because you're McQueen.",
 
-    "You've been called the Da Vinci of our time. What do you say to that? \n Absolutely ridiculous. I don't paint.",
+    "You've been called the da Vinci of our time. What do you say to that? \n Absolutely ridiculous. I don't paint.",
 
     "Aluminium. \n- Jony Ive",
 

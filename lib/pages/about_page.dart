@@ -219,7 +219,7 @@ class _AboutSectionState extends State<AboutSection> {
               )
             ],
             image: const DecorationImage(
-              image: AssetImage("assets/icons/icon.png"),
+              image: AssetImage("assets/icons/betaicon.jpg"),
               fit: BoxFit.cover,
             ),
           ),

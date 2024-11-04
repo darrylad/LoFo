@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lofo/animation/logout_intermediate.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/app_bar.dart';
+import 'package:lofo/components/button.dart';
 import 'package:lofo/login_verification.dart';
 import 'package:lofo/main.dart';
 import 'package:lofo/onboarding/onboarding.dart';
@@ -45,6 +46,60 @@ class _MorePageState extends State<MorePage> {
     } on Exception catch (e) {
       debugPrint('Could not launch $_url: $e');
     }
+  }
+
+  Future<void> logoutRitual() async {
+    // await NotificationService().unsubscribeSecurityFromTopic();
+    // await NotificationService().unsubscribeUsersFromTopic();
+    // await NotificationService().disableNotifications();
+    await NotificationService().completelyDisableNotifications();
+
+    await performLogout();
+  }
+
+  showConformatoryLogoutDialog() async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Logout?'),
+            titleTextStyle: themeData.textTheme.titleLarge,
+            content: const Text(
+                'Your account instance will be removed, but your posts will not be deleted.'),
+            actions: [
+              BasicButton.secondaryButton("Cancel", () {
+                Navigator.pop(context, false);
+              }),
+              const SizedBox(
+                height: 10,
+              ),
+              BasicButton.warningPrimaryButton("Logout", () {
+                Navigator.pop(context, true);
+              }),
+            ],
+          );
+        });
+  }
+
+  showLoadingDialog() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Hang tight..."),
+            titleTextStyle: themeData.textTheme.titleLarge,
+            content: const SizedBox(
+                width: 50,
+                height: 50,
+                child: Center(
+                    child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: LinearProgressIndicator(),
+                ))),
+          );
+        });
   }
 
   @override
@@ -142,15 +197,27 @@ class _MorePageState extends State<MorePage> {
           style: themeData.textTheme.bodyLarge,
         ),
         onTap: () async {
-          await performLogout();
-          // setState(() {
-          //   // isUserLoggedIn = false;
-          // });
-          if (!mounted) return;
-          Navigator.pushReplacement(this.context, PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) {
-            return const LogoutIntermediatePage();
-          }));
+          bool logout = await showConformatoryLogoutDialog();
+
+          if (logout) {
+            // await performLogout();
+            // // setState(() {
+            // //   // isUserLoggedIn = false;
+            // // });
+
+            showLoadingDialog();
+
+            await logoutRitual();
+
+            if (mounted) {
+              Navigator.of(context, rootNavigator: true).pop();
+            }
+            if (!mounted) return;
+            Navigator.pushReplacement(this.context, PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+              return const LogoutIntermediatePage();
+            }));
+          }
         },
       ),
 
@@ -273,14 +340,17 @@ class _MorePageState extends State<MorePage> {
                                 .subsribsibeUsersToTopic();
                           }
                         } else {
-                          await NotificationService().disableNotifications();
-                          if (loggedInAsSecurity) {
-                            await NotificationService()
-                                .unsubscribeSecurityFromTopic();
-                          } else {
-                            await NotificationService()
-                                .unsubscribeUsersFromTopic();
-                          }
+                          // await NotificationService().disableNotifications();
+                          // if (loggedInAsSecurity) {
+                          //   await NotificationService()
+                          //       .unsubscribeSecurityFromTopic();
+                          // } else {
+                          //   await NotificationService()
+                          //       .unsubscribeUsersFromTopic();
+                          // }
+                          await NotificationService()
+                              .completelyDisableNotifications();
+
                           await NotificationService()
                               .checkNotificationPermission();
                         }

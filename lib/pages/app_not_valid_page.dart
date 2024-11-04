@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo/backend/login_details.dart';
 import 'package:lofo/components/shower_thoughts.dart';
@@ -102,7 +103,7 @@ class SomeThingWentWrongPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 50),
-          Icon(Icons.cloud_off,
+          Icon(Icons.cloud_off_rounded,
               size: 150, color: themeData.colorScheme.secondary),
           const SizedBox(height: 50),
           Padding(
