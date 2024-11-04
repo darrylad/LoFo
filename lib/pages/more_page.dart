@@ -308,7 +308,7 @@ class _MorePageState extends State<MorePage> {
                 'You are subscribed to notifications. If you\'d like to silence them, adjust your system settings.')
             : (Platform.isAndroid)
                 ? null
-                : const Text('In alpha stage'),
+                : const Text('Notifications for iOS are in development'),
         trailing: SizedBox(
             child: (isLoading)
                 ? const SizedBox(
@@ -318,49 +318,52 @@ class _MorePageState extends State<MorePage> {
                 : Switch(
                     value: areNotificationsEnabled &&
                         enabledNotificationSubscription,
-                    onChanged: (value) async {
-                      setState(() {
-                        isLoading = true;
-                      });
-                      try {
-                        if (value) {
-                          await NotificationService()
-                              .requestNotificationPermission();
-                          NotificationService().firebaseInit(context);
-                          await NotificationService().getFCMDeviceToken();
+                    onChanged: (Platform.isAndroid)
+                        ? (value) async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            try {
+                              if (value) {
+                                await NotificationService()
+                                    .requestNotificationPermission();
+                                NotificationService().firebaseInit(context);
+                                await NotificationService().getFCMDeviceToken();
 
-                          if (loggedInAsSecurity) {
-                            await NotificationService()
-                                .uploadSecurityDeviceToken();
-                            await NotificationService()
-                                .subsribsibeSecurityToTopic();
-                          } else {
-                            await NotificationService().uploadDeviceToken();
-                            await NotificationService()
-                                .subsribsibeUsersToTopic();
+                                if (loggedInAsSecurity) {
+                                  await NotificationService()
+                                      .uploadSecurityDeviceToken();
+                                  await NotificationService()
+                                      .subsribsibeSecurityToTopic();
+                                } else {
+                                  await NotificationService()
+                                      .uploadDeviceToken();
+                                  await NotificationService()
+                                      .subsribsibeUsersToTopic();
+                                }
+                              } else {
+                                // await NotificationService().disableNotifications();
+                                // if (loggedInAsSecurity) {
+                                //   await NotificationService()
+                                //       .unsubscribeSecurityFromTopic();
+                                // } else {
+                                //   await NotificationService()
+                                //       .unsubscribeUsersFromTopic();
+                                // }
+                                await NotificationService()
+                                    .completelyDisableNotifications();
+
+                                await NotificationService()
+                                    .checkNotificationPermission();
+                              }
+                            } catch (e) {
+                              debugPrint('Error: $e');
+                            }
+                            setState(() {
+                              isLoading = false;
+                            });
                           }
-                        } else {
-                          // await NotificationService().disableNotifications();
-                          // if (loggedInAsSecurity) {
-                          //   await NotificationService()
-                          //       .unsubscribeSecurityFromTopic();
-                          // } else {
-                          //   await NotificationService()
-                          //       .unsubscribeUsersFromTopic();
-                          // }
-                          await NotificationService()
-                              .completelyDisableNotifications();
-
-                          await NotificationService()
-                              .checkNotificationPermission();
-                        }
-                      } catch (e) {
-                        debugPrint('Error: $e');
-                      }
-                      setState(() {
-                        isLoading = false;
-                      });
-                    })));
+                        : null)));
   }
 
   SwitchListTile devSwitchWid() {
