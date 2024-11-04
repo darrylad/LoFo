@@ -49,3 +49,47 @@ lib/firebase_options.dart
 lib/login_verification.dart
 lib/services/verify_app_validity.dart
 lib/services/notification_terminal.dart
+
+
+# Platform-specific build outputs
+android/app/build/
+ios/build/
+macos/build/
+windows/build/
+linux/build/
+web/build/
+
+# Generated Plugin Registrant
+lib/generated_plugin_registrant.dart
+
+# Dependency directories
+ios/Flutter/
+macos/Flutter/
+ios/Pods/
+macos/Pods/
+
+# Xcode files
+ios/Runner.xcworkspace/
+ios/Runner.xcodeproj/project.xcworkspace/
+ios/Runner.xcodeproj/xcuserdata/
+macos/Runner.xcworkspace/
+macos/Runner.xcodeproj/project.xcworkspace/
+macos/Runner.xcodeproj/xcuserdata/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Package configurations
+pubspec.lock
+
+# Native assets
+build/**/native_assets/
+
+# Key stores and credentials
+android/key.properties
+android/app/*.keystore
+
+# Google Services 
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
