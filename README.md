@@ -61,6 +61,9 @@ The security side can see the public posts in the Home page, and the private pos
 
 <https://github.com/darrylad/LoFo/assets/132708308/43bcf90b-c16d-45d6-8b91-a89e6ef4d2c6>
 
+### Primitive wireframes
+<https://www.figma.com/design/stwXQuh5PBDwmeV85XcmwG/LoFo-App?node-id=0-1&t=RkU3T8bROYzyg6EF-1>
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
