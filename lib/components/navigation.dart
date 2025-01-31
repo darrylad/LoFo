@@ -89,12 +89,12 @@ class _LayoutState extends State<Layout> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: 'Home',
+          label: 'Public Posts',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.all_inbox_rounded),
           // icon: Icon(Icons.amp_stories_rounded),
-          label: 'Your Posts',
+          label: 'Your posts',
         ),
       ],
       // currentIndex: selectedPageIndex,

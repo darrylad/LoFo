@@ -82,8 +82,8 @@ class _SecurityLayoutState extends State<SecurityLayout> {
           label: 'Inbox',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+          icon: Icon(Icons.add_circle),
+          label: 'Public posts',
         ),
       ],
       currentIndex: selectedSecurityPageIndex,

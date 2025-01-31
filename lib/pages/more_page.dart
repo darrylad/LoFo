@@ -52,7 +52,9 @@ class _MorePageState extends State<MorePage> {
     // await NotificationService().unsubscribeSecurityFromTopic();
     // await NotificationService().unsubscribeUsersFromTopic();
     // await NotificationService().disableNotifications();
-    await NotificationService().completelyDisableNotifications();
+    if (Platform.isAndroid) {
+      await NotificationService().completelyDisableNotifications();
+    }
 
     await performLogout();
   }
@@ -66,7 +68,7 @@ class _MorePageState extends State<MorePage> {
             title: const Text('Logout?'),
             titleTextStyle: themeData.textTheme.titleLarge,
             content: const Text(
-                'Your account instance will be removed, but your posts will not be deleted.'),
+                'Your account instance will be removed, but your posts will not be deleted, and will reappear when you log back in.'),
             actions: [
               BasicButton.secondaryButton("Cancel", () {
                 Navigator.pop(context, false);
@@ -88,16 +90,26 @@ class _MorePageState extends State<MorePage> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Hang tight..."),
+            title: const Text("Loggin out..."),
             titleTextStyle: themeData.textTheme.titleLarge,
-            content: const SizedBox(
-                width: 50,
-                height: 50,
-                child: Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: LinearProgressIndicator(),
-                ))),
+            content: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                    // width: 50,
+                    height: 50,
+                    child: Center(
+                        child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: LinearProgressIndicator(),
+                    ))),
+                SizedBox(height: 10),
+                Text(
+                  'Hang tight ... this might take a few seconds',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
           );
         });
   }
@@ -193,7 +205,7 @@ class _MorePageState extends State<MorePage> {
 
       ListTile(
         title: Text(
-          'Logout and delete account',
+          'Logout',
           style: themeData.textTheme.bodyLarge,
         ),
         onTap: () async {

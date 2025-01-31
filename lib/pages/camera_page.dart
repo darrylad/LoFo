@@ -471,7 +471,8 @@ class _PreCamLoadPageState extends State<PreCamLoadPage> {
                 const SizedBox(
                   height: 30,
                 ),
-                Text('Looking for cameras',
+                Text(
+                    "Looking for cameras \n \n If you're stuck here for long, enable camera permission in settings",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: themeData.colorScheme.secondary,
