@@ -1,3 +1,6 @@
+
+<img width="150" alt="Lofo App Logo" src="https://github.com/user-attachments/assets/05e7d679-79bb-466b-9999-e01fdfd8236d">
+
 # LoFo
 
 A beautiful, sleek, and extensive app that helps report lost and found items to our campus security and vice versa.
