@@ -36,9 +36,7 @@ Confirmatory buttons show popups to minimize accidental actions:
 
 <img width="250" alt="Hi there" src="https://github.com/user-attachments/assets/91aaee5a-cc49-45e8-969c-b6de984ae9f1">  <img width="250" alt="See posts" src="https://github.com/user-attachments/assets/6ea9d4b1-b18d-4643-a558-ced0e9cb236e">  <img width="250" alt="Create new private posts" src="https://github.com/user-attachments/assets/aa16caf7-6df8-491c-929e-b39039eb0a68">  <img width="250" alt="Archive" src="https://github.com/user-attachments/assets/d2798b4c-5b17-484f-9fba-71c65f822a67">  <img width="250" alt="Notifications" src="https://github.com/user-attachments/assets/e20c0511-ff61-4fc3-bac0-b1693b2c22b9">  <img width="250" alt="User Verification" src="https://github.com/user-attachments/assets/c7ca9eee-5a6c-4693-aeea-f7943c40cdfb">
 
-
-https://github.com/user-attachments/assets/b01d76ec-eb1a-4607-a21b-5d5e6e98649a
-
+https://github.com/user-attachments/assets/edd11d26-a87d-4238-a04a-bca1f7559d74
 
 #### Animations
 
